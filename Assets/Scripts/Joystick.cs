@@ -22,6 +22,12 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
+        img_Stick.enabled = false;
+    }
+
+    void Update()
+    {
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -38,6 +44,7 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
             inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
 
             // Moving joystick img
+            img_Stick.enabled = true;
             img_Stick.rectTransform.anchoredPosition = new Vector3(inputVector.x * (img_Joystick.rectTransform.sizeDelta.x / 2), inputVector.z * (img_Joystick.rectTransform.sizeDelta.y / 2));
 
             //Debug.Log(inputVector);
@@ -51,7 +58,8 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        img_Stick.rectTransform.anchoredPosition = Vector3.zero;
+        //img_Stick.rectTransform.anchoredPosition = Vector3.zero;
+        img_Stick.enabled = false;
     }
 
     // For player movement
