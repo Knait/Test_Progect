@@ -21,13 +21,16 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
 
     void Start()
     {
-        player = FindObjectOfType<PlayerController>();
+        if(!FindObjectOfType<PlayerController>())
+        {
+            Debug.LogError("Can't find Player Controller!");
+
+        } else
+        {
+            player = FindObjectOfType<PlayerController>();
+        }
+
         img_Stick.enabled = false;
-    }
-
-    void Update()
-    {
-
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -48,6 +51,8 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
             img_Stick.rectTransform.anchoredPosition = new Vector3(inputVector.x * (img_Joystick.rectTransform.sizeDelta.x / 2), inputVector.z * (img_Joystick.rectTransform.sizeDelta.y / 2));
 
             //Debug.Log(inputVector);
+
+            player.dashing = true;
         }
     }
 

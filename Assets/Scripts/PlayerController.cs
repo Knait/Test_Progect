@@ -5,32 +5,41 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Could use the singleton
+    //Need to rewrite joystick then
     public Joystick joystick;
     [SerializeField] private float speed;
+    [SerializeField] private float dashRate;
+    [SerializeField] private float restBetweenDash;
+    [HideInInspector] public bool dashing;
 
     private Rigidbody thisRB;
 
     void Start()
     {
         thisRB = GetComponent<Rigidbody>();
+        dashing = false;
     }
 
     void Update()
     {
-        Move();
+        //Move();
+
+        //Cooldown
+        if(restBetweenDash > 0) restBetweenDash -= Time.deltaTime;
+
+        //If cooldown is 0 and the joystick is pressed
+        if(restBetweenDash <= 0 && dashing)
+        {
+            Move();
+            dashing = false;
+            restBetweenDash = 2f / dashRate;
+        }
     }
-
-    private void Move()
+    
+    //Actual movement of the player
+    public void Move()
     {
-        thisRB.AddForce(Dir() * speed);
-
-        /* Without RigidBody
-        Vector3 pos = transform.position;
-
-        pos += Dir() * speed * Time.deltaTime;
-
-        transform.position = pos;
-        */
+        thisRB.AddForce(Dir() * speed, ForceMode.Impulse);
     }
 
     //Calculate direction
