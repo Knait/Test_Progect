@@ -44,7 +44,7 @@ public class FSGameController : MonoBehaviour
 
     [Header("TimerGoDown (Если useTimer = true)")]
     [SerializeField] private bool useTimerDown = false;
-    [SerializeField] private int startMinutCount = 5;
+    //[SerializeField] private int startMinutCount = 5;
 
     [Header("TimerGoUp (Если useTimer = true)")]
     [SerializeField] private bool useTimerUp = false;

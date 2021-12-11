@@ -8,5 +8,7 @@ public class ObstacleWallController : MonoBehaviour
     {
         Debug.Log("YOU ARE DEAD");
         collision.transform.position = new Vector3(0, 0, 0);
+
+        GameController.Instance.death = true;
     }
 }

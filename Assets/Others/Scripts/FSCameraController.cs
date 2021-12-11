@@ -9,7 +9,7 @@ public class FSCameraController : MonoBehaviour
     [SerializeField] private float rotateSpeed = 5;
 
     private Camera _camera;
-    [SerializeField] private float maxCamFOV = 80;
+    //[SerializeField] private float maxCamFOV = 80;
     private float factCamFOV = 60;
 
     private bool useTransform = false;

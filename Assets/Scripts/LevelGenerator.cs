@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [Header("Numbers")] 
-    //Numbers
-    [SerializeField] private int Obstacles;
+    [Header("Parameters")] 
+    //Number of obstacles
+    [SerializeField] private int ObstaclesAmount;
+    //Distance between obstacles
     [SerializeField] private float YOffset;
+    //Range of the tube
     [SerializeField] private float XRange;
     [SerializeField] private float ZRange;
+    //The offset of corners of tube
     [SerializeField] private float RangeOffset;
+    //Number of coins
+    [SerializeField] private int CoinAmount;
+    //The offset of coin position to obstacle position
+    [SerializeField] private float CoinOffset;
+    //A coin spawning chance
+    [SerializeField] private float CoinChance;
 
     [Header("References")]
     //References
-    [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject ObstaclePrefab;
+    [SerializeField] private GameObject CoinPrefab;
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
 
@@ -25,41 +35,52 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         //Adding 4 "corners" of a tube
-        Vector2 frstCorner = new Vector2(-XRange + RangeOffset, ZRange - RangeOffset);
+        Vector2 frstCorner = new Vector2(-XRange + RangeOffset, ZRange - RangeOffset); //
         Corners.Add(frstCorner);
-        Vector2 scndCorner = new Vector2(XRange - RangeOffset, ZRange - RangeOffset);
+        Vector2 scndCorner = new Vector2(XRange - RangeOffset, ZRange - RangeOffset); //
         Corners.Add(scndCorner);
         Vector2 thrdCorner = new Vector2(XRange - RangeOffset, -ZRange + RangeOffset);
         Corners.Add(thrdCorner);
         Vector2 frthCorner = new Vector2(-XRange + RangeOffset, -ZRange + RangeOffset);
         Corners.Add(frthCorner);
 
-        for (int i = 0; i <= Obstacles; i++)
+        for (int i = 0; i <= ObstaclesAmount; i++)
         {
+            #region ObstacleSpawner
+
             //Random values on the range
             //float xVal = Random.Range(-XRange, XRange);
             //float zVal = Random.Range(-ZRange, ZRange);
-            Debug.Log(Corners.Capacity);
 
-            //Position 
-            Vector3 pos;
+            //Obstacle position 
+            Vector3 ObstPos;
+            //Coint position
+            Vector3 CoinPos;
 
-            //If there is no previously spwaned object => random spawn, else, offset.
+            //If there is no previously spwaned object => spawn with offset from start point, else, offset from previous.
             if (!previousObj)
             {
-                pos = new Vector3(Corners[Random.Range(0, Corners.Capacity)].x, startPoint.position.y - YOffset, Corners[Random.Range(0, Corners.Capacity)].y);
+                ObstPos = new Vector3(Corners[Random.Range(0, Corners.Capacity)].x, startPoint.position.y - YOffset, Corners[Random.Range(0, Corners.Capacity)].y);
             }
             else
             {
-                pos = new Vector3(Corners[Random.Range(0, Corners.Capacity)].x, previousObj.position.y - YOffset, Corners[Random.Range(0, Corners.Capacity)].y);
+                ObstPos = new Vector3(Corners[Random.Range(0, Corners.Capacity)].x, previousObj.position.y - YOffset, Corners[Random.Range(0, Corners.Capacity)].y);
             }
 
-            //Rotation
+            //Obstacle Rotation
             Quaternion rot = Quaternion.Euler(0f, 0f, 0f);
 
-            GameObject obj = Instantiate(prefab, pos, rot);
+            GameObject ObstObj = Instantiate(ObstaclePrefab, ObstPos, rot);
 
-            previousObj = obj.transform;
+            //Hardcoded offset
+            CoinPos = new Vector3(ObstPos.x, ObstPos.y + CoinOffset, ObstPos.z);
+
+            GameObject CoinObj = Instantiate(CoinPrefab, CoinPos, rot);
+            CoinAmount++;
+
+            previousObj = ObstObj.transform;
+
+            #endregion
         }
     }
 }

@@ -51,8 +51,6 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
             img_Stick.rectTransform.anchoredPosition = new Vector3(inputVector.x * (img_Joystick.rectTransform.sizeDelta.x / 2), inputVector.z * (img_Joystick.rectTransform.sizeDelta.y / 2));
 
             //Debug.Log(inputVector);
-
-            player.dashing = true;
         }
     }
 
@@ -65,6 +63,7 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     {
         //img_Stick.rectTransform.anchoredPosition = Vector3.zero;
         img_Stick.enabled = false;
+        player.dashing = true;
     }
 
     // For player movement

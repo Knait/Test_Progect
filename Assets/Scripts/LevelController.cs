@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] private float levelGameTime = 15;
+    //[SerializeField] private float levelGameTime = 15;
 
     void OnCollisionEnter(Collision collision)
     {

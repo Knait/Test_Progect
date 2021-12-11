@@ -6,13 +6,27 @@ public class PlayerController : MonoBehaviour
 {
     //Could use the singleton
     //Need to rewrite joystick then
+    private static PlayerController instance;
+    public static PlayerController Instance => instance;
+
+    //Parameters
     public Joystick joystick;
     [SerializeField] private float speed;
     [SerializeField] private float dashRate;
-    [SerializeField] private float restBetweenDash;
+
+    [Header("DON'T CHANGE")]
+    [SerializeField] private Vector3 velocity;
+    public float restBetweenDash;
+
     [HideInInspector] public bool dashing;
 
+    //References
     private Rigidbody thisRB;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -23,12 +37,19 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Move();
+        velocity = GetComponent<Rigidbody>().velocity;
 
         //Cooldown
         if(restBetweenDash > 0) restBetweenDash -= Time.deltaTime;
 
+        //For visual purposes
+        if (restBetweenDash < 0)
+        {
+            restBetweenDash = 0;
+        }
+
         //If cooldown is 0 and the joystick is pressed
-        if(restBetweenDash <= 0 && dashing)
+        if (restBetweenDash <= 0 && dashing)
         {
             Move();
             dashing = false;
@@ -57,7 +78,18 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //Push the player to the opposite direction
-        thisRB.AddForce(-1 * Dir() * speed, ForceMode.Impulse);
+        //If collided with coin
+        if(collision.gameObject.GetComponent<Coin>())
+        {
+            GameController.Instance.score++;
+            restBetweenDash = 0;
+            Destroy(collision.gameObject);
+
+        } else
+        {
+            //Push the player to the opposite direction
+            thisRB.AddForce(-1 * Dir() * speed, ForceMode.Impulse);
+        }
+
     }
 }
