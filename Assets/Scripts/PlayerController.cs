@@ -40,20 +40,20 @@ public class PlayerController : MonoBehaviour
         velocity = GetComponent<Rigidbody>().velocity;
 
         //Cooldown
-        if(restBetweenDash > 0) restBetweenDash -= Time.deltaTime;
+        //if(restBetweenDash > 0) restBetweenDash -= Time.deltaTime;
 
         //For visual purposes
-        if (restBetweenDash < 0)
+        /*if (restBetweenDash < 0)
         {
             restBetweenDash = 0;
-        }
+        }*/
 
         //If cooldown is 0 and the joystick is pressed
-        if (restBetweenDash <= 0 && dashing)
+        if (dashing)
         {
             Move();
             dashing = false;
-            restBetweenDash = 2f / dashRate;
+            //restBetweenDash = 2f / dashRate;
         }
     }
     
@@ -82,13 +82,13 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.GetComponent<Coin>())
         {
             GameController.Instance.score++;
-            restBetweenDash = 0;
+            //restBetweenDash = 0;
             Destroy(collision.gameObject);
 
         } else
         {
             //Push the player to the opposite direction
-            thisRB.AddForce(-1 * Dir() * speed, ForceMode.Impulse);
+            thisRB.AddForce(-1 * Dir() * 0.2f, ForceMode.Impulse);
         }
 
     }
