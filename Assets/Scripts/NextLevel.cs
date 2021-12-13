@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleWallController : MonoBehaviour
+public class NextLevel : MonoBehaviour
 {
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("YOU ARE DEAD");
-        GameController.Instance.death = true;
+        Debug.Log("Next Level");
+        GameController.Instance.win = true;
     }
 }

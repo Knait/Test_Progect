@@ -18,6 +18,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private RectTransform textPanel;
     [SerializeField] private RectTransform startPanel;
     [SerializeField] private RectTransform endPanel;
+    [SerializeField] private RectTransform winPanel;
+
+    //Temporary ref
+    [SerializeField] private GameObject trubaParent;
+
     private Text levelTxt;
     private Text scoreTxt;
     //REMOVE OR ADD UPON RELEASE
@@ -25,6 +30,7 @@ public class GameController : MonoBehaviour
 
     private bool pause = true;
     [HideInInspector] public bool death = false;
+    [HideInInspector] public bool win = false;
 
     void Awake()
     {
@@ -46,15 +52,32 @@ public class GameController : MonoBehaviour
         //Death panel setup
         endPanel.gameObject.SetActive(false);
         endPanel.GetComponentInChildren<Button>().onClick.AddListener(EndButton);
+
+        winPanel.gameObject.SetActive(false);
+        winPanel.GetComponentInChildren<Button>().onClick.AddListener(WinButton);
     }
 
     void Update()
     {
         DisplayText();
 
-        if(pause) PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
+        if (pause)
+        {
+            trubaParent.transform.position = new Vector3(0, -45f, 0);
+            PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
+        }
 
-        if(death) endPanel.gameObject.SetActive(true);
+        if (death)
+        {
+            endPanel.gameObject.SetActive(true);
+            pause = true;
+        }
+
+        if (win)
+        {
+            winPanel.gameObject.SetActive(true);
+            pause = true;
+        }
     }
 
     void DisplayText()
@@ -71,6 +94,7 @@ public class GameController : MonoBehaviour
         }
     }
 
+    #region Buttons
     void StartButton()
     {
         startPanel.gameObject.SetActive(false);
@@ -83,4 +107,12 @@ public class GameController : MonoBehaviour
         death = false;
         pause = false;
     }
+
+    void WinButton()
+    {
+        winPanel.gameObject.SetActive(false);
+        win = false;
+        pause = false;
+    }
+    #endregion
 }
