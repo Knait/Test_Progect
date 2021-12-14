@@ -14,6 +14,9 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
 
     private Vector3 inputVector;
 
+    //Test
+    private bool dragging = false;
+
     void Awake()
     {
         instance = this;
@@ -38,6 +41,7 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
         Vector2 pos;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(img_Joystick.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
         {
+            dragging = true;
             // Stick restrictions
             pos.x = (pos.x / img_Joystick.rectTransform.sizeDelta.x);
             pos.y = (pos.y / img_Joystick.rectTransform.sizeDelta.y);
@@ -56,14 +60,20 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnDrag(eventData);
+        //Clickin bug!
+        //OnDrag(eventData);
+        Debug.Log("clicking!");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         //img_Stick.rectTransform.anchoredPosition = Vector3.zero;
         img_Stick.enabled = false;
-        player.dashing = true;
+        if (dragging)
+        {
+            player.dashing = true;
+            dragging = false;
+        }
     }
 
     // For player movement

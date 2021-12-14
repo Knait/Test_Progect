@@ -954,6 +954,8 @@ MonoBehaviour:
   joystick: {fileID: 1700037970}
   speed: 10
   dashRate: 2
+  dashEffect: {fileID: 0}
+  moveEffect: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   restBetweenDash: 0
   dashing: 0
@@ -1938,7 +1940,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5fa2438df45d449a6f05d947f344ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trubaList: []
+  trubaList:
+  - {fileID: 1404140882}
 --- !u!1 &1565888782
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public Joystick joystick;
     [SerializeField] private float speed;
     [SerializeField] private float dashRate;
+    [SerializeField] private ParticleSystem dashEffect;
+    [SerializeField] private ParticleSystem moveEffect;
 
     [Header("DON'T CHANGE")]
     [SerializeField] private Vector3 velocity;
@@ -33,6 +35,8 @@ public class PlayerController : MonoBehaviour
         thisRB = GetComponent<Rigidbody>();
         dashing = false;
         thisRB.useGravity = false;
+
+        if (!dashEffect || !moveEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
     }
 
     void Update()
