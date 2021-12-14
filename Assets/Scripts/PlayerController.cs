@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         thisRB = GetComponent<Rigidbody>();
         dashing = false;
+        thisRB.useGravity = false;
     }
 
     void Update()
@@ -78,18 +79,19 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //If collided with coin
-        if(collision.gameObject.GetComponent<Coin>())
+        //Push the player to the opposite direction
+        thisRB.AddForce(-1 * Dir() * 0.2f, ForceMode.Impulse);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+            //If collided with coin
+        if (other.gameObject.GetComponentInParent<Coin>())
         {
             GameController.Instance.score++;
             //restBetweenDash = 0;
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
 
-        } else
-        {
-            //Push the player to the opposite direction
-            thisRB.AddForce(-1 * Dir() * 0.2f, ForceMode.Impulse);
         }
-
     }
 }
