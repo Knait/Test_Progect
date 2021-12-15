@@ -12,7 +12,7 @@ public class LevelController : MonoBehaviour
         collision.transform.position = new Vector3(0, 0, 0);
     }*/
 
-    [SerializeField] private float levelSpeed;
+    [HideInInspector] public float levelSpeed;
 
     public void Update()
     {

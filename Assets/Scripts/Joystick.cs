@@ -62,7 +62,6 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     {
         //Clickin bug!
         //OnDrag(eventData);
-        Debug.Log("clicking!");
     }
 
     public void OnPointerUp(PointerEventData eventData)
