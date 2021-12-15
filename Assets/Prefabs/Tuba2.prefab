@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 2715852223080093596}
   - component: {fileID: 2715852223080093595}
   m_Layer: 0
-  m_Name: Tuba
+  m_Name: Tuba2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2715852223080093597}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -44.8, z: 0}
+  m_LocalPosition: {x: 0, y: -45, z: 0}
   m_LocalScale: {x: 4.0749, y: 47.686054, z: 4.0749}
   m_Children:
   - {fileID: 2715852224337420945}

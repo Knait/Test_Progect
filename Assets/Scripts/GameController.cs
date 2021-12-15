@@ -10,8 +10,10 @@ public class GameController : MonoBehaviour
     public static GameController Instance => instance;
 
     //Globals
+    [Header("Globals")]
     [SerializeField] private float gameLevel;
     public int score;
+    [SerializeField] private float levelSpeed;
 
     //UI
     [Header("UI")]
@@ -20,15 +22,14 @@ public class GameController : MonoBehaviour
     [SerializeField] private RectTransform endPanel;
     [SerializeField] private RectTransform winPanel;
 
-    //Temporary ref
-    [SerializeField] private GameObject trubaParent;
+    //List of tubes
+    public List<GameObject> inGameTubes = new List<GameObject>();
 
     private Text levelTxt;
     private Text scoreTxt;
     //REMOVE OR ADD UPON RELEASE
     private Text debugText;
 
-    private bool pause = true;
     [HideInInspector] public bool death = false;
     [HideInInspector] public bool win = false;
 
@@ -53,30 +54,29 @@ public class GameController : MonoBehaviour
         endPanel.gameObject.SetActive(false);
         endPanel.GetComponentInChildren<Button>().onClick.AddListener(EndButton);
 
+        //Win panel setup
         winPanel.gameObject.SetActive(false);
         winPanel.GetComponentInChildren<Button>().onClick.AddListener(WinButton);
+
+        Pause();
     }
 
     void Update()
     {
         DisplayText();
 
-        if (pause)
-        {
-            trubaParent.transform.position = new Vector3(0, -45f, 0);
-            PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
-        }
-
         if (death)
         {
             endPanel.gameObject.SetActive(true);
-            pause = true;
+            Pause();
+            death = false; //Temporary
         }
 
         if (win)
         {
             winPanel.gameObject.SetActive(true);
-            pause = true;
+            Pause();
+            win = false; //Temporary
         }
     }
 
@@ -98,21 +98,67 @@ public class GameController : MonoBehaviour
     void StartButton()
     {
         startPanel.gameObject.SetActive(false);
-        pause = false;
+        setSpeed(10);
     }
 
     void EndButton()
     {
         endPanel.gameObject.SetActive(false);
         death = false;
-        pause = false;
+        setSpeed(10);
     }
 
     void WinButton()
     {
         winPanel.gameObject.SetActive(false);
         win = false;
-        pause = false;
+        setSpeed(10);
     }
     #endregion
+
+    #region Setters and Getters
+    //Set the speed of current levels
+    public void setSpeed(float _speed)
+    {
+        levelSpeed = _speed;
+
+        for(int i = 0; i < inGameTubes.Count; i++)
+        {
+            inGameTubes[i].GetComponent<LevelController>().levelSpeed = levelSpeed;
+        }
+    }
+
+    //Get the speed of current levels
+    public float getSpeed()
+    {
+        return levelSpeed;
+    }
+    #endregion
+
+    //A funciton to reset the speed and position of the level and player
+    void Pause()
+    {
+        GameObject previousObj = null;
+        setSpeed(0);
+
+        //Resetting the position of the tubes
+        for (int i = 0; i < inGameTubes.Count; i++)
+        {
+            Debug.Log(i);
+            if (i == 0)
+            {
+                previousObj = inGameTubes[0];
+                inGameTubes[i].transform.position = new Vector3(0, -45f, 0);
+
+            }
+            else
+            {
+                inGameTubes[i].transform.position = new Vector3(0, previousObj.transform.position.y - 90f, 0);
+                previousObj = inGameTubes[i];
+            }
+        }
+
+        //Resetting the position of the player
+        PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
+    }
 }

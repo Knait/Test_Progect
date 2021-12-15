@@ -27,7 +27,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private GameObject CoinPrefab;
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
-    [SerializeField] private GameObject trubaParent;
+    //[SerializeField] private GameObject trubaParent; //To avoid errors
     //Holder for previous Object
     private Transform previousObj;
     //A list of corners of tube
@@ -71,13 +71,13 @@ public class LevelGenerator : MonoBehaviour
             Quaternion rot = Quaternion.Euler(0f, 0f, 0f);
 
             GameObject ObstObj = Instantiate(ObstaclePrefab, ObstPos, rot);
-            ObstObj.transform.SetParent(trubaParent.transform);
+            //ObstObj.transform.SetParent(trubaParent.transform);
             
             //Hardcoded offset
             CoinPos = new Vector3(ObstPos.x, ObstPos.y + CoinOffset, ObstPos.z);
 
             GameObject CoinObj = Instantiate(CoinPrefab, CoinPos, rot);
-            CoinObj.transform.SetParent(trubaParent.transform);
+            //CoinObj.transform.SetParent(trubaParent.transform);
             CoinAmount++;
 
             previousObj = ObstObj.transform;
