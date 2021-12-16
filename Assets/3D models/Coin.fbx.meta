@@ -3,12 +3,7 @@ guid: 4c4e4897876b9f14ea2db2ee50920f5e
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: LvPgbBaL
-    second: {fileID: 2800000, guid: ee0dcbf0f9712964b97de76774a5cf22, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
