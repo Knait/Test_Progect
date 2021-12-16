@@ -760,7 +760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 1700037970}
-  speed: 10
+  speed: 5
   dashRate: 2
   dashEffect: {fileID: 0}
   moveEffect: {fileID: 0}
@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1588,6 +1588,7 @@ MonoBehaviour:
   startPanel: {fileID: 151855028}
   endPanel: {fileID: 629997714}
   winPanel: {fileID: 1420091995}
+  playZone: {fileID: 1700037967}
   inGameTubes: []
   death: 0
   win: 0
@@ -1761,11 +1762,11 @@ RectTransform:
   m_Father: {fileID: 223458942}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 960, y: 960}
-  m_Pivot: {x: 1, y: 0}
+  m_SizeDelta: {x: 960, y: 1492.6}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700037968
 MonoBehaviour:
   m_ObjectHideFlags: 0
