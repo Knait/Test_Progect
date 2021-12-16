@@ -6,17 +6,18 @@ public class TrubaGenerator : MonoBehaviour
 {
     [SerializeField] private List<GameObject> trubaList = new List<GameObject>();
 
-    //TODO: GENERATE TUBES AT RANDOM! WITHOUTH REPEATING
+    //TODO: GENERATE TUBES AT RANDOM! WITHOUTH REPEATING (check the name
     void Start()
     {
         //If the array is empty, generate error message
-        if(trubaList.Capacity > 0)
+        if(trubaList.Count > 0)
         {
             Debug.Log("Generating Levels");
             GameObject previosObj = null;
             Vector3 pos = new Vector3(0,0,0);
             Quaternion rot = Quaternion.Euler(0,0,0);
 
+            //Determine how much tubes to spawn
             for (int i = 0; i < trubaList.Count; i++)
             {
                 //Static initial spawn at the start

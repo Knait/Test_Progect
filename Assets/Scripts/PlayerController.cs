@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 velocity;
     public float restBetweenDash;
 
-    [HideInInspector] public bool dashing;
+    [HideInInspector] public bool dashing = false;
 
     //References
     private Rigidbody thisRB;
@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         thisRB = GetComponent<Rigidbody>();
-        dashing = false;
         thisRB.useGravity = false;
 
         if (!dashEffect || !moveEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
@@ -41,9 +40,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Move();
-        velocity = GetComponent<Rigidbody>().velocity;
-
         //Cooldown
         //if(restBetweenDash > 0) restBetweenDash -= Time.deltaTime;
 
@@ -54,12 +50,20 @@ public class PlayerController : MonoBehaviour
         }*/
 
         //If cooldown is 0 and the joystick is pressed
-        if (dashing)
+
+        Debug.Log(dashing);
+        if (dashing == true)
         {
+            Debug.Log("Moving");
             Move();
+            dashEffect.Play();
             dashing = false;
             //restBetweenDash = 2f / dashRate;
         }
+
+        moveEffect.Play();
+        //Move();
+        velocity = GetComponent<Rigidbody>().velocity;
     }
     
     //Actual movement of the player

@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private RectTransform startPanel;
     [SerializeField] private RectTransform endPanel;
     [SerializeField] private RectTransform winPanel;
+    [SerializeField] private RectTransform playZone;
+    private Canvas canvasRef;
 
     //List of tubes
     public List<GameObject> inGameTubes = new List<GameObject>();
@@ -40,6 +42,9 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        canvasRef = FindObjectOfType<Canvas>();
+        //playZone.sizeDelta = canvasRef.renderingDisplaySize;
+
         gameLevel = 1;
         //Go to child and grab component
         scoreTxt = textPanel.GetChild(0).GetComponent<Text>();
