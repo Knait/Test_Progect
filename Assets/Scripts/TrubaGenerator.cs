@@ -23,14 +23,16 @@ public class TrubaGenerator : MonoBehaviour
                 if (i == 0)
                 {
                     pos = new Vector3(0, -45f, 0);
+                    rot = Quaternion.Euler(0, Random.Range(0, 360), 0);
                 }
                 else //Or spawn relative to previous spawned object
                 {
                     //Hardcoded offset for now - need to change
                     pos = new Vector3(0, previosObj.transform.position.y - 90f, 0);
+                    rot = Quaternion.Euler(0, Random.Range(0, 360), 0);
                 }
 
-                var obj = Instantiate(trubaList[i], pos, rot);
+                var obj = Instantiate(trubaList[Random.Range(0, trubaList.Count)], pos, rot);
                 previosObj = obj;
 
                 //Try to get to the LevelController of the tube
