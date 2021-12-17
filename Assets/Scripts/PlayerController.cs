@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("DON'T CHANGE")]
     [SerializeField] private Vector3 velocity;
-    public float restBetweenDash;
 
     [HideInInspector] public bool dashing = false;
 
@@ -40,29 +39,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Cooldown
-        //if(restBetweenDash > 0) restBetweenDash -= Time.deltaTime;
-
-        //For visual purposes
-        /*if (restBetweenDash < 0)
-        {
-            restBetweenDash = 0;
-        }*/
-
-        //If cooldown is 0 and the joystick is pressed
-
-        Debug.Log(dashing);
         if (dashing == true)
         {
-            Debug.Log("Moving");
             Move();
             dashEffect.Play();
             dashing = false;
-            //restBetweenDash = 2f / dashRate;
         }
 
         moveEffect.Play();
-        //Move();
         velocity = GetComponent<Rigidbody>().velocity;
     }
     

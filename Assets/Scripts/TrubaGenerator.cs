@@ -12,7 +12,6 @@ public class TrubaGenerator : MonoBehaviour
         //If the array is empty, generate error message
         if(trubaList.Count > 0)
         {
-            Debug.Log("Generating Levels");
             GameObject previosObj = null;
             Vector3 pos = new Vector3(0,0,0);
             Quaternion rot = Quaternion.Euler(0,0,0);

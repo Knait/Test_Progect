@@ -760,9 +760,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 1700037970}
-  speed: 5
+  speed: 2
   dashRate: 2
-  dashEffect: {fileID: 0}
+  dashEffect: {fileID: 198708924916045680, guid: cb60cfe2258158041bac94bd339e3f6b, type: 3}
   moveEffect: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   restBetweenDash: 0
@@ -1605,8 +1605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trubaList:
-  - {fileID: 2715852223080093597, guid: 5141db17c94c7bb4ab2d5f7bff9ccaaf, type: 3}
-  - {fileID: 2715852223080093597, guid: 3214fd51626d49e4c8ef69fcc3dde786, type: 3}
+  - {fileID: 6536797266243848212, guid: 46a919601828d4a45a087aab5675a358, type: 3}
+  - {fileID: 6536797266243848212, guid: a5e753a90e55e2d41ae90c929333d0f7, type: 3}
 --- !u!1 &1565888782
 GameObject:
   m_ObjectHideFlags: 0
