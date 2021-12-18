@@ -29,8 +29,6 @@ public class GameController : MonoBehaviour
 
     private Text levelTxt;
     private Text scoreTxt;
-    //REMOVE OR ADD UPON RELEASE
-    private Text debugText;
 
     [HideInInspector] public bool death = false;
     [HideInInspector] public bool win = false;
@@ -49,7 +47,6 @@ public class GameController : MonoBehaviour
         //Go to child and grab component
         scoreTxt = textPanel.GetChild(0).GetComponent<Text>();
         levelTxt = textPanel.GetChild(1).GetComponent<Text>();
-        debugText = textPanel.GetChild(2).GetComponent<Text>();
 
         //Start panel setup
         startPanel.gameObject.SetActive(true);
@@ -95,7 +92,6 @@ public class GameController : MonoBehaviour
         {
             levelTxt.text = "Level: " + gameLevel;
             scoreTxt.text = "Score: " + score;
-            debugText.text = "" + PlayerController.Instance.restBetweenDash;
         }
     }
 
