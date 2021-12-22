@@ -6,6 +6,6 @@ public class NextLevel : MonoBehaviour
 {
     void OnCollisionEnter(Collision collision)
     {
-        GameController.Instance.win = true;
+        GameController.Instance.NextLevel();
     }
 }

@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 
     //Globals
     [Header("Globals")]
-    [SerializeField] private float gameLevel;
+    [SerializeField] private int gameLevel;
     public int score;
     [SerializeField] private float levelSpeed;
 
@@ -60,6 +60,9 @@ public class GameController : MonoBehaviour
         winPanel.gameObject.SetActive(false);
         winPanel.GetComponentInChildren<Button>().onClick.AddListener(WinButton);
 
+        //Initial generation of the level
+        TrubaGenerator.Instance.generateLevel(gameLevel);
+        //Starting pause
         Pause();
     }
 
@@ -161,5 +164,24 @@ public class GameController : MonoBehaviour
 
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
+    }
+
+    //When player reached final tube of the level
+    public void NextLevel()
+    {
+        //Win screen if it was a final level
+        if(gameLevel == 3)
+        {
+            win = true;
+            return;
+        }
+
+        //Increase level and speed of the levele otherwise
+        gameLevel++;
+        levelSpeed++;
+
+        //Resetting the position of the player
+        PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
+        TrubaGenerator.Instance.generateLevel(gameLevel);
     }
 }

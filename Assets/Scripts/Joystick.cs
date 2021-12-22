@@ -41,8 +41,9 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
         {
 
             dragging = true;
+
             // Stick restrictions
-            pos.x = (pos.x / img_Joystick.rectTransform.sizeDelta.x);
+            pos.x = (pos.x /img_Joystick.rectTransform.sizeDelta.x);
             pos.y = (pos.y / img_Joystick.rectTransform.sizeDelta.y);
 
             // To make the pos go above 0
@@ -57,13 +58,12 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     public void OnPointerDown(PointerEventData eventData)
     {
         //Clickin bug!
-        OnDrag(eventData);
+        //OnDrag(eventData);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         //img_Stick.rectTransform.anchoredPosition = Vector3.zero;
-        Debug.Log("Dragging = " + dragging);
 
         if (dragging)
         {
