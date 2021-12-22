@@ -14,6 +14,11 @@ public class LevelController : MonoBehaviour
 
     [HideInInspector] public float levelSpeed;
 
+    void Awake()
+    {
+        levelSpeed = GameController.Instance.getSpeed();
+    }
+
     public void Update()
     {
         transform.Translate(new Vector3(0, levelSpeed, 0) * Time.deltaTime);

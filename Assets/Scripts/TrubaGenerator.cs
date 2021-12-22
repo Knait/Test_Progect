@@ -9,14 +9,14 @@ public class TrubaGenerator : MonoBehaviour
     public static TrubaGenerator Instance => instance;
     #endregion
 
+    [Header("Parameters")]
+    [SerializeField] private int pipesPerLevel;
+
     [Header("References")]
     //Truba prefabs
     [SerializeField] private GameObject startTruba;
     [SerializeField] private GameObject finishLane;
     [SerializeField] private List<GameObject> trubaList = new List<GameObject>();
-
-    [Header("Parameters")]
-    [SerializeField] private int pipesPerLevel;
 
     void Awake()
     {
@@ -69,7 +69,7 @@ public class TrubaGenerator : MonoBehaviour
                 {
                     //Instantiating a finish lane
                     pos = new Vector3(0, previosObj.transform.position.y - 45f, 0);
-                    var tempObj = Instantiate(finishLane, pos, rot);
+                    var tempObj = Instantiate(finishLane, pos, rot, previosObj.transform);
                 }
 
                 //Try to get to the LevelController of the tube to set the speed
