@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
         winPanel.GetComponentInChildren<Button>().onClick.AddListener(WinButton);
 
         //Initial generation of the level
-        TrubaGenerator.Instance.generateLevel(1);
+        TrubaGenerator.Instance.GenerateLevel(1);
         //Starting pause
         Pause();
     }
@@ -128,7 +128,7 @@ public class GameController : MonoBehaviour
 
         for(int i = 0; i < inGameTubes.Count; i++)
         {
-            inGameTubes[i].GetComponent<LevelController>().levelSpeed = levelSpeed;
+            //inGameTubes[i].GetComponent<LevelController>().levelSpeed = levelSpeed;
         }
     }
 
@@ -181,6 +181,7 @@ public class GameController : MonoBehaviour
 
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
-        TrubaGenerator.Instance.generateLevel(gameLevel);
+        TrubaGenerator.Instance.ClearLevel(inGameTubes);
+        TrubaGenerator.Instance.GenerateLevel(gameLevel);
     }
 }

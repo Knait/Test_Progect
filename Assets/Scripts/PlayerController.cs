@@ -77,13 +77,16 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-            //If collided with coin
+        //If collided with coin
         if (other.gameObject.GetComponentInParent<Coin>())
         {
             GameController.Instance.score++;
-            //restBetweenDash = 0;
             Destroy(other.gameObject);
+        }
 
+        if (other.gameObject.GetComponent<NextLevel>())
+        {
+            GameController.Instance.NextLevel();
         }
     }
 }

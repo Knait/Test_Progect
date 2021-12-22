@@ -24,7 +24,7 @@ public class TrubaGenerator : MonoBehaviour
     }
 
     //Level generator
-    public void generateLevel(int _gameLevel)
+    public void GenerateLevel(int _gameLevel)
     {
         if (!startTruba) Debug.LogError("Can't find starting truba.");
         //If the array is empty, generate error message
@@ -72,11 +72,11 @@ public class TrubaGenerator : MonoBehaviour
                     var tempObj = Instantiate(finishLane, pos, rot, previosObj.transform);
                 }
 
-                //Try to get to the LevelController of the tube to set the speed
+                /*//Try to get to the LevelController of the tube to set the speed
                 if (currentObj.TryGetComponent(out LevelController controller))
                 {
-                    controller.levelSpeed = GameController.Instance.getSpeed();
-                }
+                    //controller.levelSpeed = GameController.Instance.getSpeed();
+                }*/
 
                 //To add just created object to game manager array
                 GameController.Instance.inGameTubes.Add(currentObj);
@@ -99,5 +99,13 @@ public class TrubaGenerator : MonoBehaviour
         while (tempObj.name == _prevObj.name) tempObj = _list[Random.Range(0, trubaList.Count)];
 
         return tempObj;
+    }
+
+    public void ClearLevel(List<GameObject> _current)
+    {
+        for (int i = 0; i < _current.Count; i++)
+        {
+            Destroy(_current[i]);
+        }
     }
 }

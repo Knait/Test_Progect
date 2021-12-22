@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class NextLevel : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
-    {
-        GameController.Instance.NextLevel();
-    }
+
 }
