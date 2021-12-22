@@ -1899,9 +1899,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5fa2438df45d449a6f05d947f344ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipesPerLevel: 4
+  pipesPerLevel: 1
   startTruba: {fileID: 6536797266243848212, guid: 10da7feb19f8f004cb5851964092f7bf, type: 3}
-  finishLane: {fileID: 2547764430006475695, guid: da824034da752f947a82e36c96f32c16, type: 3}
+  finishLane: {fileID: 1116356093264338035, guid: e04d9c94e645a714aa60238bb0640412, type: 3}
   trubaList:
   - {fileID: 6536797266243848212, guid: 46a919601828d4a45a087aab5675a358, type: 3}
   - {fileID: 6536797266243848212, guid: a5e753a90e55e2d41ae90c929333d0f7, type: 3}

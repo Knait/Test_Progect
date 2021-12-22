@@ -12,15 +12,16 @@ public class LevelController : MonoBehaviour
         collision.transform.position = new Vector3(0, 0, 0);
     }*/
 
-    [HideInInspector] public float levelSpeed;
+    [SerializeField] private float levelSpeed;
 
-    void Awake()
+    void Start()
     {
         levelSpeed = GameController.Instance.getSpeed();
     }
 
     public void Update()
     {
+        levelSpeed = GameController.Instance.getSpeed();
         transform.Translate(new Vector3(0, levelSpeed, 0) * Time.deltaTime);
     }
 }
