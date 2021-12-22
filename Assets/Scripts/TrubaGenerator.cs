@@ -15,16 +15,10 @@ public class TrubaGenerator : MonoBehaviour
     [SerializeField] private GameObject finishLane;
     [SerializeField] private List<GameObject> trubaList = new List<GameObject>();
 
-    [Header("Materials")]
-    //Materials
-    [SerializeField] private Material firstLevelM;
-    [SerializeField] private Material secondLevelM;
-    [SerializeField] private Material thirdLevelM;
-
     [Header("Parameters")]
     [SerializeField] private int pipesPerLevel;
 
-    void Start()
+    void Awake()
     {
         instance = this;
     }

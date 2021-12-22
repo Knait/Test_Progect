@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
         winPanel.GetComponentInChildren<Button>().onClick.AddListener(WinButton);
 
         //Initial generation of the level
-        TrubaGenerator.Instance.generateLevel(gameLevel);
+        TrubaGenerator.Instance.generateLevel(1);
         //Starting pause
         Pause();
     }
@@ -148,7 +148,6 @@ public class GameController : MonoBehaviour
         //Resetting the position of the tubes
         for (int i = 0; i < inGameTubes.Count; i++)
         {
-            Debug.Log(i);
             if (i == 0)
             {
                 previousObj = inGameTubes[0];
