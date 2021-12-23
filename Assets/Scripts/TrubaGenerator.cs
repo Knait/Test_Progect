@@ -47,9 +47,11 @@ public class TrubaGenerator : MonoBehaviour
                 }
                 else //Or spawn relative to previous spawned object
                 {
+                    //Hardcoded set of angles to choose from (to avoid visual artifacts)
+                    int[] angles = {90, 180, 270, 360 };
                     //Hardcoded offset for now - need to change
                     pos = new Vector3(0, previosObj.transform.position.y - 90f, 0);
-                    rot = Quaternion.Euler(0, Random.Range(0, 360), 0);
+                    rot = Quaternion.Euler(0, angles[Random.Range(0, angles.Length)], 0);
 
                     //Holder of generated random gameObject for name switch
                     var nameHolder = randomObjFromList(trubaList, previosObj);
@@ -71,12 +73,6 @@ public class TrubaGenerator : MonoBehaviour
                     pos = new Vector3(0, previosObj.transform.position.y - 45f, 0);
                     var tempObj = Instantiate(finishLane, pos, rot, previosObj.transform);
                 }
-
-                /*//Try to get to the LevelController of the tube to set the speed
-                if (currentObj.TryGetComponent(out LevelController controller))
-                {
-                    //controller.levelSpeed = GameController.Instance.getSpeed();
-                }*/
 
                 //To add just created object to game manager array
                 GameController.Instance.inGameTubes.Add(currentObj);

@@ -1899,7 +1899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5fa2438df45d449a6f05d947f344ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipesPerLevel: 1
+  pipesPerLevel: 5
   startTruba: {fileID: 6536797266243848212, guid: 10da7feb19f8f004cb5851964092f7bf, type: 3}
   finishLane: {fileID: 1116356093264338035, guid: e04d9c94e645a714aa60238bb0640412, type: 3}
   trubaList:

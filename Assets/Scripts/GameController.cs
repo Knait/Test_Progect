@@ -181,6 +181,8 @@ public class GameController : MonoBehaviour
 
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = new Vector3(0, 0, 0);
+
+        //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
         TrubaGenerator.Instance.GenerateLevel(gameLevel);
     }
