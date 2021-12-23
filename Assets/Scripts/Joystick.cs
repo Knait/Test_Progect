@@ -7,13 +7,14 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     private static Joystick instance;
     public static Joystick Instance => instance;
 
+    [SerializeField] private Image img_Panel;
     [SerializeField] private Image img_Joystick;
     [SerializeField] private Image img_Stick;
 
     [SerializeField] private PlayerController player;
 
     private Vector3 inputVector;
-
+    public Vector2 _stickPos;
     //Test
     private bool dragging = false;
 
@@ -57,6 +58,9 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Vector2 stickPos;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(img_Panel.rectTransform, eventData.position, eventData.pressEventCamera, out stickPos))
+            img_Joystick.rectTransform.anchoredPosition = stickPos;
         //Clickin bug!
         //OnDrag(eventData);
     }
@@ -70,6 +74,8 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
             player.dashing = true;
             dragging = false;
         }
+
+        img_Stick.rectTransform.anchoredPosition = Vector2.zero;
     }
 
     // For player movement

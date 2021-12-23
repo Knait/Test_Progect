@@ -89,4 +89,6 @@ public class PlayerController : MonoBehaviour
             GameController.Instance.NextLevel();
         }
     }
+
+
 }
