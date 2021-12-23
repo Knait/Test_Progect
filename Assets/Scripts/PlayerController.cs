@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     //Actual movement of the player
     public void Move()
     {
+        thisRB.velocity = new Vector3(0, 0, 0);
         thisRB.AddForce(Dir() * speed, ForceMode.Impulse);
     }
 
