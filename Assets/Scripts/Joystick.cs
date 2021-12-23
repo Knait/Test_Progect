@@ -75,7 +75,7 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
             dragging = false;
         }
 
-        img_Stick.rectTransform.anchoredPosition = Vector2.zero;
+        //img_Stick.rectTransform.anchoredPosition = Vector2.zero;
     }
 
     // For player movement
