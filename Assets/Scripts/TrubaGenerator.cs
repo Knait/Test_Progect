@@ -44,6 +44,8 @@ public class TrubaGenerator : MonoBehaviour
                 {
                     currentObj = Instantiate(startTruba, pos, rot);
                     previosObj = currentObj;
+                    //To add just created object to game manager array
+                    GameController.Instance.inGameTubes.Add(currentObj);
                 }
                 else //Or spawn relative to previous spawned object
                 {
@@ -65,6 +67,9 @@ public class TrubaGenerator : MonoBehaviour
 
                     //For offset
                     previosObj = currentObj;
+
+                    //To add just created object to game manager array
+                    GameController.Instance.inGameTubes.Add(currentObj);
                 }
 
                 //Last tube
@@ -79,12 +84,10 @@ public class TrubaGenerator : MonoBehaviour
                     {
                         pos = new Vector3(0, previosObj.transform.position.y - 90f, 0);
                         var lastTube = Instantiate(startTruba, pos, rot);
+                        GameController.Instance.inGameTubes.Add(lastTube);
                         previosObj = lastTube;
                     }
                 }
-
-                //To add just created object to game manager array
-                GameController.Instance.inGameTubes.Add(currentObj);
             }
 
         }

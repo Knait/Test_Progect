@@ -58,6 +58,16 @@ public class PlayerController : MonoBehaviour
         return startingPlayerPosition;
     }
 
+    public void SetStartingPosition(Vector3 _position)
+    {
+        startingPlayerPosition = _position;
+    }
+
+    public void ChangeStartingPosition(Vector3 _position)
+    {
+        startingPlayerPosition -= _position;
+    }
+
     #region Movement
     //Actual movement of the player
     public void Move()
