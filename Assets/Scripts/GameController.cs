@@ -41,7 +41,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        
+        if (speedIncrease == 0) Debug.LogError("SpeedIncrease need to be above 0, to work");
+
         gameLevel = 1;
         //Go to child and grab component
         //scoreTxt = textPanel.GetChild(0).GetComponent<TextMeshPro>();
@@ -89,7 +90,7 @@ public class GameController : MonoBehaviour
             scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
             DisplayText();
             Pause();
-            win = false; //Temporary
+            win = false;
         }
     }
 
@@ -185,11 +186,12 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        win = true;
         //TODO:Display UI
 
         //Increase level and speed of the levele otherwise
         gameLevel++;
-        levelSpeed++;
+        setSpeed(speedIncrease);
 
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
