@@ -179,13 +179,6 @@ public class GameController : MonoBehaviour
     //When player reached final tube of the level
     public void NextLevel()
     {
-        //Win screen if it was a final level
-        if(gameLevel == 3)
-        {
-            win = true;
-            return;
-        }
-
         win = true;
         //TODO:Display UI
 

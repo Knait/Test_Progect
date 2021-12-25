@@ -750,7 +750,7 @@ MonoBehaviour:
   gameLevel: 0
   score: 0
   levelSpeed: 10
-  speedIncrease: 0
+  speedIncrease: 2
   textPanel: {fileID: 0}
   startPanel: {fileID: 1945145575186995170}
   endPanel: {fileID: 1945145576067900610}

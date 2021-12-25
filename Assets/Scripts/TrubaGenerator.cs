@@ -73,6 +73,14 @@ public class TrubaGenerator : MonoBehaviour
                     //Instantiating a finish lane
                     pos = new Vector3(0, previosObj.transform.position.y - 45f, 0);
                     var tempObj = Instantiate(finishLane, pos, rot, previosObj.transform);
+                    
+                    //Two tubes
+                    for(int k = 0; k < 2; k++)
+                    {
+                        pos = new Vector3(0, previosObj.transform.position.y - 90f, 0);
+                        var lastTube = Instantiate(startTruba, pos, rot);
+                        previosObj = lastTube;
+                    }
                 }
 
                 //To add just created object to game manager array
