@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-
-    [SerializeField] private float levelSpeed;
-
-    void Start()
-    {
-        levelSpeed = GameController.Instance.getSpeed();
-    }
+    public float levelSpeed;
+    public bool moving = false;
 
     public void Update()
     {
-        levelSpeed = GameController.Instance.getSpeed();
-        transform.Translate(new Vector3(0, levelSpeed, 0) * Time.deltaTime);
+        if(moving) transform.Translate(new Vector3(0, levelSpeed, 0) * Time.deltaTime);
     }
 }

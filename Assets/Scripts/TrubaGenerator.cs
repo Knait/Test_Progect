@@ -36,7 +36,7 @@ public class TrubaGenerator : MonoBehaviour
             Vector3 pos = new Vector3(0, 0, 0);
             Quaternion rot = Quaternion.Euler(0, 0, 0);
 
-            //Determine how much tubes to spawn
+            //Determine how much tubes to spawn (plus starting tube)
             for (int i = 0; i < pipesPerLevel + 1; i++)
             {
                 //Static initial spawn at the start
@@ -47,10 +47,11 @@ public class TrubaGenerator : MonoBehaviour
                 }
                 else //Or spawn relative to previous spawned object
                 {
-                    //Hardcoded set of angles to choose from (to avoid visual artifacts)
+                    //Set of angles to choose from (to avoid visual artifacts)
                     int[] angles = {90, 180, 270, 360 };
                     //Hardcoded offset for now - need to change
                     pos = new Vector3(0, previosObj.transform.position.y - 90f, 0);
+
                     rot = Quaternion.Euler(0, angles[Random.Range(0, angles.Length)], 0);
 
                     //Holder of generated random gameObject for name switch
@@ -102,6 +103,29 @@ public class TrubaGenerator : MonoBehaviour
         for (int i = 0; i < _current.Count; i++)
         {
             Destroy(_current[i]);
+        }
+
+        _current.Clear();
+    }
+
+    //Reset the position of current level
+    public void ResetLevel()
+    {
+        Vector3 _pos = new Vector3(0, 0, 0);
+        GameObject _prevObject = null;
+
+        for(int i = 0; i < GameController.Instance.inGameTubes.Count; i++)
+        {
+            if (i == 0)
+            {
+                GameController.Instance.inGameTubes[i].transform.position = new Vector3(0, _pos.y, 0);
+                _prevObject = GameController.Instance.inGameTubes[i];
+
+            } else
+            {
+                GameController.Instance.inGameTubes[i].transform.position = new Vector3(0, _prevObject.transform.position.y - 90f, 0);
+                _prevObject = GameController.Instance.inGameTubes[i];
+            }
         }
     }
 }

@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
     //Parameters
     public Joystick joystick;
     [SerializeField] private float speed;
-    [SerializeField] private float dashRate;
     [SerializeField] private ParticleSystem dashEffect;
     [SerializeField] private ParticleSystem moveEffect;
+
+    //Hidden
+    private Vector3 startingPlayerPosition;
 
     [Header("DON'T CHANGE")]
     [SerializeField] private Vector3 velocity;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         instance = this;
+        startingPlayerPosition = transform.position;
     }
 
     void Start()
@@ -39,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (dashing == true)
+        if (dashing == true && !GameController.Instance.paused)
         {
             Move();
             dashEffect.Play();
@@ -49,10 +52,17 @@ public class PlayerController : MonoBehaviour
         moveEffect.Play();
         velocity = GetComponent<Rigidbody>().velocity;
     }
-    
+
+    public Vector3 GetStartingPosition()
+    {
+        return startingPlayerPosition;
+    }
+
+    #region Movement
     //Actual movement of the player
     public void Move()
     {
+        //Reset the velocity, so the speed will remain the same
         thisRB.velocity = new Vector3(0, 0, 0);
         thisRB.AddForce(Dir() * speed, ForceMode.Impulse);
     }
@@ -69,7 +79,9 @@ public class PlayerController : MonoBehaviour
 
         return dir;
     }
+    #endregion
 
+    #region Collision
     void OnCollisionEnter(Collision collision)
     {
         //Push the player to the opposite direction
@@ -85,11 +97,11 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
         }
 
+        //If collided with finishlane
         if (other.gameObject.GetComponent<NextLevel>())
         {
             GameController.Instance.NextLevel();
         }
     }
-
-
+    #endregion
 }

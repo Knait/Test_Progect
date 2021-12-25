@@ -67,15 +67,11 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //img_Stick.rectTransform.anchoredPosition = Vector3.zero;
-
         if (dragging)
         {
             player.dashing = true;
             dragging = false;
         }
-
-        //img_Stick.rectTransform.anchoredPosition = Vector2.zero;
     }
 
     // For player movement
