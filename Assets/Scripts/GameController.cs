@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour
 
     //List of tubes
     public List<GameObject> inGameTubes = new List<GameObject>();
+    //List of current coins
+    //TODO add all generated coins there
+    //disable them upon impact
+    [SerializeField] private List<GameObject> coins = new List<GameObject>();
 
     private TMP_Text levelTxt;
     private Text scoreTxt;
@@ -179,13 +183,14 @@ public class GameController : MonoBehaviour
     //When player reached final tube of the level
     public void NextLevel()
     {
+        //UI display
         win = true;
-        //TODO:Display UI
 
         //Increase level and speed of the levele otherwise
         gameLevel++;
 
-        if (gameLevel % 2 == 1) setSpeed(speedIncrease += 5);
+        //Increase the speed every 2 levels
+        if (gameLevel % 2 == 0) setSpeed(speedIncrease += 5);
 
         setSpeed(speedIncrease);
 
@@ -196,7 +201,5 @@ public class GameController : MonoBehaviour
         //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
         TrubaGenerator.Instance.GenerateLevel(gameLevel);
-
-        Resume();
     }
 }

@@ -13,7 +13,11 @@ public class PlayerController : MonoBehaviour
     public Joystick joystick;
     [SerializeField] private float speed;
     [SerializeField] private ParticleSystem dashEffect;
-    [SerializeField] private ParticleSystem moveEffect;
+    [SerializeField] private ParticleSystem crashEffect;
+
+    //Inside refs
+    private ParticleSystem dashRef;
+    private ParticleSystem crashRef;
 
     //Hidden
     private Vector3 startingPlayerPosition;
@@ -30,6 +34,13 @@ public class PlayerController : MonoBehaviour
     {
         instance = this;
         startingPlayerPosition = transform.position;
+
+        crashRef = Instantiate(crashEffect, gameObject.transform);
+        dashRef = Instantiate(dashEffect, gameObject.transform);
+
+        //References to instantiated effects
+        crashRef.Pause();
+        dashRef.Pause();
     }
 
     void Start()
@@ -37,7 +48,7 @@ public class PlayerController : MonoBehaviour
         thisRB = GetComponent<Rigidbody>();
         thisRB.useGravity = false;
 
-        if (!dashEffect || !moveEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
+        if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
     }
 
     void Update()
@@ -45,11 +56,10 @@ public class PlayerController : MonoBehaviour
         if (dashing == true && !GameController.Instance.paused)
         {
             Move();
-            dashEffect.Play();
+            dashRef.Play();
             dashing = false;
         }
 
-        moveEffect.Play();
         velocity = GetComponent<Rigidbody>().velocity;
     }
 
@@ -65,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeStartingPosition(Vector3 _position)
     {
-        startingPlayerPosition -= _position;
+        startingPlayerPosition += _position;
     }
 
     #region Movement
@@ -94,6 +104,7 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        crashRef.Play();
         //Push the player to the opposite direction
         thisRB.AddForce(-1 * Dir() * 0.2f, ForceMode.Impulse);
     }
@@ -104,7 +115,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.GetComponentInParent<Coin>())
         {
             GameController.Instance.score++;
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
 
         //If collided with finishlane

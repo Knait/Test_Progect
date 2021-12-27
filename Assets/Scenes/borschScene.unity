@@ -157,7 +157,7 @@ MonoBehaviour:
   joystick: {fileID: 223458943}
   speed: 10
   dashEffect: {fileID: 198509125451577780, guid: 3313c584bfb0ca54584fe5b29871dfc2, type: 3}
-  moveEffect: {fileID: 198633821086180066, guid: 101d62f0a3e4fef4eab61adb79c845df, type: 3}
+  crashEffect: {fileID: 198497312146361894, guid: 2e0d5536e42d3aa48b6e363997b6b9e4, type: 3}
   velocity: {x: 0, y: 0, z: 0}
   dashing: 0
 --- !u!54 &199187296
@@ -756,6 +756,7 @@ MonoBehaviour:
   endPanel: {fileID: 1945145576067900610}
   winPanel: {fileID: 1945145574829751861}
   inGameTubes: []
+  coins: []
   death: 0
   win: 0
   paused: 0
