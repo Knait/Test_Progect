@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 223458943}
   speed: 10
-  dashEffect: {fileID: 198509125451577780, guid: 3313c584bfb0ca54584fe5b29871dfc2, type: 3}
+  dashEffect: {fileID: 198708924916045680, guid: cb60cfe2258158041bac94bd339e3f6b, type: 3}
   crashEffect: {fileID: 198497312146361894, guid: 2e0d5536e42d3aa48b6e363997b6b9e4, type: 3}
   velocity: {x: 0, y: 0, z: 0}
   dashing: 0
@@ -324,7 +324,6 @@ MonoBehaviour:
   img_Panel: {fileID: 2137730162}
   img_Joystick: {fileID: 1700037968}
   img_Stick: {fileID: 752266533}
-  player: {fileID: 0}
   _stickPos: {x: 0, y: 0}
 --- !u!1 &306818943
 GameObject:
@@ -749,14 +748,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameLevel: 0
   score: 0
-  levelSpeed: 10
+  defaultLevelSpeed: 10
   speedIncrease: 2
   textPanel: {fileID: 0}
   startPanel: {fileID: 1945145575186995170}
   endPanel: {fileID: 1945145576067900610}
   winPanel: {fileID: 1945145574829751861}
   inGameTubes: []
-  coins: []
+  currentCoins: 0
+  maxCoins: 0
   death: 0
   win: 0
   paused: 0
@@ -2697,7 +2697,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &1945145575459344684
 CanvasRenderer:
   m_ObjectHideFlags: 0

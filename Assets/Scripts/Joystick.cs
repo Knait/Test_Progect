@@ -11,8 +11,6 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     [SerializeField] private Image img_Joystick;
     [SerializeField] private Image img_Stick;
 
-    [SerializeField] private PlayerController player;
-
     private Vector3 inputVector;
     public Vector2 _stickPos;
     //Test
@@ -21,18 +19,6 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     void Awake()
     {
         instance = this;
-    }
-
-    void Start()
-    {
-        if(!FindObjectOfType<PlayerController>())
-        {
-            Debug.LogError("Can't find Player Controller!");
-
-        } else
-        {
-            player = FindObjectOfType<PlayerController>();
-        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -69,7 +55,7 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     {
         if (dragging)
         {
-            player.dashing = true;
+            PlayerController.Instance.dashing = true;
             dragging = false;
         }
     }

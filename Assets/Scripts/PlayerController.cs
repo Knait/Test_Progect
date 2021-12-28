@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.GetComponentInParent<Coin>())
         {
             GameController.Instance.score++;
+            GameController.Instance.currentCoins--;
             other.gameObject.SetActive(false);
         }
 

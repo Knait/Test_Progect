@@ -10,11 +10,12 @@ public class GameController : MonoBehaviour
     private static GameController instance;
     public static GameController Instance => instance;
 
-    //Globals
+    //Parameters
     [Header("Globals")]
     [SerializeField] private int gameLevel;
     public int score;
-    [SerializeField] private float levelSpeed;
+
+    [SerializeField] private float defaultLevelSpeed;
     [SerializeField] private float speedIncrease;
 
     //UI
@@ -24,15 +25,14 @@ public class GameController : MonoBehaviour
     [SerializeField] private RectTransform endPanel;
     [SerializeField] private RectTransform winPanel;
 
+    private TMP_Text levelTxt;
+    private Text scoreTxt;
+
     //List of tubes
     public List<GameObject> inGameTubes = new List<GameObject>();
     //List of current coins
-    //TODO add all generated coins there
-    //disable them upon impact
-    [SerializeField] private List<GameObject> coins = new List<GameObject>();
-
-    private TMP_Text levelTxt;
-    private Text scoreTxt;
+    public int currentCoins;
+    [SerializeField] private int maxCoins;
 
     [HideInInspector] public bool death = false;
     [HideInInspector] public bool win = false;
@@ -41,6 +41,12 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        if(!PlayerPrefs.HasKey("allCoins"))
+        {
+            PlayerPrefs.SetInt("allCoins", 0);
+            PlayerPrefs.Save();
+        }
     }
 
     void Start()
@@ -48,19 +54,15 @@ public class GameController : MonoBehaviour
         if (speedIncrease == 0) Debug.LogError("SpeedIncrease need to be above 0, to work");
 
         gameLevel = 1;
-        //Go to child and grab component
-        //scoreTxt = textPanel.GetChild(0).GetComponent<TextMeshPro>();
 
         //Start panel setup
         startPanel.gameObject.SetActive(true);
         startPanel.GetComponentInChildren<Button>().onClick.AddListener(StartButton);
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
 
-
         //Death panel setup
         endPanel.gameObject.SetActive(false);
         endPanel.GetComponentInChildren<Button>().onClick.AddListener(EndButton);
-
 
         //Win panel setup
         winPanel.gameObject.SetActive(false);
@@ -69,10 +71,12 @@ public class GameController : MonoBehaviour
         //Initial generation of the level
         TrubaGenerator.Instance.GenerateLevel(1);
 
+        maxCoins = FindObjectsOfType<Coin>().Length;
+        currentCoins = maxCoins;
+
         //Starting pause
         Pause();
     }
-
     void Update()
     {
         DisplayText();
@@ -89,6 +93,30 @@ public class GameController : MonoBehaviour
 
         if (win)
         {
+            var panel1 = winPanel.Find("Title1");
+            var panel2 = winPanel.Find("Title2");
+
+            //Different text
+            if (currentCoins == 0)
+            {
+                //All coins collected
+                panel2.gameObject.SetActive(true);
+                panel1.gameObject.SetActive(false);
+            }
+
+            if(currentCoins > 0)
+            {
+                //Not all coins collected
+                panel1.gameObject.SetActive(true);
+                panel2.gameObject.SetActive(false);
+            }
+
+            if (currentCoins == maxCoins)
+            {
+                //None of the coins  collected
+            }
+
+            //if(currentCoins)
             winPanel.gameObject.SetActive(true);
             levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
@@ -101,7 +129,7 @@ public class GameController : MonoBehaviour
     #region Buttons
     void StartButton()
     {
-        setSpeed(levelSpeed);
+        setSpeed(defaultLevelSpeed);
         startPanel.gameObject.SetActive(false);
         paused = false;
         Resume();
@@ -133,18 +161,18 @@ public class GameController : MonoBehaviour
     //Set the speed of current levels
     public void setSpeed(float _speed)
     {
-        levelSpeed = _speed;
+        defaultLevelSpeed = _speed;
 
         for(int i = 0; i < inGameTubes.Count; i++)
         {
-            inGameTubes[i].GetComponent<LevelController>().levelSpeed = levelSpeed;
+            inGameTubes[i].GetComponent<LevelController>().levelSpeed = defaultLevelSpeed;
         }
     }
 
     //Get the speed of current levels
     public float getSpeed()
     {
-        return levelSpeed;
+        return defaultLevelSpeed;
     }
     #endregion
     
