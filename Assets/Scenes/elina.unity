@@ -624,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198497312146361894, guid: 2e0d5536e42d3aa48b6e363997b6b9e4, type: 3}
       propertyPath: lengthInSec
-      value: 2
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 198497312146361894, guid: 2e0d5536e42d3aa48b6e363997b6b9e4, type: 3}
       propertyPath: autoRandomSeed
@@ -652,7 +652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198497312146361894, guid: 2e0d5536e42d3aa48b6e363997b6b9e4, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.1
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 198497312146361894, guid: 2e0d5536e42d3aa48b6e363997b6b9e4, type: 3}
       propertyPath: InitialModule.startSpeed.minScalar
