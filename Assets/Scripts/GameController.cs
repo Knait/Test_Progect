@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
     [HideInInspector] public bool win = false;
     [HideInInspector] public bool paused = false;
 
+    private int allCoins;
+
     void Awake()
     {
         instance = this;
@@ -79,10 +81,13 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        DisplayText();
+        //Debug
+        if (Input.GetKeyDown(KeyCode.R)) PlayerPrefs.SetInt("allCoins", 0);
+        //Debug
 
         if (death)
         {
+            UpdateAllCoins();
             endPanel.gameObject.SetActive(true);
             levelTxt = endPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = endPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
@@ -179,8 +184,17 @@ public class GameController : MonoBehaviour
 
     void DisplayText()
     {
-        if(levelTxt) levelTxt.text = "Level: " + gameLevel;
+        textPanel.GetComponentInChildren<Text>().text = PlayerPrefs.GetInt("allCoins").ToString();
+        if (levelTxt) levelTxt.text = "Level: " + gameLevel;
         if(scoreTxt) scoreTxt.text = score.ToString();
+    }
+
+    void UpdateAllCoins()
+    {
+        allCoins = PlayerPrefs.GetInt("allCoins");
+        PlayerPrefs.SetInt("allCoins", allCoins + score);
+        PlayerPrefs.Save();
+        score = 0;
     }
 
     //A funciton to reset the speed and position of the level and player
