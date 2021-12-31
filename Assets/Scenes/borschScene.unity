@@ -749,8 +749,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameLevel: 0
   score: 0
-  defaultLevelSpeed: 10
-  speedIncrease: 2
+  defaultLevelSpeed: 20
+  speedIncrease: 5
   textPanel: {fileID: 1683338238}
   startPanel: {fileID: 1945145575186995170}
   endPanel: {fileID: 1945145576067900610}
