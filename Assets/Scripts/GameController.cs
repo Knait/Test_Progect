@@ -174,6 +174,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void changeSpeed(float _speed)
+    {
+        defaultLevelSpeed += _speed;
+
+        for (int i = 0; i < inGameTubes.Count; i++)
+        {
+            inGameTubes[i].GetComponent<LevelController>().levelSpeed = defaultLevelSpeed;
+        }
+    }
+
     //Get the speed of current levels
     public float getSpeed()
     {
@@ -231,11 +241,6 @@ public class GameController : MonoBehaviour
         //Increase level and speed of the levele otherwise
         gameLevel++;
 
-        //Increase the speed every 2 levels
-        if (gameLevel % 2 == 0) setSpeed(speedIncrease += 5);
-
-        setSpeed(speedIncrease);
-
         PlayerController.Instance.ChangeStartingPosition(new Vector3(0, speedIncrease, 0));
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
@@ -243,5 +248,8 @@ public class GameController : MonoBehaviour
         //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
         TrubaGenerator.Instance.GenerateLevel(gameLevel);
+
+        //Increase the speed every 2 levels
+        if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
     }
 }
