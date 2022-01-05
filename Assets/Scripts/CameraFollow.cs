@@ -12,7 +12,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (target != null)
         {
-            transform.position = new Vector3(target.position.x, target.position.y + offset.y, target.position.z);
+            transform.position = new Vector3(target.position.x / 1.7f, target.position.y + offset.y, target.position.z / 1.7f);
         }
     }
 }

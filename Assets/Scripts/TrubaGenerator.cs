@@ -28,8 +28,6 @@ public class TrubaGenerator : MonoBehaviour
     //Level generator
     public void GenerateLevel(int _gameLevel)
     {
-        if (!startTruba) Debug.LogError("Can't find starting truba.");
-
         //If the array is empty, generate error message
         if (trubaList.Count > 0)
         {

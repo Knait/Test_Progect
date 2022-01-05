@@ -7,8 +7,13 @@ public class LevelController : MonoBehaviour
     public float levelSpeed;
     public bool moving = false;
 
+    public void Start()
+    {
+        levelSpeed = GameController.Instance.getSpeed();
+    }
     public void Update()
     {
+
         if(moving) transform.Translate(new Vector3(0, levelSpeed, 0) * Time.deltaTime);
     }
 }
