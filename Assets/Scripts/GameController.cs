@@ -241,7 +241,7 @@ public class GameController : MonoBehaviour
         //Increase level and speed of the levele otherwise
         gameLevel++;
 
-        PlayerController.Instance.ChangeStartingPosition(new Vector3(0, speedIncrease, 0));
+        PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
 

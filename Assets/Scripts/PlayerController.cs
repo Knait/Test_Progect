@@ -11,13 +11,14 @@ public class PlayerController : MonoBehaviour
 
     //Parameters
     public Joystick joystick;
-    [SerializeField] private float speed;
+    [SerializeField] private float dashSpeed;
     [SerializeField] private ParticleSystem dashEffect;
     [SerializeField] private ParticleSystem crashEffect;
 
     //Inside refs
     private ParticleSystem dashRef;
     private ParticleSystem crashRef;
+    private Animator playerAnimator;
 
     //Hidden
     private Vector3 startingPlayerPosition;
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 velocity;
 
     [HideInInspector] public bool dashing = false;
+    //To track if player is attached to the wall
+    private bool attached = true;
 
     //References
     private Rigidbody thisRB;
@@ -41,6 +44,8 @@ public class PlayerController : MonoBehaviour
         //References to instantiated effects
         crashRef.Pause();
         dashRef.Pause();
+
+        playerAnimator = GetComponent<Animator>();
     }
 
     void Start()
@@ -53,12 +58,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (dashing == true && !GameController.Instance.paused)
+        //Dashing trigger
+        if (dashing == true && !GameController.Instance.paused && attached)
         {
             Move();
             dashRef.transform.localPosition = -Dir();
             dashRef.Play();
             dashing = false;
+            attached = false;
         }
 
         velocity = GetComponent<Rigidbody>().velocity;
@@ -74,7 +81,7 @@ public class PlayerController : MonoBehaviour
         startingPlayerPosition = _position;
     }
 
-    public void ChangeStartingPosition(Vector3 _position)
+    public void IncreaseStartingPosition(Vector3 _position)
     {
         startingPlayerPosition += _position;
     }
@@ -85,7 +92,7 @@ public class PlayerController : MonoBehaviour
     {
         //Reset the velocity, so the speed will remain the same
         thisRB.velocity = new Vector3(0, 0, 0);
-        thisRB.AddForce(Dir() * speed, ForceMode.Impulse);
+        thisRB.AddForce(Dir() * dashSpeed, ForceMode.Impulse);
     }
 
     //Calculate direction
@@ -110,11 +117,14 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = collision.collider.ClosestPoint(transform.position) - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
         Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
-        crashRef.transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
 
-        crashRef.Play();
+        //crashRef.Play();
         //Push the player to the opposite direction
-        thisRB.AddForce(-1 * Dir() * 0.5f, ForceMode.Impulse);
+        //thisRB.AddForce(-1 * Dir() * 0.5f, ForceMode.Impulse);
+
+        //The player is attached to the wall
+        attached = true;
     }
 
     void OnTriggerEnter(Collider other)
