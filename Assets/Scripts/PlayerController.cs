@@ -78,12 +78,18 @@ public class PlayerController : MonoBehaviour
 
     public void SetStartingPosition(Vector3 _position)
     {
+        //Reset the velocity, so the speed will remain the same
+        thisRB.velocity = new Vector3(0, 0, 0);
         startingPlayerPosition = _position;
+        attached = true;
     }
 
     public void IncreaseStartingPosition(Vector3 _position)
     {
+        //Reset the velocity, so the speed will remain the same
+        thisRB.velocity = new Vector3(0, 0, 0);
         startingPlayerPosition += _position;
+        attached = true;
     }
 
     #region Movement
