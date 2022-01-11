@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
         if (dashing == true && !GameController.Instance.paused)
         {
             Move();
+            dashRef.transform.localPosition = -Dir();
             dashRef.Play();
             dashing = false;
         }
@@ -104,9 +105,16 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
+
+        Vector3 dir = collision.collider.ClosestPoint(transform.position) - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
+        crashRef.transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
         crashRef.Play();
         //Push the player to the opposite direction
-        thisRB.AddForce(-1 * Dir() * 0.2f, ForceMode.Impulse);
+        thisRB.AddForce(-1 * Dir() * 0.5f, ForceMode.Impulse);
     }
 
     void OnTriggerEnter(Collider other)

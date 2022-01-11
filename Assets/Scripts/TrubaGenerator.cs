@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class TrubaGenerator : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class TrubaGenerator : MonoBehaviour
     //Truba prefabs
     [SerializeField] private GameObject startTruba;
     [SerializeField] private GameObject finishLane;
+    [SerializeField] private GameObject bottom;
     [SerializeField] private List<GameObject> trubaList = new List<GameObject>();
 
     void Awake()
@@ -26,8 +28,6 @@ public class TrubaGenerator : MonoBehaviour
     //Level generator
     public void GenerateLevel(int _gameLevel)
     {
-        if (!startTruba) Debug.LogError("Can't find starting truba.");
-
         //If the array is empty, generate error message
         if (trubaList.Count > 0)
         {
@@ -88,6 +88,9 @@ public class TrubaGenerator : MonoBehaviour
                         GameController.Instance.inGameTubes.Add(lastTube);
                         previosObj = lastTube;
                     }
+
+                    pos = new Vector3(0, previosObj.transform.position.y - 45f, 0);
+                    var lastObj = Instantiate(bottom, pos, rot, previosObj.transform);
                 }
             }
 
@@ -110,6 +113,7 @@ public class TrubaGenerator : MonoBehaviour
         return tempObj;
     }
 
+    //Delete everytube in the list, then clear it
     public void ClearLevel(List<GameObject> _current)
     {
         for (int i = 0; i < _current.Count; i++)
@@ -128,12 +132,13 @@ public class TrubaGenerator : MonoBehaviour
 
         for(int i = 0; i < GameController.Instance.inGameTubes.Count; i++)
         {
+            //First tube
             if (i == 0)
             {
                 GameController.Instance.inGameTubes[i].transform.position = new Vector3(0, _pos.y, 0);
                 _prevObject = GameController.Instance.inGameTubes[i];
 
-            } else
+            } else //The rest
             {
                 GameController.Instance.inGameTubes[i].transform.position = new Vector3(0, _prevObject.transform.position.y - 90f, 0);
                 _prevObject = GameController.Instance.inGameTubes[i];

@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
     [HideInInspector] public bool win = false;
     [HideInInspector] public bool paused = false;
 
+    private int allCoins;
+
     void Awake()
     {
         instance = this;
@@ -79,10 +81,13 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        DisplayText();
+        //Debug
+        if (Input.GetKeyDown(KeyCode.R)) PlayerPrefs.SetInt("allCoins", 0);
+        //Debug
 
         if (death)
         {
+            UpdateAllCoins();
             endPanel.gameObject.SetActive(true);
             levelTxt = endPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = endPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
@@ -169,6 +174,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void changeSpeed(float _speed)
+    {
+        defaultLevelSpeed += _speed;
+
+        for (int i = 0; i < inGameTubes.Count; i++)
+        {
+            inGameTubes[i].GetComponent<LevelController>().levelSpeed = defaultLevelSpeed;
+        }
+    }
+
     //Get the speed of current levels
     public float getSpeed()
     {
@@ -179,8 +194,17 @@ public class GameController : MonoBehaviour
 
     void DisplayText()
     {
-        if(levelTxt) levelTxt.text = "Level: " + gameLevel;
+        textPanel.GetComponentInChildren<Text>().text = PlayerPrefs.GetInt("allCoins").ToString();
+        if (levelTxt) levelTxt.text = "Level: " + gameLevel;
         if(scoreTxt) scoreTxt.text = score.ToString();
+    }
+
+    void UpdateAllCoins()
+    {
+        allCoins = PlayerPrefs.GetInt("allCoins");
+        PlayerPrefs.SetInt("allCoins", allCoins + score);
+        PlayerPrefs.Save();
+        score = 0;
     }
 
     //A funciton to reset the speed and position of the level and player
@@ -217,11 +241,6 @@ public class GameController : MonoBehaviour
         //Increase level and speed of the levele otherwise
         gameLevel++;
 
-        //Increase the speed every 2 levels
-        if (gameLevel % 2 == 0) setSpeed(speedIncrease += 5);
-
-        setSpeed(speedIncrease);
-
         PlayerController.Instance.ChangeStartingPosition(new Vector3(0, speedIncrease, 0));
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
@@ -229,5 +248,8 @@ public class GameController : MonoBehaviour
         //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
         TrubaGenerator.Instance.GenerateLevel(gameLevel);
+
+        //Increase the speed every 2 levels
+        if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
     }
 }
