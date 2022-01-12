@@ -72,6 +72,9 @@ public class PlayerController : MonoBehaviour
             //Then add the required constrains
             thisRB.constraints = RigidbodyConstraints.FreezeRotation;
             thisRB.constraints = RigidbodyConstraints.FreezePositionY;
+
+            //Quaternion lookRotation = Quaternion.LookRotation(Dir());
+            gameObject.transform.LookAt(Dir());
         }
 
         velocity = GetComponent<Rigidbody>().velocity;
