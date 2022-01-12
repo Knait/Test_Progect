@@ -66,7 +66,10 @@ public class PlayerController : MonoBehaviour
             dashRef.Play();
             dashing = false;
             attached = false;
+
+            //Unfreeze everything when jumping of the wall
             thisRB.constraints = RigidbodyConstraints.None;
+            //Then add the required constrains
             thisRB.constraints = RigidbodyConstraints.FreezeRotation;
             thisRB.constraints = RigidbodyConstraints.FreezePositionY;
         }
@@ -134,6 +137,7 @@ public class PlayerController : MonoBehaviour
 
         //The player is attached to the wall
         attached = true;
+        //Freeze the player translations as a whole (to avoid wall surfing)
         thisRB.constraints = RigidbodyConstraints.FreezeAll;
     }
 
