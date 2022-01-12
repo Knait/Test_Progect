@@ -62,10 +62,13 @@ public class PlayerController : MonoBehaviour
         if (dashing == true && !GameController.Instance.paused && attached)
         {
             Move();
-            dashRef.transform.localPosition = -Dir();
+            dashRef.transform.localPosition = -Dir() + new Vector3(0.2f, 0, 0.2f); //Added a temporary offset
             dashRef.Play();
             dashing = false;
             attached = false;
+            thisRB.constraints = RigidbodyConstraints.None;
+            thisRB.constraints = RigidbodyConstraints.FreezeRotation;
+            thisRB.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         velocity = GetComponent<Rigidbody>().velocity;
@@ -131,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
         //The player is attached to the wall
         attached = true;
+        thisRB.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     void OnTriggerEnter(Collider other)
