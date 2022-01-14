@@ -18,7 +18,7 @@ public class FadeOutTest : MonoBehaviour
     {
         if(transform.position.y > 0 && !faded)
         {
-            Debug.Log("Just Pased Player!");
+            Debug.Log("Just Passed Player!");
             StartCoroutine(startFading());
             faded = true;
         }

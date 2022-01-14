@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //Debug
-        Debug.Log("Collision" + collision.transform.position);
+        //Debug.Log("Collision" + collision.transform.position);
         //
 
         //If the player collided with the same collider
