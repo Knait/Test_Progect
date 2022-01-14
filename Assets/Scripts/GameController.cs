@@ -77,6 +77,7 @@ public class GameController : MonoBehaviour
         currentCoins = maxCoins;
 
         //Starting pause
+        DisplayText();
         Pause();
     }
     void Update()
@@ -156,6 +157,20 @@ public class GameController : MonoBehaviour
     {
         winPanel.gameObject.SetActive(false);
         win = false;
+        //Increase level and speed of the level otherwise
+        gameLevel++;
+
+        PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
+        //Resetting the position of the player
+        PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
+        PlayerController.Instance.ResetPlayerAnimation();
+
+        //Clearing the level and generating a new one
+        TrubaGenerator.Instance.ClearLevel(inGameTubes);
+        TrubaGenerator.Instance.GenerateLevel(gameLevel);
+
+        //Increase the speed every 2 levels
+        if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
         Resume();
     }
     #endregion
@@ -212,7 +227,7 @@ public class GameController : MonoBehaviour
         {
             inGameTubes[i].GetComponent<LevelController>().moving = false;
         }
-        Debug.Log("Game Paused");
+
         //Pausing
         paused = true;
         //Resetting the velocity of player
@@ -236,20 +251,5 @@ public class GameController : MonoBehaviour
     {
         //UI display
         win = true;
-
-        //Increase level and speed of the levele otherwise
-        gameLevel++;
-
-        PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
-        //Resetting the position of the player
-        PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
-        PlayerController.Instance.ResetPlayerAnimation();
-
-        //Clearing the level and generating a new one
-        TrubaGenerator.Instance.ClearLevel(inGameTubes);
-        TrubaGenerator.Instance.GenerateLevel(gameLevel);
-
-        //Increase the speed every 2 levels
-        if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
     }
 }
