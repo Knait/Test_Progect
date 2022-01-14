@@ -22,23 +22,24 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     }
 
     public void OnDrag(PointerEventData eventData)
-    {
-        Vector2 pos;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(img_Joystick.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
+    { 
+        if (!GameController.Instance.paused && !PlayerController.Instance.flying)
         {
+            Vector2 pos;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(img_Joystick.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
+            {
+                dragging = true;
 
-            dragging = true;
+                // Stick restrictions
+                /*pos.x = (pos.x /img_Joystick.rectTransform.sizeDelta.x);
+                pos.y = (pos.y / img_Joystick.rectTransform.sizeDelta.y);*/
 
-            // Stick restrictions
-            pos.x = (pos.x /img_Joystick.rectTransform.sizeDelta.x);
-            pos.y = (pos.y / img_Joystick.rectTransform.sizeDelta.y);
-
-            // To make the pos go above 0
-            inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
-            inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
-
-            // Moving joystick img
-            img_Stick.rectTransform.anchoredPosition = new Vector3(inputVector.x * (img_Joystick.rectTransform.sizeDelta.x / 2), inputVector.z * (img_Joystick.rectTransform.sizeDelta.y / 2));
+                // To make the pos go above 0
+                inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
+                inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
+                // Moving joystick img
+                //img_Stick.rectTransform.anchoredPosition = new Vector3(inputVector.x * (img_Joystick.rectTransform.sizeDelta.x / 2), inputVector.z * (img_Joystick.rectTransform.sizeDelta.y / 2));
+            }
         }
     }
 

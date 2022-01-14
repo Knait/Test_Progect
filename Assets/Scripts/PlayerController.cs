@@ -28,11 +28,10 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool dashing = false;
     //To track if player is attached to the wall
-    private bool attached = true;
-
+    public bool flying = false;
     //References
     private Rigidbody thisRB;
-
+    Collision prevCol;
     void Awake()
     {
         instance = this;
@@ -41,11 +40,15 @@ public class PlayerController : MonoBehaviour
         crashRef = Instantiate(crashEffect, gameObject.transform);
         dashRef = Instantiate(dashEffect, gameObject.transform);
 
+        //Dash effect position and rotation
+        dashRef.transform.position -= new Vector3(0, 0, 0.1f);
+        dashRef.transform.localRotation = new Quaternion(0, -180, 0, 0);
+
         //References to instantiated effects
         crashRef.Pause();
         dashRef.Pause();
 
-        playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponentInChildren<Animator>();
     }
 
     void Start()
@@ -59,22 +62,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Dashing trigger
-        if (dashing == true && !GameController.Instance.paused && attached)
+        if (dashing  && !flying)
         {
+            thisRB.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Move();
-            dashRef.transform.localPosition = -Dir() + new Vector3(0.2f, 0, 0.2f); //Added a temporary offset
+            Quaternion lookRotation = Quaternion.LookRotation(Dir());
+            //Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
+            transform.rotation = lookRotation;
+            //Dash Effect play
             dashRef.Play();
+            //Animation
+            playerAnimator.SetBool("dashing", true);
+            //Flags
             dashing = false;
-            attached = false;
-
-            //Unfreeze everything when jumping of the wall
-            thisRB.constraints = RigidbodyConstraints.None;
-            //Then add the required constrains
-            thisRB.constraints = RigidbodyConstraints.FreezeRotation;
-            thisRB.constraints = RigidbodyConstraints.FreezePositionY;
-
-            //Quaternion lookRotation = Quaternion.LookRotation(Dir());
-            gameObject.transform.LookAt(Dir());
+            flying = true;
         }
 
         velocity = GetComponent<Rigidbody>().velocity;
@@ -90,7 +91,6 @@ public class PlayerController : MonoBehaviour
         //Reset the velocity, so the speed will remain the same
         thisRB.velocity = new Vector3(0, 0, 0);
         startingPlayerPosition = _position;
-        attached = true;
     }
 
     public void IncreaseStartingPosition(Vector3 _position)
@@ -98,7 +98,6 @@ public class PlayerController : MonoBehaviour
         //Reset the velocity, so the speed will remain the same
         thisRB.velocity = new Vector3(0, 0, 0);
         startingPlayerPosition += _position;
-        attached = true;
     }
 
     #region Movement
@@ -108,6 +107,7 @@ public class PlayerController : MonoBehaviour
         //Reset the velocity, so the speed will remain the same
         thisRB.velocity = new Vector3(0, 0, 0);
         thisRB.AddForce(Dir() * dashSpeed, ForceMode.Impulse);
+        //Debug.Log("Direction " + Dir());
     }
 
     //Calculate direction
@@ -118,8 +118,9 @@ public class PlayerController : MonoBehaviour
         dir.x = joystick.Horizontal();
         dir.z = joystick.Vertical();
 
+        //DEBUG!!
+        //Debug.Log(dir);
         if (dir.magnitude > 1) dir.Normalize();
-
         return dir;
     }
     #endregion
@@ -127,21 +128,55 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
-        crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
+        //Debug
+        Debug.Log("Collision" + collision.transform.position);
+        //
 
-        Vector3 dir = collision.collider.ClosestPoint(transform.position) - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        //If the player collided with the same collider
+        if(prevCol == collision)
+        {
+            //Debug.Log("SameCollision " + prevCol.transform.position);
+            flying = false;
+            //Reset the velocity
+            thisRB.velocity = Vector3.zero;
+            //Stop rotating
+            thisRB.angularVelocity = Vector3.zero;
+            //Flying flag
+            flying = false;
+            //Play dashing animation
+            playerAnimator.SetBool("dashing", false);
+            //Stopping dash effect
+            dashRef.Stop();
+        }
 
-        //crashRef.Play();
+        //To track the previous collision
+        prevCol = collision;
+
         //Push the player to the opposite direction
-        //thisRB.AddForce(-1 * Dir() * 0.5f, ForceMode.Impulse);
+        StartCoroutine(PushPlayer());
 
-        //The player is attached to the wall
-        attached = true;
-        //Freeze the player translations as a whole (to avoid wall surfing)
-        thisRB.constraints = RigidbodyConstraints.FreezeAll;
+        //crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
+
+        //Making sure the player looks at the collided object
+        Vector3 dir = collision.collider.ClosestPoint(transform.position) - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(dir.normalized);
+        //Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
+        transform.rotation = lookRotation;
+
+        //Reset the velocity
+        thisRB.velocity = Vector3.zero;
+        //Stop rotating
+        thisRB.angularVelocity = Vector3.zero;
+
+        //LEAVE IT FOR EFFECTS
+        //crashRef.Play();
+
+        //Flying flag
+        flying = false;
+        //Play dashing animation
+        playerAnimator.SetBool("dashing", false);
+        //Stopping dash effect
+        dashRef.Stop();
     }
 
     void OnTriggerEnter(Collider other)
@@ -161,4 +196,19 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+
+    //A coroutine to slightly push the player in the opposite direction
+    IEnumerator PushPlayer()
+    {
+        thisRB.AddForce(-Dir() * 0.2f, ForceMode.Impulse);
+
+        yield return null;
+    }
+
+    //Reset player animation back to "Idle"
+    public void ResetPlayerAnimation()
+    {
+        playerAnimator.SetBool("dashing", false);
+        flying = false;
+    }
 }

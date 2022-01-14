@@ -83,6 +83,7 @@ public class GameController : MonoBehaviour
     {
         //Debug
         if (Input.GetKeyDown(KeyCode.R)) PlayerPrefs.SetInt("allCoins", 0);
+        if (Input.GetKeyDown(KeyCode.Space)) Pause();
         //Debug
 
         if (death)
@@ -136,7 +137,6 @@ public class GameController : MonoBehaviour
     {
         setSpeed(defaultLevelSpeed);
         startPanel.gameObject.SetActive(false);
-        paused = false;
         Resume();
     }
 
@@ -149,7 +149,6 @@ public class GameController : MonoBehaviour
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
         //Reset the level
         TrubaGenerator.Instance.ResetLevel();
-        paused = false;
         Resume();
     }
 
@@ -157,7 +156,6 @@ public class GameController : MonoBehaviour
     {
         winPanel.gameObject.SetActive(false);
         win = false;
-        paused = false;
         Resume();
     }
     #endregion
@@ -214,7 +212,7 @@ public class GameController : MonoBehaviour
         {
             inGameTubes[i].GetComponent<LevelController>().moving = false;
         }
-
+        Debug.Log("Game Paused");
         //Pausing
         paused = true;
         //Resetting the velocity of player
@@ -225,6 +223,7 @@ public class GameController : MonoBehaviour
 
     void Resume()
     {
+        paused = false;
         //Time.timeScale = 1;
         for (int i = 0; i < inGameTubes.Count; i++)
         {
@@ -244,6 +243,7 @@ public class GameController : MonoBehaviour
         PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
+        PlayerController.Instance.ResetPlayerAnimation();
 
         //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
