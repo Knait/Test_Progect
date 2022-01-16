@@ -13,11 +13,12 @@ public class GameController : MonoBehaviour
     [Header("Globals")]
     [SerializeField] private int gameLevel;
     public int score;
+    public float fadeSpeed;
 
+    [Header("Speed")]
     [SerializeField] private float defaultLevelSpeed;
     [SerializeField] private float speedIncrease;
 
-    //UI
     [Header("UI")]
     [SerializeField] private RectTransform textPanel;
     [SerializeField] private RectTransform startPanel;
