@@ -2845,6 +2845,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pipe_middle_2holes
       objectReference: {fileID: 0}
+    - target: {fileID: 8370160422073580337, guid: fbd6362c7206f2142b2fc9cc906ebbea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9179207000155414923, guid: fbd6362c7206f2142b2fc9cc906ebbea, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2980,6 +2984,10 @@ PrefabInstance:
     - target: {fileID: 329111000181790892, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
       propertyPath: m_Name
       value: Pipe_half (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 329111000181790892, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1142485054508892694, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
       propertyPath: m_RootOrder
@@ -3169,6 +3177,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pipe_corner1
       objectReference: {fileID: 0}
+    - target: {fileID: 5241375549621098189, guid: 00d40b3d53663e847bf70b1cd841c1a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d40b3d53663e847bf70b1cd841c1a9, type: 3}
 --- !u!4 &1438107061315492189 stripped
@@ -3239,6 +3251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crystal4
       objectReference: {fileID: 0}
+    - target: {fileID: 7764070820361680711, guid: 033343f5ee92141458bb7987adf32e33, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 033343f5ee92141458bb7987adf32e33, type: 3}
 --- !u!4 &4122704370901051331 stripped
@@ -3256,6 +3272,10 @@ PrefabInstance:
     - target: {fileID: 329111000181790892, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
       propertyPath: m_Name
       value: Pipe_half
+      objectReference: {fileID: 0}
+    - target: {fileID: 329111000181790892, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1142485054508892694, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
       propertyPath: m_RootOrder

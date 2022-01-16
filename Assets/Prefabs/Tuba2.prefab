@@ -2887,6 +2887,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pipe_corner1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5241375549621098189, guid: 00d40b3d53663e847bf70b1cd841c1a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d40b3d53663e847bf70b1cd841c1a9, type: 3}
 --- !u!4 &7589693183926139239 stripped
@@ -2908,6 +2912,10 @@ PrefabInstance:
     - target: {fileID: 8370160422073580337, guid: fbd6362c7206f2142b2fc9cc906ebbea, type: 3}
       propertyPath: m_Name
       value: Pipe_middle_2holes
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370160422073580337, guid: fbd6362c7206f2142b2fc9cc906ebbea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9179207000155414923, guid: fbd6362c7206f2142b2fc9cc906ebbea, type: 3}
       propertyPath: m_RootOrder
@@ -3019,6 +3027,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pipe_corner1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5241375549621098189, guid: 00d40b3d53663e847bf70b1cd841c1a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d40b3d53663e847bf70b1cd841c1a9, type: 3}
 --- !u!4 &710417561207419805 stripped
@@ -3036,6 +3048,10 @@ PrefabInstance:
     - target: {fileID: 329111000181790892, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
       propertyPath: m_Name
       value: Pipe_half (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 329111000181790892, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1142485054508892694, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
       propertyPath: m_RootOrder
