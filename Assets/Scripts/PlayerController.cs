@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //Could use the singleton
+    #region Singleton
     //Need to rewrite joystick then
     private static PlayerController instance;
     public static PlayerController Instance => instance;
+    #endregion
 
-    //Parameters
+    //Refs
     public Joystick joystick;
     [SerializeField] private float dashSpeed;
     [SerializeField] private ParticleSystem dashEffect;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem dashRef;
     private ParticleSystem crashRef;
     private Animator playerAnimator;
+    private Rigidbody thisRB;
 
     //Hidden
     private Vector3 startingPlayerPosition;
@@ -29,8 +31,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool dashing = false;
     //To track if player is attached to the wall
     public bool flying = false;
-    //References
-    private Rigidbody thisRB;
     Collision prevCol;
     void Awake()
     {
@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
             dashRef.Play();
             //Animation
             playerAnimator.SetBool("dashing", true);
+            playerAnimator.SetBool("attached", false);
             //Flags
             dashing = false;
             flying = true;
@@ -175,6 +176,7 @@ public class PlayerController : MonoBehaviour
         flying = false;
         //Play dashing animation
         playerAnimator.SetBool("dashing", false);
+        playerAnimator.SetBool("attached", true);
         //Stopping dash effect
         dashRef.Stop();
     }
@@ -206,8 +208,9 @@ public class PlayerController : MonoBehaviour
     }
 
     //Reset player animation back to "Idle"
-    public void ResetPlayerAnimation()
+    public void ResetPlayer()
     {
+        transform.rotation = new Quaternion(0, 0, 0, 0);
         playerAnimator.SetBool("dashing", false);
         flying = false;
     }
