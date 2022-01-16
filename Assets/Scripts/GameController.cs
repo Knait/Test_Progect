@@ -6,7 +6,6 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    //Singleton //TODO: TRY CATCH ANOTHER SIGLETON
     private static GameController instance;
     public static GameController Instance => instance;
 
@@ -146,8 +145,9 @@ public class GameController : MonoBehaviour
         endPanel.gameObject.SetActive(false);
         death = false;
 
-        //Reset position of the player
+        //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
+        PlayerController.Instance.ResetPlayer();
         //Reset the level
         TrubaGenerator.Instance.ResetLevel();
         Resume();
@@ -163,7 +163,7 @@ public class GameController : MonoBehaviour
         PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
-        PlayerController.Instance.ResetPlayerAnimation();
+        PlayerController.Instance.ResetPlayer();
 
         //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
@@ -239,7 +239,7 @@ public class GameController : MonoBehaviour
     void Resume()
     {
         paused = false;
-        //Time.timeScale = 1;
+
         for (int i = 0; i < inGameTubes.Count; i++)
         {
             inGameTubes[i].GetComponent<LevelController>().moving = true;

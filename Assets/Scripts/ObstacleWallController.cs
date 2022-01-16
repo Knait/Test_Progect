@@ -18,9 +18,19 @@ public class ObstacleWallController : MonoBehaviour
     {
         if (transform.position.y > 0 && !faded)
         {
-            Debug.Log("Just Passed Player!");
             StartCoroutine(startFading());
             faded = true;
+        }
+
+        if(faded && GameController.Instance.paused)
+        {
+            for (int i = 0; i < thisMats.Length; i++)
+            {
+                Color temp = thisMats[i].color;
+                temp.a = 100;
+
+                thisMats[i].color = temp;
+            }
         }
     }
 
