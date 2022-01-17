@@ -218,5 +218,10 @@ public class PlayerController : MonoBehaviour
         transform.rotation = new Quaternion(0, 0, 0, 0);
         playerAnimator.SetBool("dashing", false);
         flying = false;
+
+        //Reset the velocity
+        thisRB.velocity = Vector3.zero;
+        //Stop rotating
+        thisRB.angularVelocity = Vector3.zero;
     }
 }
