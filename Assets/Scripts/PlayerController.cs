@@ -204,6 +204,11 @@ public class PlayerController : MonoBehaviour
     {
         thisRB.AddForce(-Dir() * 0.2f, ForceMode.Impulse);
 
+        //Reset the velocity
+        thisRB.velocity = Vector3.zero;
+        //Stop rotating
+        thisRB.angularVelocity = Vector3.zero;
+
         yield return null;
     }
 

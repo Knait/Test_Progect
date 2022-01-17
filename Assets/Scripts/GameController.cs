@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
         gameLevel = 1;
 
         //Start panel setup
-        startPanel.gameObject.SetActive(true);
+        startPanel.gameObject.SetActive(false);
         startPanel.GetComponentInChildren<Button>().onClick.AddListener(StartButton);
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
 
@@ -91,9 +91,11 @@ public class GameController : MonoBehaviour
         {
             UpdateAllCoins();
             endPanel.gameObject.SetActive(true);
+            startPanel.gameObject.SetActive(true);
             levelTxt = endPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = endPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
             DisplayText();
+            PlayerController.Instance.ResetPlayer();
             Pause();
             death = false;
         }
@@ -125,6 +127,7 @@ public class GameController : MonoBehaviour
 
             //if(currentCoins)
             winPanel.gameObject.SetActive(true);
+            startPanel.gameObject.SetActive(true);
             levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
             DisplayText();
