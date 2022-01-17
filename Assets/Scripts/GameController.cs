@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int gameLevel;
     public int score;
     public float fadeSpeed;
+    [SerializeField] private int levelGold;
 
     [Header("Speed")]
     [SerializeField] private float defaultLevelSpeed;
@@ -142,12 +143,14 @@ public class GameController : MonoBehaviour
     {
         setSpeed(defaultLevelSpeed);
         startPanel.gameObject.SetActive(false);
+        textPanel.gameObject.SetActive(false);
         Resume();
     }
 
     void EndButton()
     {
         endPanel.gameObject.SetActive(false);
+        textPanel.gameObject.SetActive(false);
         death = false;
 
         //Resetting the position of the player
@@ -161,11 +164,13 @@ public class GameController : MonoBehaviour
     void WinButton()
     {
         winPanel.gameObject.SetActive(false);
+        textPanel.gameObject.SetActive(false);
         win = false;
         //Increase level and speed of the level otherwise
         gameLevel++;
 
         PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
+
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
         PlayerController.Instance.ResetPlayer();
@@ -256,5 +261,6 @@ public class GameController : MonoBehaviour
     {
         //UI display
         win = true;
+        score += levelGold;
     }
 }
