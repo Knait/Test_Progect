@@ -12,9 +12,14 @@ public class GameController : MonoBehaviour
     //Parameters
     [Header("Globals")]
     [SerializeField] private int gameLevel;
-    public int score;
-    public float fadeSpeed;
+    public int localScore;
+    [SerializeField] private int goldPerCrystal;
     [SerializeField] private int levelGold;
+
+    [Header("UI Parameters")]
+    public float fadeSpeed;
+    [SerializeField] private float secondsBeforeTransfer;
+    [SerializeField] private float secondsAfterTransfer;
 
     [Header("Speed")]
     [SerializeField] private float defaultLevelSpeed;
@@ -63,6 +68,7 @@ public class GameController : MonoBehaviour
         startPanel.GetComponentInChildren<Button>().onClick.AddListener(StartButton);
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
         textPanel.gameObject.SetActive(false);
+        PlayerController.Instance.ResetPlayer();
 
         //Death panel setup
         endPanel.gameObject.SetActive(false);
@@ -77,28 +83,44 @@ public class GameController : MonoBehaviour
 
         maxCoins = FindObjectsOfType<Coin>().Length;
         currentCoins = maxCoins;
-
+        allCoins = PlayerPrefs.GetInt("allCoins");
         //Starting pause
-        DisplayText();
+        RefreshText();
         Pause();
     }
     void Update()
     {
         //Debug
-        if (Input.GetKeyDown(KeyCode.R)) PlayerPrefs.SetInt("allCoins", 0);
-        if (Input.GetKeyDown(KeyCode.Space)) Pause();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            //Also need to reset local variable
+            PlayerPrefs.SetInt("allCoins", 0);
+            allCoins = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(paused)
+            {
+                Resume();
+            }else
+            {
+                Pause();
+            }
+        }
         //Debug
 
         if (death)
         {
-            UpdateAllCoins();
+            //UpdateAllCoins();
             endPanel.gameObject.SetActive(true);
             textPanel.gameObject.SetActive(true);
             levelTxt = endPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = endPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
-            DisplayText();
             PlayerController.Instance.ResetPlayer();
             Pause();
+            RefreshText();
+
+            StartCoroutine(TransferGold());
             death = false;
         }
 
@@ -132,8 +154,9 @@ public class GameController : MonoBehaviour
             textPanel.gameObject.SetActive(true);
             levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
-            DisplayText();
+            RefreshText();
             Pause();
+            StartCoroutine(TransferGold());
             win = false;
         }
     }
@@ -215,19 +238,19 @@ public class GameController : MonoBehaviour
     #endregion
     
 
-    void DisplayText()
+    void RefreshText()
     {
         textPanel.GetComponentInChildren<Text>().text = PlayerPrefs.GetInt("allCoins").ToString();
         if (levelTxt) levelTxt.text = "Level: " + gameLevel;
-        if(scoreTxt) scoreTxt.text = score.ToString();
+        if(scoreTxt) scoreTxt.text = localScore.ToString();
     }
 
     void UpdateAllCoins()
     {
         allCoins = PlayerPrefs.GetInt("allCoins");
-        PlayerPrefs.SetInt("allCoins", allCoins + score);
+        PlayerPrefs.SetInt("allCoins", allCoins + localScore);
         PlayerPrefs.Save();
-        score = 0;
+        localScore = 0;
     }
 
     //A funciton to reset the speed and position of the level and player
@@ -240,10 +263,6 @@ public class GameController : MonoBehaviour
 
         //Pausing
         paused = true;
-        //Resetting the velocity of player
-        PlayerController.Instance.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-        //DO NOT ALLOW DASHING (block controls)
-        PlayerController.Instance.dashing = false;
     }
 
     void Resume()
@@ -261,6 +280,27 @@ public class GameController : MonoBehaviour
     {
         //UI display
         win = true;
-        score += levelGold;
+        localScore += levelGold;
+    }
+
+    IEnumerator TransferGold()
+    {
+        yield return new WaitForSeconds(secondsBeforeTransfer);
+
+        for (int i = 0; i <= localScore; i = 1 )
+        {
+            localScore -= i;
+
+            PlayerPrefs.SetInt("allCoins", allCoins++);
+            PlayerPrefs.Save();
+            RefreshText();
+
+            yield return new WaitForSeconds(secondsAfterTransfer);
+        }
+    }
+
+    public void CollectGold()
+    {
+        localScore += goldPerCrystal;
     }
 }

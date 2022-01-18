@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Dashing trigger
-        if (dashing  && !flying)
+        if (dashing && !flying)
         {
             thisRB.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Move();
@@ -142,9 +142,7 @@ public class PlayerController : MonoBehaviour
             thisRB.velocity = Vector3.zero;
             //Stop rotating
             thisRB.angularVelocity = Vector3.zero;
-            //Flying flag
-            flying = false;
-            //Play dashing animation
+            //Don't play dashing animation
             playerAnimator.SetBool("dashing", false);
             //Stopping dash effect
             dashRef.Stop();
@@ -186,7 +184,7 @@ public class PlayerController : MonoBehaviour
         //If collided with coin
         if (other.gameObject.GetComponentInParent<Coin>())
         {
-            GameController.Instance.score++;
+            GameController.Instance.CollectGold();
             GameController.Instance.currentCoins--;
             other.gameObject.SetActive(false);
         }
@@ -204,11 +202,6 @@ public class PlayerController : MonoBehaviour
     {
         thisRB.AddForce(-Dir() * 0.2f, ForceMode.Impulse);
 
-        //Reset the velocity
-        thisRB.velocity = Vector3.zero;
-        //Stop rotating
-        thisRB.angularVelocity = Vector3.zero;
-
         yield return null;
     }
 
@@ -216,6 +209,7 @@ public class PlayerController : MonoBehaviour
     public void ResetPlayer()
     {
         transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.position = new Vector3(0, 0, 7);
         playerAnimator.SetBool("dashing", false);
         flying = false;
 
@@ -223,5 +217,6 @@ public class PlayerController : MonoBehaviour
         thisRB.velocity = Vector3.zero;
         //Stop rotating
         thisRB.angularVelocity = Vector3.zero;
+        
     }
 }
