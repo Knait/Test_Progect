@@ -924,6 +924,7 @@ MonoBehaviour:
   gameLevel: 0
   score: 0
   fadeSpeed: 0
+  levelGold: 0
   defaultLevelSpeed: 30
   speedIncrease: 5
   textPanel: {fileID: 1540573737}
@@ -5152,7 +5153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8707273952902676164}
   m_LocalRotation: {x: -0.7071068, y: -0.00000000190978, z: 0.0000000020414879, w: 0.7071067}
-  m_LocalPosition: {x: 0.000000040829182, y: -0.0000000059604637, z: -9.313236e-10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543450653283604799}
