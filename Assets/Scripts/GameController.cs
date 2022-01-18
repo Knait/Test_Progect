@@ -116,7 +116,7 @@ public class GameController : MonoBehaviour
             textPanel.gameObject.SetActive(true);
             levelTxt = endPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = endPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
-            PlayerController.Instance.ResetPlayer();
+            //PlayerController.Instance.ResetPlayer();
             Pause();
             RefreshText();
 
