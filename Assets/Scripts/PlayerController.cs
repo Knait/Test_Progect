@@ -129,12 +129,22 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.GetComponent<ObstacleWallController>())
+        {
+            Debug.Log("dead");
+
+            playerAnimator.SetBool("death", true);
+            playerAnimator.SetBool("dashing", false);
+            playerAnimator.SetBool("attached", false);
+
+            return;
+        }
         //Debug
         //Debug.Log("Collision" + collision.transform.position);
         //
 
         //If the player collided with the same collider
-        if(prevCol == collision)
+        if (prevCol == collision)
         {
             //Debug.Log("SameCollision " + prevCol.transform.position);
             flying = false;
@@ -172,7 +182,7 @@ public class PlayerController : MonoBehaviour
 
         //Flying flag
         flying = false;
-        //Play dashing animation
+        //Don't Play dashing animation
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("attached", true);
         //Stopping dash effect
@@ -211,6 +221,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = new Vector3(0, 0, 7);
         playerAnimator.SetBool("dashing", false);
+        playerAnimator.SetBool("death", false);
         flying = false;
 
         //Reset the velocity
