@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
         //Push the player to the opposite direction
         StartCoroutine(PushPlayer());
 
-        //crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
+        crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
 
         //Making sure the player looks at the collided object
         //ONLY ROTATE ON Y AXIS
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         StopPlayer();
 
         //LEAVE IT FOR EFFECTS
-        //crashRef.Play();
+        crashRef.Play();
 
         //Flying flag
         flying = false;
