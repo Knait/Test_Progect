@@ -125,12 +125,6 @@ public class GameController : MonoBehaviour
             Pause();
             RefreshText();
 
-            //Cycle through all the coins and enable them
-            for(int i = 0; i < maxCoins; i++)
-            {
-                inGameCrystals[i].gameObject.SetActive(true);
-            }
-
             if(localScore > 0) StartCoroutine(TransferGold());
             death = false;
         }
@@ -192,6 +186,12 @@ public class GameController : MonoBehaviour
         PlayerController.Instance.ResetPlayer();
         //Reset the level
         TrubaGenerator.Instance.ResetLevel();
+
+        //Cycle through all the coins and enable them
+        for (int i = 0; i < maxCoins; i++)
+        {
+            inGameCrystals[i].gameObject.SetActive(true);
+        }
 
         Resume();
     }
@@ -299,14 +299,16 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(secondsBeforeTransfer);
 
-        for (int i = 0; i <= localScore; i = 1 )
+        for (int i = 0; i < localScore;)
         {
-            localScore -= i;
-
-            PlayerPrefs.SetInt("allCoins", allCoins++);
+            allCoins++;
+            localScore--;
+            PlayerPrefs.SetInt("allCoins", allCoins);
             PlayerPrefs.Save();
             RefreshText();
 
+            Debug.Log("L " + localScore);
+            Debug.Log("A " + allCoins);
             yield return new WaitForSeconds(secondsAfterTransfer);
         }
     }
