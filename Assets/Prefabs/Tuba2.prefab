@@ -904,6 +904,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7334901632535712270, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e18a630a54c92934184bf34c40e3f73f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afdf189dbf37387469581a973a44d6d4, type: 3}
 --- !u!4 &91282403820190285 stripped
@@ -962,6 +966,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8446940989052458608, guid: 1ba291e2dbf0a3544a387c4ca029d9ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a559ce79ed29548419b0960854039944, type: 2}
     - target: {fileID: 9084021559886493982, guid: 1ba291e2dbf0a3544a387c4ca029d9ec, type: 3}
       propertyPath: m_Name
       value: Pipe_middle_2holes 1
