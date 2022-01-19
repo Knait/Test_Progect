@@ -116,11 +116,11 @@ public class GameController : MonoBehaviour
             textPanel.gameObject.SetActive(true);
             levelTxt = endPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = endPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
-            //PlayerController.Instance.ResetPlayer();
+            PlayerController.Instance.StopPlayer();
             Pause();
             RefreshText();
 
-            StartCoroutine(TransferGold());
+            if(localScore > 0) StartCoroutine(TransferGold());
             death = false;
         }
 
@@ -156,7 +156,7 @@ public class GameController : MonoBehaviour
             scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
             RefreshText();
             Pause();
-            StartCoroutine(TransferGold());
+            if (localScore > 0) StartCoroutine(TransferGold());
             win = false;
         }
     }

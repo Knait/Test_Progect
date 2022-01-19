@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     //To track if player is attached to the wall
     public bool flying = false;
     Collision prevCol;
+    Vector3 pos;
+    Quaternion rot;
     void Awake()
     {
         instance = this;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
         dashRef.Pause();
 
         playerAnimator = GetComponentInChildren<Animator>();
+        pos = transform.position;
     }
 
     void Start()
@@ -61,6 +64,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        pos = transform.position;
+        pos.y = Mathf.Clamp(0, 0, 0);
+
+        velocity = GetComponent<Rigidbody>().velocity;
         //Dashing trigger
         if (dashing && !flying)
         {
@@ -79,7 +86,7 @@ public class PlayerController : MonoBehaviour
             flying = true;
         }
 
-        velocity = GetComponent<Rigidbody>().velocity;
+        transform.position = pos;
     }
 
     public Vector3 GetStartingPosition()
@@ -89,15 +96,13 @@ public class PlayerController : MonoBehaviour
 
     public void SetStartingPosition(Vector3 _position)
     {
-        //Reset the velocity, so the speed will remain the same
-        thisRB.velocity = new Vector3(0, 0, 0);
+        StopPlayer();
         startingPlayerPosition = _position;
     }
 
     public void IncreaseStartingPosition(Vector3 _position)
     {
-        //Reset the velocity, so the speed will remain the same
-        thisRB.velocity = new Vector3(0, 0, 0);
+        StopPlayer();
         startingPlayerPosition += _position;
     }
 
@@ -129,13 +134,15 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.collider.name);
+        //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
         {
-            Debug.Log("dead");
-
             playerAnimator.SetBool("death", true);
             playerAnimator.SetBool("dashing", false);
             playerAnimator.SetBool("attached", false);
+            //Stopping dash effect
+            dashRef.Stop();
 
             return;
         }
@@ -167,15 +174,14 @@ public class PlayerController : MonoBehaviour
         //crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
 
         //Making sure the player looks at the collided object
+        //ONLY ROTATE ON Y AXIS
         Vector3 dir = collision.collider.ClosestPoint(transform.position) - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(dir.normalized);
+        //Works now?
+        Quaternion lookRotation = Quaternion.LookRotation(dir, new Vector3(0, 1, 0));
         //Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
         transform.rotation = lookRotation;
 
-        //Reset the velocity
-        thisRB.velocity = Vector3.zero;
-        //Stop rotating
-        thisRB.angularVelocity = Vector3.zero;
+        StopPlayer();
 
         //LEAVE IT FOR EFFECTS
         //crashRef.Play();
@@ -210,7 +216,7 @@ public class PlayerController : MonoBehaviour
     //A coroutine to slightly push the player in the opposite direction
     IEnumerator PushPlayer()
     {
-        thisRB.AddForce(-Dir() * 0.2f, ForceMode.Impulse);
+        thisRB.AddForce(-Dir() * 0.3f, ForceMode.Impulse);
 
         yield return null;
     }
@@ -218,16 +224,20 @@ public class PlayerController : MonoBehaviour
     //Reset player animation back to "Idle"
     public void ResetPlayer()
     {
+        StopPlayer();
         transform.rotation = new Quaternion(0, 0, 0, 0);
-        transform.position = new Vector3(0, 0, 7);
+        transform.position = new Vector3(0, 0, 6);
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("death", false);
         flying = false;
+    }
 
+    public void StopPlayer()
+    {
         //Reset the velocity
         thisRB.velocity = Vector3.zero;
         //Stop rotating
         thisRB.angularVelocity = Vector3.zero;
-        
+        thisRB.Sleep(); //Important bit, that helped somehow stop movement of player
     }
 }

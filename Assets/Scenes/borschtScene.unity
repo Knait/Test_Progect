@@ -923,10 +923,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameLevel: 0
   localScore: 0
-  levelGold: 0
+  goldPerCrystal: 10
+  levelGold: 100
   fadeSpeed: 0
-  secondsBeforeTransfer: 0.3
-  secondsAfterTransfer: 0.3
+  secondsBeforeTransfer: 0.5
+  secondsAfterTransfer: 0.025
   defaultLevelSpeed: 30
   speedIncrease: 5
   textPanel: {fileID: 1540573737}
