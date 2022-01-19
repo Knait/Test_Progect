@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour
     //List of tubes
     public List<GameObject> inGameTubes = new List<GameObject>();
     //List of current coins
+    [SerializeField] private Coin[] inGameCrystals;
     public int currentCoins;
     [SerializeField] private int maxCoins;
 
@@ -81,7 +82,11 @@ public class GameController : MonoBehaviour
         //Initial generation of the level
         TrubaGenerator.Instance.GenerateLevel(1);
 
+        //Maximum amount of coins
         maxCoins = FindObjectsOfType<Coin>().Length;
+        //A list of active coins
+        inGameCrystals = FindObjectsOfType<Coin>();
+        //Current amount of coins on the level
         currentCoins = maxCoins;
         allCoins = PlayerPrefs.GetInt("allCoins");
         //Starting pause
@@ -119,6 +124,12 @@ public class GameController : MonoBehaviour
             PlayerController.Instance.StopPlayer();
             Pause();
             RefreshText();
+
+            //Cycle through all the coins and enable them
+            for(int i = 0; i < maxCoins; i++)
+            {
+                inGameCrystals[i].gameObject.SetActive(true);
+            }
 
             if(localScore > 0) StartCoroutine(TransferGold());
             death = false;
@@ -181,6 +192,7 @@ public class GameController : MonoBehaviour
         PlayerController.Instance.ResetPlayer();
         //Reset the level
         TrubaGenerator.Instance.ResetLevel();
+
         Resume();
     }
 
@@ -245,13 +257,13 @@ public class GameController : MonoBehaviour
         if(scoreTxt) scoreTxt.text = localScore.ToString();
     }
 
-    void UpdateAllCoins()
+    /*void UpdateAllCoins()
     {
         allCoins = PlayerPrefs.GetInt("allCoins");
         PlayerPrefs.SetInt("allCoins", allCoins + localScore);
         PlayerPrefs.Save();
         localScore = 0;
-    }
+    }*/
 
     //A funciton to reset the speed and position of the level and player
     void Pause()
