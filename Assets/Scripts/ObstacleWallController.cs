@@ -19,8 +19,8 @@ public class ObstacleWallController : MonoBehaviour
     {
         if (transform.position.y > 0 && !faded && !GameController.Instance.paused)
         {
-            StartCoroutine(startFading());
             faded = true;
+            StartCoroutine(startFading());
         }
 
         if(faded && GameController.Instance.paused)

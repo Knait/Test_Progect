@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     public int localScore;
     [SerializeField] private int goldPerCrystal;
     [SerializeField] private int levelGold;
+    [SerializeField] private int TrubaPerLevel;
 
     [Header("UI Parameters")]
     public float fadeSpeed;
@@ -80,7 +81,7 @@ public class GameController : MonoBehaviour
         winPanel.GetComponentInChildren<Button>().onClick.AddListener(WinButton);
 
         //Initial generation of the level
-        TrubaGenerator.Instance.GenerateLevel(1);
+        TrubaGenerator.Instance.GenerateLevel(TrubaPerLevel);
 
         //Maximum amount of coins
         maxCoins = FindObjectsOfType<Coin>().Length;
@@ -191,6 +192,8 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < maxCoins; i++)
         {
             inGameCrystals[i].gameObject.SetActive(true);
+            //Current amount of coins on the level
+            currentCoins = maxCoins;
         }
 
         Resume();
@@ -210,12 +213,14 @@ public class GameController : MonoBehaviour
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
         PlayerController.Instance.ResetPlayer();
 
-        //Clearing the level and generating a new one
-        TrubaGenerator.Instance.ClearLevel(inGameTubes);
-        TrubaGenerator.Instance.GenerateLevel(gameLevel);
-
         //Increase the speed every 2 levels
         if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
+        if (gameLevel % 3 == 0) TrubaPerLevel++;
+
+        //Clearing the level and generating a new one
+        TrubaGenerator.Instance.ClearLevel(inGameTubes);
+        TrubaGenerator.Instance.GenerateLevel(TrubaPerLevel);
+
         Resume();
     }
     #endregion
@@ -307,8 +312,8 @@ public class GameController : MonoBehaviour
             PlayerPrefs.Save();
             RefreshText();
 
-            Debug.Log("L " + localScore);
-            Debug.Log("A " + allCoins);
+            /*Debug.Log("L " + localScore);
+            Debug.Log("A " + allCoins);*/
             yield return new WaitForSeconds(secondsAfterTransfer);
         }
     }

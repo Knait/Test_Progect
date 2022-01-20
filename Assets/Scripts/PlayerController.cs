@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         instance = this;
+        thisRB = GetComponent<Rigidbody>();
         startingPlayerPosition = transform.position;
 
         crashRef = Instantiate(crashEffect, gameObject.transform);
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        thisRB = GetComponent<Rigidbody>();
+
         thisRB.useGravity = false;
 
         if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour
         pos = transform.position;
         pos.y = Mathf.Clamp(0, 0, 0);
 
-        velocity = GetComponent<Rigidbody>().velocity;
+        velocity = thisRB.velocity;
         //Dashing trigger
         if (dashing && !flying)
         {
@@ -134,7 +135,8 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.name);
+        //Debug.Log(collision.collider.name);
+        Debug.Log("Collision");
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
         {
@@ -146,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
             return;
         }
+          
         //Debug
         //Debug.Log("Collision" + collision.transform.position);
         //
@@ -168,18 +171,21 @@ public class PlayerController : MonoBehaviour
         //To track the previous collision
         prevCol = collision;
 
-        //Push the player to the opposite direction
-        StartCoroutine(PushPlayer());
-
         crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
 
         //Making sure the player looks at the collided object
         //ONLY ROTATE ON Y AXIS
         Vector3 dir = collision.collider.ClosestPoint(transform.position) - transform.position;
-        //Works now?
-        Quaternion lookRotation = Quaternion.LookRotation(dir, new Vector3(0, 1, 0));
-        //Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
+        //Works now? -NO!
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        lookRotation.x = 0;
+        lookRotation.z = 0;
+
+        Debug.Log("Look " + lookRotation);
         transform.rotation = lookRotation;
+
+        //Push the player to the opposite direction
+        StartCoroutine(PushPlayer());
 
         StopPlayer();
 
@@ -191,6 +197,7 @@ public class PlayerController : MonoBehaviour
         //Don't Play dashing animation
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("attached", true);
+
         //Stopping dash effect
         dashRef.Stop();
     }

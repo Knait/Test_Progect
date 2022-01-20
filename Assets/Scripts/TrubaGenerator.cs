@@ -11,7 +11,7 @@ public class TrubaGenerator : MonoBehaviour
     #endregion
 
     [Header("Parameters")]
-    [SerializeField] private int pipesPerLevel;
+
 
     [Header("References")]
     //Truba prefabs
@@ -26,7 +26,7 @@ public class TrubaGenerator : MonoBehaviour
     }
 
     //Level generator
-    public void GenerateLevel(int _gameLevel)
+    public void GenerateLevel(int _tubeAmount)
     {
         //If the array is empty, generate error message
         if (trubaList.Count > 0)
@@ -38,7 +38,7 @@ public class TrubaGenerator : MonoBehaviour
             Quaternion rot = Quaternion.Euler(0, 0, 0);
 
             //Determine how much tubes to spawn (plus starting tube)
-            for (int i = 0; i < pipesPerLevel + 1; i++)
+            for (int i = 0; i < _tubeAmount + 1; i++)
             {
                 //Static initial spawn at the start
                 if (i == 0)
@@ -74,7 +74,7 @@ public class TrubaGenerator : MonoBehaviour
                 }
 
                 //Last tube
-                if (i == pipesPerLevel)
+                if (i == _tubeAmount)
                 {
                     //Instantiating a finish lane
                     pos = new Vector3(0, previosObj.transform.position.y - 45f, 0);
