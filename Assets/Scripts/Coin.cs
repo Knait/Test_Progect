@@ -13,6 +13,11 @@ public class Coin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(gameObject.activeInHierarchy == false  && GameController.Instance.reset)
+        {
+            gameObject.SetActive(true);
+
+            GameController.Instance.reset = false;
+        }
     }
 }

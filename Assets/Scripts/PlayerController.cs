@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
         //
         crashRef = Instantiate(crashEffect, gameObject.transform);
         dashRef = Instantiate(dashEffect, gameObject.transform);
+        bladeRef = Instantiate(bladeEffect, gameObject.transform);
 
         //Dash effect position and rotation
         dashRef.transform.position -= new Vector3(0, 0, 0.1f);
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         //References to instantiated effects
         crashRef.Pause();
         dashRef.Pause();
+        bladeRef.Pause();
 
         playerAnimator = GetComponentInChildren<Animator>();
         pos = transform.position;

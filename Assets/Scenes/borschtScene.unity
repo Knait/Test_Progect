@@ -1908,7 +1908,7 @@ MonoBehaviour:
   localScore: 0
   goldPerCrystal: 10
   levelGold: 100
-  TrubaAmountAtStart: 5
+  TrubaAmountAtStart: 3
   fadeSpeed: 0
   secondsBeforeTransfer: 0.5
   secondsAfterTransfer: 0.025
@@ -1919,12 +1919,14 @@ MonoBehaviour:
   endPanel: {fileID: 1945145576067900610}
   winPanel: {fileID: 1945145574829751861}
   inGameTubes: []
-  inGameCrystals: []
+  CrystalList: []
+  obstacleTestList: []
   currentCoins: 0
   maxCoins: 0
   death: 0
   win: 0
   paused: 0
+  reset: 0
 --- !u!114 &1563445680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2376,6 +2378,7 @@ MonoBehaviour:
   dashSpeed: 35
   dashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   crashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
+  bladeEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   velocity: {x: 0, y: 0, z: 0}
   dashing: 0
   flying: 0

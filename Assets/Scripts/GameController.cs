@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,9 +38,12 @@ public class GameController : MonoBehaviour
 
     //List of tubes
     public List<GameObject> inGameTubes = new List<GameObject>();
+
     //List of current coins
-    [SerializeField] private Coin[] inGameCrystals;
+    [SerializeField] private List<Coin> CrystalList = new List<Coin>();
+    //Currently not collected coins
     public int currentCoins;
+    //Maximum amount of coins
     [SerializeField] private int maxCoins;
 
     [HideInInspector] public bool death = false;
@@ -47,6 +51,7 @@ public class GameController : MonoBehaviour
     [HideInInspector] public bool paused = false;
 
     private int allCoins;
+    public bool reset;
 
     void Awake()
     {
@@ -83,12 +88,11 @@ public class GameController : MonoBehaviour
         //Initial generation of the level
         TrubaGenerator.Instance.GenerateLevel(TrubaAmountAtStart);
 
-        //Maximum amount of coins
-        maxCoins = FindObjectsOfType<Coin>().Length;
-        //A list of active coins
-        inGameCrystals = FindObjectsOfType<Coin>();
-        //Current amount of coins on the level
-        currentCoins = maxCoins;
+        //Finding all "Coins"
+        //inGameCrystals = FindObjectsOfType<Coin>();
+
+        maxCoins = CrystalList.Count;
+
         allCoins = PlayerPrefs.GetInt("allCoins");
         //Starting pause
         RefreshText();
@@ -155,7 +159,6 @@ public class GameController : MonoBehaviour
                 //None of the coins  collected
             }
 
-            //if(currentCoins)
             winPanel.gameObject.SetActive(true);
             textPanel.gameObject.SetActive(true);
             levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
@@ -173,11 +176,14 @@ public class GameController : MonoBehaviour
         setSpeed(defaultLevelSpeed);
         startPanel.gameObject.SetActive(false);
         textPanel.gameObject.SetActive(false);
+        //Add them to the list for easier manipulation
+        CrystalList.AddRange(FindObjectsOfType<Coin>());
         Resume();
     }
 
-    void EndButton()
+    public void EndButton()
     {
+        reset = true;
         endPanel.gameObject.SetActive(false);
         textPanel.gameObject.SetActive(false);
         death = false;
@@ -188,10 +194,13 @@ public class GameController : MonoBehaviour
         //Reset the level
         TrubaGenerator.Instance.ResetLevel();
 
+        CrystalList.Clear();
+        CrystalList.AddRange(FindObjectsOfType<Coin>(true));
+        
         //Cycle through all the coins and enable them
-        for (int i = 0; i < maxCoins; i++)
+        for (int i = 0; i < CrystalList.Count; i++)
         {
-            inGameCrystals[i].gameObject.SetActive(true);
+            CrystalList[i].gameObject.SetActive(true);
             //Current amount of coins on the level
             currentCoins = maxCoins;
         }
@@ -201,6 +210,14 @@ public class GameController : MonoBehaviour
 
     void WinButton()
     {
+        //Increase the speed every 2 levels
+        if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
+        if (gameLevel % 3 == 0) TrubaAmountAtStart++;
+
+        //Clearing the level and generating a new one
+        TrubaGenerator.Instance.ClearLevel(inGameTubes);
+        TrubaGenerator.Instance.GenerateLevel(TrubaAmountAtStart);
+
         winPanel.gameObject.SetActive(false);
         textPanel.gameObject.SetActive(false);
         win = false;
@@ -212,21 +229,6 @@ public class GameController : MonoBehaviour
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
         PlayerController.Instance.ResetPlayer();
-
-        //Increase the speed every 2 levels
-        if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
-        if (gameLevel % 3 == 0) TrubaAmountAtStart++;
-
-        //Clearing the level and generating a new one
-        TrubaGenerator.Instance.ClearLevel(inGameTubes);
-        TrubaGenerator.Instance.GenerateLevel(TrubaAmountAtStart);
-
-        //Maximum amount of coins
-        maxCoins = FindObjectsOfType<Coin>().Length;
-        //A list of active coins
-        inGameCrystals = FindObjectsOfType<Coin>();
-        //Current amount of coins on the level
-        currentCoins = maxCoins;
 
         Resume();
     }
