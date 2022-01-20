@@ -15,10 +15,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed;
     [SerializeField] private ParticleSystem dashEffect;
     [SerializeField] private ParticleSystem crashEffect;
+    [SerializeField] private ParticleSystem bladeEffect;
 
     //Inside refs
     private ParticleSystem dashRef;
     private ParticleSystem crashRef;
+    private ParticleSystem bladeRef;
     private Animator playerAnimator;
     private Rigidbody thisRB;
 
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
         thisRB = GetComponent<Rigidbody>();
         startingPlayerPosition = transform.position;
 
+        //
         crashRef = Instantiate(crashEffect, gameObject.transform);
         dashRef = Instantiate(dashEffect, gameObject.transform);
 
@@ -57,7 +60,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
         thisRB.useGravity = false;
 
         if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
@@ -85,8 +87,12 @@ public class PlayerController : MonoBehaviour
             //Flags
             dashing = false;
             flying = true;
+
+            crashRef.Stop();
+            bladeRef.Stop();
         }
 
+        if (!flying && !dashing) bladeRef.Play();
         transform.position = pos;
     }
 
