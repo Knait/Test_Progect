@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.8509804, g: 0.73333335, b: 0.5254902, a: 1}
+  m_FogColor: {r: 1, g: 0.6392157, b: 0, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
   m_LinearFogStart: 75
@@ -942,7 +942,7 @@ MonoBehaviour:
   localScore: 0
   goldPerCrystal: 10
   levelGold: 100
-  TrubaPerLevel: 8
+  TrubaAmountAtStart: 5
   fadeSpeed: 0
   secondsBeforeTransfer: 0.5
   secondsAfterTransfer: 0.025
