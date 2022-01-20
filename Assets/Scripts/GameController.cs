@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     public int localScore;
     [SerializeField] private int goldPerCrystal;
     [SerializeField] private int levelGold;
-    [SerializeField] private int TrubaPerLevel;
+    [SerializeField] private int TrubaAmountAtStart;
 
     [Header("UI Parameters")]
     public float fadeSpeed;
@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour
         winPanel.GetComponentInChildren<Button>().onClick.AddListener(WinButton);
 
         //Initial generation of the level
-        TrubaGenerator.Instance.GenerateLevel(TrubaPerLevel);
+        TrubaGenerator.Instance.GenerateLevel(TrubaAmountAtStart);
 
         //Maximum amount of coins
         maxCoins = FindObjectsOfType<Coin>().Length;
@@ -215,11 +215,18 @@ public class GameController : MonoBehaviour
 
         //Increase the speed every 2 levels
         if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
-        if (gameLevel % 3 == 0) TrubaPerLevel++;
+        if (gameLevel % 3 == 0) TrubaAmountAtStart++;
 
         //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
-        TrubaGenerator.Instance.GenerateLevel(TrubaPerLevel);
+        TrubaGenerator.Instance.GenerateLevel(TrubaAmountAtStart);
+
+        //Maximum amount of coins
+        maxCoins = FindObjectsOfType<Coin>().Length;
+        //A list of active coins
+        inGameCrystals = FindObjectsOfType<Coin>();
+        //Current amount of coins on the level
+        currentCoins = maxCoins;
 
         Resume();
     }

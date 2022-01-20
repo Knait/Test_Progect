@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log(collision.collider.name);
-        Debug.Log("Collision");
+        //Debug.Log("Collision");
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
         {
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         lookRotation.x = 0;
         lookRotation.z = 0;
 
-        Debug.Log("Look " + lookRotation);
+        //Debug.Log("Look " + lookRotation);
         transform.rotation = lookRotation;
 
         //Push the player to the opposite direction
@@ -215,6 +215,8 @@ public class PlayerController : MonoBehaviour
         //If collided with finishlane
         if (other.gameObject.GetComponent<NextLevel>())
         {
+            transform.LookAt(new Vector3(0, 0, 0));
+            playerAnimator.SetBool("win", true);
             GameController.Instance.NextLevel();
         }
     }
@@ -236,6 +238,7 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(0, 0, 6);
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("death", false);
+        playerAnimator.SetBool("win", false);
         flying = false;
     }
 
