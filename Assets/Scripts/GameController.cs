@@ -51,7 +51,6 @@ public class GameController : MonoBehaviour
     [HideInInspector] public bool paused = false;
 
     private int allCoins;
-    public bool reset;
 
     void Awake()
     {
@@ -183,7 +182,6 @@ public class GameController : MonoBehaviour
 
     public void EndButton()
     {
-        reset = true;
         endPanel.gameObject.SetActive(false);
         textPanel.gameObject.SetActive(false);
         death = false;
