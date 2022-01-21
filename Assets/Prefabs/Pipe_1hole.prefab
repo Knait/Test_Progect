@@ -207,8 +207,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15.647949, y: 1, z: 25.356628}
-  m_Center: {x: 8.895584, y: 0, z: -3.3587341}
+  m_Size: {x: 15.647949, y: 2.6350708, z: 25.356628}
+  m_Center: {x: 8.895584, y: 0.8175354, z: -3.3587341}
 --- !u!65 &7452459756714288022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -220,8 +220,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 25.593628, y: 1, z: 14.92157}
-  m_Center: {x: 4.0993805, y: 0, z: -8.386871}
+  m_Size: {x: 25.593628, y: 2.6835938, z: 14.92157}
+  m_Center: {x: 4.0993805, y: 0.8417969, z: -8.386871}
 --- !u!114 &8085807141317110293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,6 +234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33dbf784609b4cd4aae9f54c03964835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisMesh: []
+  matList: []
+  faded: 0
 --- !u!1 &8551977007508589802
 GameObject:
   m_ObjectHideFlags: 0

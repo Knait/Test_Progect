@@ -44,8 +44,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.735254, y: 1.5853882, z: 19.443136}
-  m_Center: {x: -5.467557, y: 0.009674072, z: 0.21104908}
+  m_Size: {x: 11.735254, y: 2.596466, z: 19.443136}
+  m_Center: {x: -5.467557, y: 0.51521313, z: 0.21104908}
 --- !u!114 &5400119482072094251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,6 +58,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33dbf784609b4cd4aae9f54c03964835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisMesh: []
+  matList: []
+  faded: 0
 --- !u!1 &2055812137697740272
 GameObject:
   m_ObjectHideFlags: 0
