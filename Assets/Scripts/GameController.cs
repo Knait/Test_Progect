@@ -123,9 +123,14 @@ public class GameController : MonoBehaviour
             //UpdateAllCoins();
             endPanel.gameObject.SetActive(true);
             textPanel.gameObject.SetActive(true);
+
             levelTxt = endPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = endPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
+
+            //Stop player movement
             PlayerController.Instance.StopPlayer();
+            //Reset particle effecs
+            PlayerController.Instance.StopEffects();
             Pause();
             RefreshText();
 
@@ -135,6 +140,8 @@ public class GameController : MonoBehaviour
 
         if (win)
         {
+            Pause();
+
             var panel1 = winPanel.Find("Title1");
             var panel2 = winPanel.Find("Title2");
 
@@ -160,12 +167,17 @@ public class GameController : MonoBehaviour
 
             //Reset particle effecs
             PlayerController.Instance.StopEffects();
+
             winPanel.gameObject.SetActive(true);
             textPanel.gameObject.SetActive(true);
+
             levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
             scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
+
             RefreshText();
-            Pause();
+
+            PlayerController.Instance.WalkTowardsCrystal();
+            StartCoroutine(CameraFollow.cam.PlayerShowcase());
             if (localScore > 0) StartCoroutine(TransferGold());
             win = false;
         }
@@ -230,6 +242,9 @@ public class GameController : MonoBehaviour
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
         PlayerController.Instance.ResetPlayer();
+
+        //Reset camera position and rotation
+        CameraFollow.cam.ResetCamera();
 
         Resume();
     }

@@ -10,9 +10,6 @@ public class TrubaGenerator : MonoBehaviour
     public static TrubaGenerator Instance => instance;
     #endregion
 
-    [Header("Parameters")]
-
-
     [Header("References")]
     //Truba prefabs
     [SerializeField] private GameObject startTruba;

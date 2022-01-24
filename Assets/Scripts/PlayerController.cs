@@ -10,16 +10,23 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance => instance;
     #endregion
 
+    [Header("Paramaeters")]
+    [SerializeField] private float dashSpeed;
+    [SerializeField] private float walkingSpeed;
+
+    [Header("References")]
     //Refs
     public Joystick joystick;
-    [SerializeField] private float dashSpeed;
+    //Position for blade effect
+    [SerializeField] private Transform bladePos;
+
+    [Header("Effects")]
     [SerializeField] private ParticleSystem dashEffect;
     [SerializeField] private ParticleSystem crashEffect;
     [SerializeField] private ParticleSystem bladeEffect;
     [SerializeField] private ParticleSystem coinEffect;
-    //Position for blade effect
-    [SerializeField] private Transform bladePos;
 
+    //Hidden
     //Inside refs
     private ParticleSystem dashRef;
     private ParticleSystem crashRef;
@@ -29,18 +36,18 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimator;
     private Rigidbody thisRB;
 
-    //Hidden
     private Vector3 startingPlayerPosition;
 
     [Header("DON'T CHANGE")]
     [SerializeField] private Vector3 velocity;
 
     [HideInInspector] public bool dashing = false;
+
     //To track if player is attached to the wall
     public bool flying = false;
-    Collision prevCol;
-    Vector3 pos;
-    Quaternion rot;
+    private Collision prevCol;
+    private Vector3 pos;
+    private Quaternion rot;
     void Awake()
     {
         instance = this;
@@ -81,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
         velocity = thisRB.velocity;
         //Dashing trigger
-        if (dashing && !flying)
+        if (dashing && !flying && !GameController.Instance.paused)
         {
             thisRB.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Move();
@@ -154,6 +161,7 @@ public class PlayerController : MonoBehaviour
         bladeRef.Play();
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
+
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
         {
@@ -286,5 +294,17 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("death", false);
         playerAnimator.SetBool("win", false);
         playerAnimator.SetBool("attached", false);
+    }
+
+    //A fucntion for moving player towards crystal
+    public void WalkTowardsCrystal()
+    {
+        StopPlayer();
+        Vector3 dir = new Vector3(0, 0, 0) - gameObject.transform.position;
+
+        for(float i = 0; i < 3; i += 0.5f)
+        {
+            thisRB.AddForce(dir.normalized * walkingSpeed, ForceMode.Impulse);
+        }
     }
 }

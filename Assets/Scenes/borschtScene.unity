@@ -808,7 +808,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1803158121}
-  offset: {x: 0, y: 20, z: 0}
+  classicOffset: {x: 0, y: 20, z: 0}
+  finishOffset: {x: 3, y: 3, z: 0.5}
 --- !u!1 &573800890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,13 +2404,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396e2f361f7248f47a5e228c3a0a952b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystick: {fileID: 223458943}
   dashSpeed: 35
+  walkingSpeed: 3
+  joystick: {fileID: 223458943}
+  bladePos: {fileID: 1392857991}
   dashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   crashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
   coinEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
-  bladePos: {fileID: 1392857991}
   velocity: {x: 0, y: 0, z: 0}
   dashing: 0
   flying: 0
