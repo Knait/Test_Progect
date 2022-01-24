@@ -158,6 +158,8 @@ public class GameController : MonoBehaviour
                 //None of the coins  collected
             }
 
+            //Reset particle effecs
+            PlayerController.Instance.StopEffects();
             winPanel.gameObject.SetActive(true);
             textPanel.gameObject.SetActive(true);
             levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
@@ -210,6 +212,7 @@ public class GameController : MonoBehaviour
     {
         //Increase the speed every 2 levels
         if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
+        //Increase pipe amount by 1 every 3 levels
         if (gameLevel % 3 == 0) TrubaAmountAtStart++;
 
         //Clearing the level and generating a new one
@@ -268,14 +271,6 @@ public class GameController : MonoBehaviour
         if (levelTxt) levelTxt.text = "Level: " + gameLevel;
         if(scoreTxt) scoreTxt.text = localScore.ToString();
     }
-
-    /*void UpdateAllCoins()
-    {
-        allCoins = PlayerPrefs.GetInt("allCoins");
-        PlayerPrefs.SetInt("allCoins", allCoins + localScore);
-        PlayerPrefs.Save();
-        localScore = 0;
-    }*/
 
     //A funciton to reset the speed and position of the level and player
     void Pause()

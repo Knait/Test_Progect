@@ -16,11 +16,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem dashEffect;
     [SerializeField] private ParticleSystem crashEffect;
     [SerializeField] private ParticleSystem bladeEffect;
+    [SerializeField] private ParticleSystem coinEffect;
+    //Position for blade effect
+    [SerializeField] private Transform bladePos;
 
     //Inside refs
     private ParticleSystem dashRef;
     private ParticleSystem crashRef;
     private ParticleSystem bladeRef;
+    private ParticleSystem coinRef;
+
     private Animator playerAnimator;
     private Rigidbody thisRB;
 
@@ -42,10 +47,11 @@ public class PlayerController : MonoBehaviour
         thisRB = GetComponent<Rigidbody>();
         startingPlayerPosition = transform.position;
 
-        //
+        //Effects references
         crashRef = Instantiate(crashEffect, gameObject.transform);
         dashRef = Instantiate(dashEffect, gameObject.transform);
-        bladeRef = Instantiate(bladeEffect, gameObject.transform);
+        bladeRef = Instantiate(bladeEffect, bladePos);
+        coinRef = Instantiate(coinEffect, gameObject.transform);
 
         //Dash effect position and rotation
         dashRef.transform.position -= new Vector3(0, 0, 0.1f);
@@ -55,6 +61,7 @@ public class PlayerController : MonoBehaviour
         crashRef.Pause();
         dashRef.Pause();
         bladeRef.Pause();
+        coinRef.Pause();
 
         playerAnimator = GetComponentInChildren<Animator>();
         pos = transform.position;
@@ -63,7 +70,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         thisRB.useGravity = false;
-
+        bladeRef.Play();
         if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
     }
 
@@ -90,11 +97,12 @@ public class PlayerController : MonoBehaviour
             dashing = false;
             flying = true;
 
+            //Stopping particles
             crashRef.Stop();
             bladeRef.Stop();
+            coinRef.Stop();
         }
 
-        if (!flying && !dashing) bladeRef.Play();
         transform.position = pos;
     }
 
@@ -143,6 +151,7 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        bladeRef.Play();
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
         //If player collided with obstacle
@@ -153,7 +162,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("attached", false);
             //Stopping dash effect
             dashRef.Stop();
-
+            coinRef.Stop();
             return;
         }
           
@@ -174,6 +183,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("dashing", false);
             //Stopping dash effect
             dashRef.Stop();
+            coinRef.Stop();
         }
 
         //To track the previous collision
@@ -198,7 +208,7 @@ public class PlayerController : MonoBehaviour
         StopPlayer();
 
         //LEAVE IT FOR EFFECTS
-        crashRef.Play();
+        //crashRef.Play();
 
         //Flying flag
         flying = false;
@@ -208,13 +218,15 @@ public class PlayerController : MonoBehaviour
 
         //Stopping dash effect
         dashRef.Stop();
+        coinRef.Stop();
     }
 
     void OnTriggerEnter(Collider other)
     {
         //If collided with coin
         if (other.gameObject.GetComponentInParent<Coin>())
-        {
+        { 
+            coinRef.Play();
             GameController.Instance.CollectGold();
             GameController.Instance.currentCoins--;
             other.gameObject.SetActive(false);
@@ -244,9 +256,10 @@ public class PlayerController : MonoBehaviour
         StopPlayer();
         transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = new Vector3(0, 0, 6);
-        playerAnimator.SetBool("dashing", false);
-        playerAnimator.SetBool("death", false);
-        playerAnimator.SetBool("win", false);
+
+        StopAnimations();
+        StopEffects();
+        bladeRef.Play();
         flying = false;
     }
 
@@ -257,5 +270,21 @@ public class PlayerController : MonoBehaviour
         //Stop rotating
         thisRB.angularVelocity = Vector3.zero;
         thisRB.Sleep(); //Important bit, that helped somehow stop movement of player
+    }
+
+    public void StopEffects()
+    {
+        dashRef.Stop();
+        crashRef.Stop();
+        bladeRef.Stop();
+        coinRef.Stop();
+    }
+
+    void StopAnimations()
+    {
+        playerAnimator.SetBool("dashing", false);
+        playerAnimator.SetBool("death", false);
+        playerAnimator.SetBool("win", false);
+        playerAnimator.SetBool("attached", false);
     }
 }
