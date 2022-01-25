@@ -808,7 +808,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1803158121}
-  offset: {x: 0, y: 20, z: 0}
+  timeBeforeCamera: 0
+  classicOffset: {x: 0, y: 20, z: 0}
+  finishOffset: {x: 3, y: 3, z: 0.5}
 --- !u!1 &573800890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,13 +1744,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392857990}
-  m_LocalRotation: {x: 0.71038145, y: -0.021795312, z: -0.005948061, w: 0.70345426}
-  m_LocalPosition: {x: -0.01, y: 1.4, z: 0.81}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.19, z: 0.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 358384394}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 87.683, y: -104.662, z: -103.377}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446536274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,14 +1971,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTruba: {fileID: 6536797266243848212, guid: b362653f54ed85a449c4d94bca9eb922, type: 3}
-  finishLane: {fileID: 1116356093264338035, guid: e04d9c94e645a714aa60238bb0640412, type: 3}
+  finishLane: {fileID: 6536797266243848212, guid: 48b487f5ceb682b429bf8c153542e914, type: 3}
   bottom: {fileID: 1225772143834470235, guid: d57ae9012dda9e447a22b88197146c71, type: 3}
   trubaList:
   - {fileID: 6536797266243848212, guid: 46a919601828d4a45a087aab5675a358, type: 3}
   - {fileID: 6536797266243848212, guid: a5e753a90e55e2d41ae90c929333d0f7, type: 3}
-  - {fileID: 6536797266243848212, guid: a6940ea6cc0c7404eb83c978b1eeef60, type: 3}
-  - {fileID: 6536797266243848212, guid: 3f8eb18fffb1e6d42b4b748b6ed1502e, type: 3}
-  - {fileID: 6536797266243848212, guid: b6f3cd2dac2fae14086b5ee407c3cccd, type: 3}
 --- !u!1 &1615102720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,13 +2405,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396e2f361f7248f47a5e228c3a0a952b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystick: {fileID: 223458943}
   dashSpeed: 35
-  dashEffect: {fileID: 19848150, guid: a9e087870e526ff46abde9af6dd0c819, type: 3}
-  crashEffect: {fileID: 19848150, guid: a9e087870e526ff46abde9af6dd0c819, type: 3}
-  bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
-  coinEffect: {fileID: 19851284, guid: 5552d0e6b5e91684c9b9b938763192bf, type: 3}
+  walkingSpeed: 3
+  joystick: {fileID: 223458943}
   bladePos: {fileID: 1392857991}
+  dashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
+  crashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
+  bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
+  coinEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
   velocity: {x: 0, y: 0, z: 0}
   dashing: 0
   flying: 0
