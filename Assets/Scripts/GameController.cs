@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private RectTransform startPanel;
     [SerializeField] private RectTransform endPanel;
     [SerializeField] private RectTransform winPanel;
+    [SerializeField] private float timeBeforePanel;
 
     private TMP_Text levelTxt;
     private Text scoreTxt;
@@ -141,47 +142,57 @@ public class GameController : MonoBehaviour
         if (win)
         {
             Pause();
-
-            var panel1 = winPanel.Find("Title1");
-            var panel2 = winPanel.Find("Title2");
-
-            //Different text
-            if (currentCoins == 0)
-            {
-                //All coins collected
-                panel2.gameObject.SetActive(true);
-                panel1.gameObject.SetActive(false);
-            }
-
-            if(currentCoins > 0)
-            {
-                //Not all coins collected
-                panel1.gameObject.SetActive(true);
-                panel2.gameObject.SetActive(false);
-            }
-
-            if (currentCoins == maxCoins)
-            {
-                //None of the coins  collected
-            }
-
-            //Reset particle effecs
-            PlayerController.Instance.StopEffects();
-
-            winPanel.gameObject.SetActive(true);
-            textPanel.gameObject.SetActive(true);
-
-            levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
-            scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
-
-            RefreshText();
-
             PlayerController.Instance.WalkTowardsCrystal();
             StartCoroutine(CameraFollow.cam.PlayerShowcase());
-            if (localScore > 0) StartCoroutine(TransferGold());
+            StartCoroutine(WaitWinPanel(timeBeforePanel));
             win = false;
             endGame = true;
         }
+    }
+
+    IEnumerator WaitWinPanel(float _time)
+    {
+
+        yield return new WaitForSeconds(_time);
+
+        var panel1 = winPanel.Find("Title1");
+        var panel2 = winPanel.Find("Title2");
+
+        //Different text
+        if (currentCoins == 0)
+        {
+            //All coins collected
+            panel2.gameObject.SetActive(true);
+            panel1.gameObject.SetActive(false);
+        }
+
+        if (currentCoins > 0)
+        {
+            //Not all coins collected
+            panel1.gameObject.SetActive(true);
+            panel2.gameObject.SetActive(false);
+            //StartCoroutine(goodJobPanel(timeBeforePanel));
+        }
+
+        if (currentCoins == maxCoins)
+        {
+            //None of the coins  collected
+        }
+
+        //Reset particle effecs
+        PlayerController.Instance.StopEffects();
+
+        winPanel.gameObject.SetActive(true);
+        textPanel.gameObject.SetActive(true);
+
+        levelTxt = winPanel.Find("Level").GetComponent<TMP_Text>();
+        scoreTxt = winPanel.Find("Panel [Image]").GetComponentInChildren<Text>();
+
+        RefreshText();
+
+
+        if (localScore > 0) StartCoroutine(TransferGold());
+
     }
 
     #region Buttons
@@ -244,6 +255,7 @@ public class GameController : MonoBehaviour
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
         PlayerController.Instance.ResetPlayer();
+        PlayerController.Instance.DestroyGem();
 
         //Reset camera position and rotation
         CameraFollow.cam.ResetCamera();

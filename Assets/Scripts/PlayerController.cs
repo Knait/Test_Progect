@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
     {
         StopPlayer();
         startingPlayerPosition = _position;
+        transform.position = startingPlayerPosition;
     }
 
     public void IncreaseStartingPosition(Vector3 _position)
@@ -305,9 +306,15 @@ public class PlayerController : MonoBehaviour
         StopEffects();
         bladeRef.Play();
         playerAnimator.SetBool("pickUp", false);
-        Destroy(gemRef.gameObject);
+
+       
         playerControllsBlocked = false;
         flying = false;
+    }
+
+    public void DestroyGem()
+    {
+        Destroy(gemRef.gameObject);
     }
 
     public void StopPlayer()
