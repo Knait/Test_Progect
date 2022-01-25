@@ -87,6 +87,10 @@ public class PlayerController : MonoBehaviour
         pos.y = Mathf.Clamp(0, 0, 0);
 
         velocity = thisRB.velocity;
+
+        //BUG
+        if (!flying && !GameController.Instance.endGame) StopPlayer();
+
         //Dashing trigger
         if (dashing && !flying && !GameController.Instance.paused)
         {
@@ -109,6 +113,7 @@ public class PlayerController : MonoBehaviour
             bladeRef.Stop();
             coinRef.Stop();
         }
+
 
         transform.position = pos;
     }
@@ -171,6 +176,7 @@ public class PlayerController : MonoBehaviour
             //Stopping dash effect
             dashRef.Stop();
             coinRef.Stop();
+            StopPlayer();
             return;
         }
           
@@ -183,10 +189,7 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("SameCollision " + prevCol.transform.position);
             flying = false;
-            //Reset the velocity
-            thisRB.velocity = Vector3.zero;
-            //Stop rotating
-            thisRB.angularVelocity = Vector3.zero;
+            StopPlayer();
             //Don't play dashing animation
             playerAnimator.SetBool("dashing", false);
             //Stopping dash effect
@@ -212,7 +215,7 @@ public class PlayerController : MonoBehaviour
 
         //Push the player to the opposite direction
         StartCoroutine(PushPlayer());
-
+        
         StopPlayer();
 
         //LEAVE IT FOR EFFECTS
@@ -247,6 +250,12 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("win", true);
             GameController.Instance.NextLevel();
         }
+
+        if (other.gameObject.name == "GameObject")
+        {
+
+            StopPlayer();
+        }
     }
     #endregion
 
@@ -278,6 +287,7 @@ public class PlayerController : MonoBehaviour
         //Stop rotating
         thisRB.angularVelocity = Vector3.zero;
         thisRB.Sleep(); //Important bit, that helped somehow stop movement of player
+        //Debug.Log("STOPPED");
     }
 
     public void StopEffects()
@@ -302,7 +312,7 @@ public class PlayerController : MonoBehaviour
         StopPlayer();
         Vector3 dir = new Vector3(0, 0, 0) - gameObject.transform.position;
 
-        for(float i = 0; i < 3; i += 0.5f)
+        for(float i = 0; i < 4; i += 0.5f)
         {
             thisRB.AddForce(dir.normalized * walkingSpeed, ForceMode.Impulse);
         }

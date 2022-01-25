@@ -808,6 +808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1803158121}
+  timeBeforeCamera: 0.06
   classicOffset: {x: 0, y: 20, z: 0}
   finishOffset: {x: 3, y: 3, z: 0.5}
 --- !u!1 &573800890
@@ -2389,9 +2390,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.39273286
-  m_Height: 2
+  m_Height: 1.6460028
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.4752264, z: 0}
 --- !u!114 &1803158119
 MonoBehaviour:
   m_ObjectHideFlags: 0

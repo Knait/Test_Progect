@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
     [HideInInspector] public bool paused = false;
 
     private int allCoins;
-
+    [HideInInspector] public bool endGame = false;
     void Awake()
     {
         instance = this;
@@ -180,6 +180,7 @@ public class GameController : MonoBehaviour
             StartCoroutine(CameraFollow.cam.PlayerShowcase());
             if (localScore > 0) StartCoroutine(TransferGold());
             win = false;
+            endGame = true;
         }
     }
 
@@ -222,6 +223,7 @@ public class GameController : MonoBehaviour
 
     void WinButton()
     {
+        endGame = false;
         //Increase the speed every 2 levels
         if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
         //Increase pipe amount by 1 every 3 levels
