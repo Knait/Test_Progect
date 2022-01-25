@@ -1958,6 +1958,7 @@ MonoBehaviour:
   death: 0
   win: 0
   paused: 0
+  endGame: 0
 --- !u!114 &1563445680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1971,8 +1972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTruba: {fileID: 6536797266243848212, guid: b362653f54ed85a449c4d94bca9eb922, type: 3}
-  finishLane: {fileID: 1116356093264338035, guid: e04d9c94e645a714aa60238bb0640412, type: 3}
-  bottom: {fileID: 1225772143834470235, guid: d57ae9012dda9e447a22b88197146c71, type: 3}
+  finishLane: {fileID: 6536797266243848212, guid: 48b487f5ceb682b429bf8c153542e914, type: 3}
   trubaList:
   - {fileID: 6536797266243848212, guid: 46a919601828d4a45a087aab5675a358, type: 3}
   - {fileID: 6536797266243848212, guid: a5e753a90e55e2d41ae90c929333d0f7, type: 3}
@@ -2409,6 +2409,7 @@ MonoBehaviour:
   walkingSpeed: 3
   joystick: {fileID: 223458943}
   bladePos: {fileID: 1392857991}
+  gemPos: {fileID: 0}
   dashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   crashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}

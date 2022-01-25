@@ -17,8 +17,10 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     //Refs
     public Joystick joystick;
+    [Header("Positions")]
     //Position for blade effect
     [SerializeField] private Transform bladePos;
+    [SerializeField] private Transform gemPos;
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem dashEffect;
@@ -38,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 startingPlayerPosition;
 
+    private Transform gemRef;
+
     [Header("DON'T CHANGE")]
     [SerializeField] private Vector3 velocity;
 
@@ -53,6 +57,7 @@ public class PlayerController : MonoBehaviour
         instance = this;
         thisRB = GetComponent<Rigidbody>();
         startingPlayerPosition = transform.position;
+        transform.position = startingPlayerPosition;
 
         //Effects references
         crashRef = Instantiate(crashEffect, gameObject.transform);
@@ -79,6 +84,9 @@ public class PlayerController : MonoBehaviour
         thisRB.useGravity = false;
         bladeRef.Play();
         if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
+
+        //Find winning crystal on the level
+        gemRef = GameObject.Find("Crystal7").transform;
     }
 
     void Update()
@@ -88,7 +96,6 @@ public class PlayerController : MonoBehaviour
 
         velocity = thisRB.velocity;
 
-        //BUG
         if (!flying && !GameController.Instance.endGame) StopPlayer();
 
         //Dashing trigger
@@ -111,7 +118,6 @@ public class PlayerController : MonoBehaviour
             //Stopping particles
             crashRef.Stop();
             bladeRef.Stop();
-            coinRef.Stop();
         }
 
 
@@ -163,6 +169,8 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
+
         bladeRef.Play();
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
@@ -175,7 +183,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("attached", false);
             //Stopping dash effect
             dashRef.Stop();
-            coinRef.Stop();
+            if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
             StopPlayer();
             return;
         }
@@ -194,7 +202,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("dashing", false);
             //Stopping dash effect
             dashRef.Stop();
-            coinRef.Stop();
+            if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
         }
 
         //To track the previous collision
@@ -229,7 +237,12 @@ public class PlayerController : MonoBehaviour
 
         //Stopping dash effect
         dashRef.Stop();
-        coinRef.Stop();
+    }
+
+    void LateUpdate()
+    {
+        //Find winning crystal on the level
+        if (gemRef == null) gemRef = GameObject.Find("Crystal7").transform;
     }
 
     void OnTriggerEnter(Collider other)
@@ -241,6 +254,7 @@ public class PlayerController : MonoBehaviour
             GameController.Instance.CollectGold();
             GameController.Instance.currentCoins--;
             other.gameObject.SetActive(false);
+            StartCoroutine(StopCoinAfterSomeTime(0.4f));
         }
 
         //If collided with finishlane
@@ -253,8 +267,9 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.name == "GameObject")
         {
-
+            playerAnimator.Play("поднял");
             StopPlayer();
+            gemRef.SetParent(gemPos);
         }
     }
     #endregion
@@ -267,6 +282,12 @@ public class PlayerController : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator StopCoinAfterSomeTime(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        coinRef.Stop();
+    }
+
     //Reset player animation back to "Idle"
     public void ResetPlayer()
     {
@@ -277,6 +298,9 @@ public class PlayerController : MonoBehaviour
         StopAnimations();
         StopEffects();
         bladeRef.Play();
+        playerAnimator.SetBool("pickUp", false);
+        Destroy(gemRef.gameObject);
+        
         flying = false;
     }
 
@@ -314,7 +338,7 @@ public class PlayerController : MonoBehaviour
 
         for(float i = 0; i < 4; i += 0.5f)
         {
-            thisRB.AddForce(dir.normalized * walkingSpeed, ForceMode.Impulse);
+            thisRB.AddForce(dir.normalized, ForceMode.Impulse);
         }
     }
 }

@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour
         startPanel.GetComponentInChildren<Button>().onClick.AddListener(StartButton);
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
         textPanel.gameObject.SetActive(false);
-        PlayerController.Instance.ResetPlayer();
+        //PlayerController.Instance.ResetPlayer();
 
         //Death panel setup
         endPanel.gameObject.SetActive(false);

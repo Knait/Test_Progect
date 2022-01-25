@@ -73,7 +73,8 @@ public class TrubaGenerator : MonoBehaviour
                 if (i == _tubeAmount)
                 {
                     //Instantiating a finish lane
-                    pos = new Vector3(0, previosObj.transform.position.y - 45f, 0);
+                    pos = new Vector3(0, previosObj.transform.position.y - 55f, 0);
+                    rot = Quaternion.Euler(0, 0, 0);
                     var tempObj = Instantiate(finishLane, pos, rot, previosObj.transform);
                 }
             }
