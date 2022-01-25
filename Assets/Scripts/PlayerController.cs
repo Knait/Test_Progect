@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
     //To track if player is attached to the wall
     public bool flying = false;
+    [HideInInspector]public bool playerControllsBlocked = false;
     private Collision prevCol;
     private Vector3 pos;
     private Quaternion rot;
@@ -271,6 +272,11 @@ public class PlayerController : MonoBehaviour
             StopPlayer();
             gemRef.SetParent(gemPos);
         }
+
+        if(other.gameObject.name == "Blockade")
+        {
+            playerControllsBlocked = true;
+        }
     }
     #endregion
 
@@ -300,7 +306,7 @@ public class PlayerController : MonoBehaviour
         bladeRef.Play();
         playerAnimator.SetBool("pickUp", false);
         Destroy(gemRef.gameObject);
-        
+        playerControllsBlocked = false;
         flying = false;
     }
 

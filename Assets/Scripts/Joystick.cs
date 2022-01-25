@@ -23,7 +23,7 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
 
     public void OnDrag(PointerEventData eventData)
     { 
-        if (!GameController.Instance.paused && !PlayerController.Instance.flying)
+        if (!GameController.Instance.paused && !PlayerController.Instance.flying && !PlayerController.Instance.playerControllsBlocked)
         {
             Vector2 pos;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(img_Joystick.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
