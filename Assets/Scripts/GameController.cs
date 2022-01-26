@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private RectTransform endPanel;
     [SerializeField] private RectTransform winPanel;
 
+    [Header("GEM")]
+    public List<Color> gemColors = new List<Color>();
 
     private TMP_Text levelTxt;
     private Text scoreTxt;
@@ -236,7 +238,11 @@ public class GameController : MonoBehaviour
     {
         endGame = false;
         //Increase the speed every 2 levels
-        if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
+        if(defaultLevelSpeed < 70)
+        {
+            if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
+        }
+
         //Increase pipe amount by 1 every 3 levels
         if (gameLevel % 3 == 0) TrubaAmountAtStart++;
 

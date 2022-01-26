@@ -244,7 +244,11 @@ public class PlayerController : MonoBehaviour
     void LateUpdate()
     {
         //Find winning crystal on the level
-        if (gemRef == null) gemRef = GameObject.Find("Crystal7").transform;
+        if (gemRef == null)
+        {
+            gemRef = GameObject.Find("Crystal7").transform;
+            //gemRef.GetComponent<MeshRenderer>().material.color = GameController.Instance.gemColors[0];
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -317,7 +321,6 @@ public class PlayerController : MonoBehaviour
 
         bladeRef.Play();
         playerAnimator.SetBool("pickUp", false);
-
        
         playerControllsBlocked = false;
         flying = false;
