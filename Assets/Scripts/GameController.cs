@@ -257,6 +257,7 @@ public class GameController : MonoBehaviour
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
 
+        //Destroying previously attached gem
         PlayerController.Instance.DestroyGem();
 
         //Reset camera position and rotation

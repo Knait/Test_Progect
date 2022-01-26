@@ -9,6 +9,8 @@ public class ObstacleWallController : MonoBehaviour
     //A list of materials on MeshRenderers
     public List<Material> matList = new List<Material>();
 
+    public Collider[] collidersOnThisObject;
+
     //Flag
     public bool faded = false;
     //The speed of fading
@@ -18,6 +20,8 @@ public class ObstacleWallController : MonoBehaviour
     {
         //Add all of the MeshRenderers in this object's children
         thisMesh = GetComponentsInChildren<MeshRenderer>();
+        //Add all of the Colliders on this object
+        collidersOnThisObject = GetComponents<Collider>();
 
         //Cycle through these MeshRenderers, and add their Materials to the list
         for (int i = 0; i < thisMesh.Length; i++)
@@ -32,6 +36,12 @@ public class ObstacleWallController : MonoBehaviour
         if (transform.position.y > 0 && !faded && !GameController.Instance.paused)
         {
             faded = true;
+
+            for(int i = 0; i < collidersOnThisObject.Length; i++)
+            {
+                collidersOnThisObject[i].enabled = false;
+            }
+
             StartCoroutine(startFading());
         }
 
@@ -44,6 +54,11 @@ public class ObstacleWallController : MonoBehaviour
                 temp.a = 255;
 
                 matList[i].color = temp;
+            }
+
+            for (int i = 0; i < collidersOnThisObject.Length; i++)
+            {
+                collidersOnThisObject[i].enabled = true;
             }
 
             faded = false;
