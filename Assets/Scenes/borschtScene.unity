@@ -1978,11 +1978,11 @@ MonoBehaviour:
   secondsAfterTransfer: 0.025
   defaultLevelSpeed: 30
   speedIncrease: 5
+  timeBeforePanel: 1
   textPanel: {fileID: 1540573737}
   startPanel: {fileID: 1945145575186995170}
   endPanel: {fileID: 1945145576067900610}
   winPanel: {fileID: 1945145574829751861}
-  timeBeforePanel: 1
   inGameTubes: []
   CrystalList: []
   currentCoins: 0
@@ -2422,9 +2422,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.39273286
-  m_Height: 1.6460028
+  m_Height: 2.2797132
   m_Direction: 1
-  m_Center: {x: 0, y: 0.4752264, z: 0}
+  m_Center: {x: 0, y: 0.15837121, z: 0}
 --- !u!114 &1803158119
 MonoBehaviour:
   m_ObjectHideFlags: 0

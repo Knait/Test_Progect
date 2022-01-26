@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         crashRef = Instantiate(crashEffect, gameObject.transform);
         dashRef = Instantiate(dashEffect, gameObject.transform);
         bladeRef = Instantiate(bladeEffect, bladePos);
-        coinRef = Instantiate(coinEffect, gameObject.transform);
+        coinRef = Instantiate(coinEffect);
 
         //Dash effect position and rotation
         dashRef.transform.position -= new Vector3(0, 0, 0.1f);
@@ -251,7 +251,12 @@ public class PlayerController : MonoBehaviour
     {
         //If collided with coin
         if (other.gameObject.GetComponentInParent<Coin>())
-        { 
+        {
+            //Set the position of coin to the visual
+            coinRef.transform.position = other.transform.position;
+            //Then attach it to the tube for movement
+            coinRef.transform.SetParent(GameController.Instance.inGameTubes[0].transform);
+
             coinRef.Play();
             GameController.Instance.CollectGold();
             GameController.Instance.currentCoins--;
@@ -267,6 +272,7 @@ public class PlayerController : MonoBehaviour
             GameController.Instance.NextLevel();
         }
 
+        //When player reached pedestal
         if (other.gameObject.name == "GameObject")
         {
             playerAnimator.Play("поднял");
@@ -274,6 +280,7 @@ public class PlayerController : MonoBehaviour
             gemRef.SetParent(gemPos);
         }
 
+        //If player reached finish lane
         if(other.gameObject.name == "Blockade")
         {
             playerControllsBlocked = true;
@@ -304,6 +311,10 @@ public class PlayerController : MonoBehaviour
 
         StopAnimations();
         StopEffects();
+
+        //Reset coinRef position back to player
+        coinRef.transform.SetParent(gameObject.transform);
+
         bladeRef.Play();
         playerAnimator.SetBool("pickUp", false);
 

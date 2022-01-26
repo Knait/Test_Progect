@@ -28,11 +28,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private float speedIncrease;
 
     [Header("UI")]
+    [SerializeField] private float timeBeforePanel;
     [SerializeField] private RectTransform textPanel;
     [SerializeField] private RectTransform startPanel;
     [SerializeField] private RectTransform endPanel;
     [SerializeField] private RectTransform winPanel;
-    [SerializeField] private float timeBeforePanel;
+
 
     private TMP_Text levelTxt;
     private Text scoreTxt;
@@ -190,7 +191,6 @@ public class GameController : MonoBehaviour
 
         RefreshText();
 
-
         if (localScore > 0) StartCoroutine(TransferGold());
 
     }
@@ -240,6 +240,8 @@ public class GameController : MonoBehaviour
         //Increase pipe amount by 1 every 3 levels
         if (gameLevel % 3 == 0) TrubaAmountAtStart++;
 
+        PlayerController.Instance.ResetPlayer();
+
         //Clearing the level and generating a new one
         TrubaGenerator.Instance.ClearLevel(inGameTubes);
         TrubaGenerator.Instance.GenerateLevel(TrubaAmountAtStart);
@@ -254,7 +256,7 @@ public class GameController : MonoBehaviour
 
         //Resetting the position of the player
         PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
-        PlayerController.Instance.ResetPlayer();
+
         PlayerController.Instance.DestroyGem();
 
         //Reset camera position and rotation
