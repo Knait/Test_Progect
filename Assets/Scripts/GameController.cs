@@ -12,14 +12,14 @@ public class GameController : MonoBehaviour
 
     //Parameters
     [Header("Globals")]
-    [SerializeField] private int gameLevel;
-    public int localScore;
+    private int gameLevel;
+    [HideInInspector] public int localScore;
     [SerializeField] private int goldPerCrystal;
     [SerializeField] private int levelGold;
     [SerializeField] private int TrubaAmountAtStart;
+    public float fadeSpeed;
 
     [Header("UI Parameters")]
-    public float fadeSpeed;
     [SerializeField] private float secondsBeforeTransfer;
     [SerializeField] private float secondsAfterTransfer;
 
@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private float speedIncrease;
 
     [Header("UI")]
-    [SerializeField] private float timeBeforePanel;
+    [SerializeField] private float timeBeforeWinPanel;
     [SerializeField] private RectTransform textPanel;
     [SerializeField] private RectTransform startPanel;
     [SerializeField] private RectTransform endPanel;
@@ -39,14 +39,14 @@ public class GameController : MonoBehaviour
     private Text scoreTxt;
 
     //List of tubes
-    public List<GameObject> inGameTubes = new List<GameObject>();
+    [HideInInspector] public List<GameObject> inGameTubes = new List<GameObject>();
 
     //List of current coins
-    [SerializeField] private List<Coin> CrystalList = new List<Coin>();
+    private List<Coin> CrystalList = new List<Coin>();
     //Currently not collected coins
-    public int currentCoins;
+    [HideInInspector] public int currentCoins;
     //Maximum amount of coins
-    [SerializeField] private int maxCoins;
+    private int maxCoins;
 
     [HideInInspector] public bool death = false;
     [HideInInspector] public bool win = false;
@@ -145,7 +145,7 @@ public class GameController : MonoBehaviour
             Pause();
             PlayerController.Instance.WalkTowardsCrystal();
             StartCoroutine(CameraFollow.cam.PlayerShowcase());
-            StartCoroutine(WaitWinPanel(timeBeforePanel));
+            StartCoroutine(WaitWinPanel(timeBeforeWinPanel));
             win = false;
             endGame = true;
         }

@@ -357,6 +357,7 @@ public class PlayerController : MonoBehaviour
     //A fucntion for moving player towards crystal
     public void WalkTowardsCrystal()
     {
+        StopEffects();
         StopPlayer();
         Vector3 dir = new Vector3(0, 0, 0) - gameObject.transform.position;
 
