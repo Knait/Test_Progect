@@ -809,7 +809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1803158121}
   timeBeforeCamera: 0.06
-  classicOffset: {x: 0, y: 20, z: 0}
+  classicOffset: {x: 0, y: 30, z: 0}
   finishOffset: {x: 3, y: 3, z: 0.5}
 --- !u!1 &573800890
 GameObject:
@@ -1975,13 +1975,18 @@ MonoBehaviour:
   fadeSpeed: 0
   secondsBeforeTransfer: 0.5
   secondsAfterTransfer: 0.025
-  defaultLevelSpeed: 30
-  speedIncrease: 3
+  defaultLevelSpeed: 35
+  speedIncrease: 0.5
   timeBeforeWinPanel: 1.5
   textPanel: {fileID: 1540573737}
   startPanel: {fileID: 1945145575186995170}
   endPanel: {fileID: 1945145576067900610}
   winPanel: {fileID: 1945145574829751861}
+  gemColors:
+  - {r: 0.23529412, g: 0.77254903, b: 0.14901961, a: 1}
+  - {r: 0.852869, g: 0.8584906, b: 0.14173192, a: 1}
+  - {r: 0.15619439, g: 0.49803922, b: 0.8490566, a: 1}
+  - {r: 0.8396226, g: 0.122774996, b: 0.7754641, a: 1}
   inGameTubes: []
   currentCoins: 0
   death: 0
