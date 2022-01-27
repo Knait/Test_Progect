@@ -1968,7 +1968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2524181a5dc65154baaf9e4f0071fdff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameLevel: 0
   localScore: 0
   goldPerCrystal: 10
   levelGold: 100
@@ -1978,15 +1977,15 @@ MonoBehaviour:
   secondsAfterTransfer: 0.025
   defaultLevelSpeed: 30
   speedIncrease: 5
-  timeBeforePanel: 1
+  timeBeforeWinPanel: 0
   textPanel: {fileID: 1540573737}
   startPanel: {fileID: 1945145575186995170}
   endPanel: {fileID: 1945145576067900610}
   winPanel: {fileID: 1945145574829751861}
+  gemColors:
+  - {r: 1, g: 0, b: 0, a: 0}
   inGameTubes: []
-  CrystalList: []
   currentCoins: 0
-  maxCoins: 0
   death: 0
   win: 0
   paused: 0

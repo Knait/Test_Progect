@@ -246,8 +246,10 @@ public class PlayerController : MonoBehaviour
         //Find winning crystal on the level
         if (gemRef == null)
         {
+            //Find gem
             gemRef = GameObject.Find("Crystal7").transform;
-            //gemRef.GetComponent<MeshRenderer>().material.color = GameController.Instance.gemColors[0];
+            //Assign it a random color
+            gemRef.GetComponent<MeshRenderer>().material.SetColor("_Color", GameController.Instance.gemColors[Random.Range(0, GameController.Instance.gemColors.Count)]);
         }
     }
 
