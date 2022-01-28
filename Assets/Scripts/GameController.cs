@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -49,13 +50,14 @@ public class GameController : MonoBehaviour
     [HideInInspector] public int currentCoins;
     //Maximum amount of coins
     private int maxCoins;
+    private int allCoins;
 
+    //Flags
     [HideInInspector] public bool death = false;
     [HideInInspector] public bool win = false;
     [HideInInspector] public bool paused = false;
-
-    private int allCoins;
     [HideInInspector] public bool endGame = false;
+
     void Awake()
     {
         instance = this;
@@ -65,6 +67,7 @@ public class GameController : MonoBehaviour
             PlayerPrefs.SetInt("allCoins", 0);
             PlayerPrefs.Save();
         }
+
     }
 
     void Start()
@@ -77,8 +80,9 @@ public class GameController : MonoBehaviour
         startPanel.gameObject.SetActive(true);
         startPanel.GetComponentInChildren<Button>().onClick.AddListener(StartButton);
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
+
         textPanel.gameObject.SetActive(false);
-        //PlayerController.Instance.ResetPlayer();
+        textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
 
         //Death panel setup
         endPanel.gameObject.SetActive(false);
@@ -361,5 +365,10 @@ public class GameController : MonoBehaviour
     public void CollectGold()
     {
         localScore += goldPerCrystal;
+    }
+
+    void ShopSelection()
+    {
+        SceneManager.LoadScene(1);
     }
 }
