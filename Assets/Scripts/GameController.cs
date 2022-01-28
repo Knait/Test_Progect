@@ -68,6 +68,7 @@ public class GameController : MonoBehaviour
             PlayerPrefs.Save();
         }
 
+        //if(!PlayerPrefs.HasKey())
     }
 
     void Start()
@@ -82,7 +83,7 @@ public class GameController : MonoBehaviour
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
 
         textPanel.gameObject.SetActive(false);
-        textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
+        //textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
 
         //Death panel setup
         endPanel.gameObject.SetActive(false);
