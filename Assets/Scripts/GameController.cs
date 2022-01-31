@@ -62,20 +62,48 @@ public class GameController : MonoBehaviour
     {
         instance = this;
 
+        //Prefs
+        //All coins
         if(!PlayerPrefs.HasKey("allCoins"))
         {
             PlayerPrefs.SetInt("allCoins", 0);
-            PlayerPrefs.Save();
+        }
+        //Current level
+        if(!PlayerPrefs.HasKey("currentLevel"))
+        {
+            PlayerPrefs.SetInt("currentLevel", 1);
+        }
+        //Current playerSpeed;
+        if(!PlayerPrefs.HasKey("currentSpeed"))
+        {
+            PlayerPrefs.SetFloat("currentSpeed", defaultLevelSpeed);
+        }
+        //FlagForShop
+        if(!PlayerPrefs.HasKey("goneShopping"))
+        {
+            PlayerPrefs.SetInt("goneShopping", 0);
         }
 
-        //if(!PlayerPrefs.HasKey())
+        PlayerPrefs.Save();
     }
 
     void Start()
     {
         if (speedIncrease == 0) Debug.LogError("SpeedIncrease need to be above 0, to work");
 
-        gameLevel = 1;
+        //RESET LEVEL AT START
+        if(PlayerPrefs.GetInt("goneShopping") == 1)
+        {
+            ChangeSpeedAndLevel();
+            gameLevel = PlayerPrefs.GetInt("currentLevel");
+            PlayerPrefs.SetInt("goneShopping", 0);
+            PlayerPrefs.Save();
+
+        } else
+        {
+            gameLevel = 1;
+            PlayerPrefs.SetInt("currentLevel", 1);
+        }
 
         //Start panel setup
         startPanel.gameObject.SetActive(true);
@@ -83,7 +111,7 @@ public class GameController : MonoBehaviour
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
 
         textPanel.gameObject.SetActive(false);
-        //textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
+        textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
 
         //Death panel setup
         endPanel.gameObject.SetActive(false);
@@ -199,15 +227,16 @@ public class GameController : MonoBehaviour
         RefreshText();
 
         if (localScore > 0) StartCoroutine(TransferGold());
-
     }
 
     #region Buttons
     void StartButton()
     {
-        setSpeed(defaultLevelSpeed);
+        SetSpeed(defaultLevelSpeed);
+
         startPanel.gameObject.SetActive(false);
         textPanel.gameObject.SetActive(false);
+
         //Add them to the list for easier manipulation
         CrystalList.AddRange(FindObjectsOfType<Coin>());
         Resume();
@@ -242,14 +271,6 @@ public class GameController : MonoBehaviour
     void WinButton()
     {
         endGame = false;
-        //Increase the speed every 2 levels
-        if(defaultLevelSpeed < 70)
-        {
-            if (gameLevel % 2 == 0) changeSpeed(speedIncrease);
-        }
-
-        //Increase pipe amount by 1 every 3 levels
-        if (gameLevel % 3 == 0) TrubaAmountAtStart++;
 
         PlayerController.Instance.ResetPlayer();
 
@@ -259,9 +280,10 @@ public class GameController : MonoBehaviour
 
         winPanel.gameObject.SetActive(false);
         textPanel.gameObject.SetActive(false);
+
         win = false;
-        //Increase level and speed of the level otherwise
-        gameLevel++;
+
+        ChangeSpeedAndLevel();
 
         PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
 
@@ -280,7 +302,7 @@ public class GameController : MonoBehaviour
 
     #region Setters and Getters
     //Set the speed of current levels
-    public void setSpeed(float _speed)
+    public void SetSpeed(float _speed)
     {
         defaultLevelSpeed = _speed;
 
@@ -290,7 +312,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void changeSpeed(float _speed)
+    public void IncreaseSpeed(float _speed)
     {
         defaultLevelSpeed += _speed;
 
@@ -301,7 +323,7 @@ public class GameController : MonoBehaviour
     }
 
     //Get the speed of current levels
-    public float getSpeed()
+    public float GetSpeed()
     {
         return defaultLevelSpeed;
     }
@@ -345,6 +367,20 @@ public class GameController : MonoBehaviour
         localScore += levelGold;
     }
 
+    void ChangeSpeedAndLevel()
+    {
+        //Increase the speed every 2 levels
+        if (defaultLevelSpeed < 70)
+        {
+            if (gameLevel % 2 == 0) IncreaseSpeed(speedIncrease);
+        }
+
+        //Increase pipe amount by 1 every 3 levels
+        if (gameLevel % 3 == 0) TrubaAmountAtStart++;
+
+        //Increase level and speed of the level otherwise
+        gameLevel++;
+    }
     IEnumerator TransferGold()
     {
         yield return new WaitForSeconds(secondsBeforeTransfer);
@@ -370,6 +406,11 @@ public class GameController : MonoBehaviour
 
     void ShopSelection()
     {
+        PlayerPrefs.SetFloat("currentSpeed", defaultLevelSpeed);
+        PlayerPrefs.SetInt("currentLevel", gameLevel);
+        PlayerPrefs.SetInt("goneShopping", 1);
+        PlayerPrefs.Save();
+
         SceneManager.LoadScene(1);
     }
 }

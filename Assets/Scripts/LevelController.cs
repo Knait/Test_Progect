@@ -9,7 +9,7 @@ public class LevelController : MonoBehaviour
 
     public void Start()
     {
-        levelSpeed = GameController.Instance.getSpeed();
+        levelSpeed = GameController.Instance.GetSpeed();
     }
     public void Update()
     {
