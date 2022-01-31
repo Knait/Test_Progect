@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem bladeEffect;
     [SerializeField] private ParticleSystem coinEffect;
 
+    [Header("Skins")]
+    [SerializeField] private List<GameObject> skinList = new List<GameObject>();
+
     //Hidden
     //Inside refs
     private ParticleSystem dashRef;
@@ -78,16 +81,32 @@ public class PlayerController : MonoBehaviour
 
         playerAnimator = GetComponentInChildren<Animator>();
         pos = transform.position;
+
+        if (skinList.Count > 0)
+        {
+            //Turning every skin off
+            foreach (GameObject targetSkin in skinList)
+            {
+                targetSkin.SetActive(false);
+            }
+        }
     }
 
     void Start()
     {
+        Debug.Log(PlayerPrefs.GetInt("BodySkin_ID"));
+
+        //Setting the right skin
+        skinList[0].SetActive(true);
+
         thisRB.useGravity = false;
         bladeRef.Play();
         if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
 
         //Find winning crystal on the level
-        gemRef = GameObject.Find("Crystal7").transform;
+        //gemRef = GameObject.Find("Crystal7").transform;
+
+
     }
 
     void Update()

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using UnityEngine.InputSystem; //ВАЖНО: использует new input system для определения с чего производится ввод!!!
 
 public class SaveData
 {
@@ -15,7 +14,6 @@ public class SaveData
 
 public class MarketManager : MonoBehaviour
 {
-
     private RaycastHit hit;
     private Ray MyRay;
     private GameObject currentObjectInUse;  // текущий обьект продукта
@@ -53,8 +51,6 @@ public class MarketManager : MonoBehaviour
         //находим продукт InUse 
         foreach (GameObject gObject in Bars)
         {
-
-
             if (GetStateProduct(gObject) == StateProduct.InUse)
             {
                 currentObjectInUse = gObject;           // устан текущий обьект InUse
@@ -271,8 +267,8 @@ public class MarketManager : MonoBehaviour
         string value = JsonUtility.ToJson(data);
         PlayerPrefs.SetString(key, value);
 
-        key = "AllPoint";
-        PlayerPrefs.SetInt("AllPoint", AllPoints);
+        key = "allCoins";
+        PlayerPrefs.SetInt("allCoins", AllPoints);
         PlayerPrefs.SetInt("SavedID", ID);
         PlayerPrefs.Save();
         Debug.Log("Data saved!");

@@ -83,6 +83,11 @@ public class GameController : MonoBehaviour
         {
             PlayerPrefs.SetInt("goneShopping", 0);
         }
+        //Current player skin
+        if (!PlayerPrefs.HasKey("BodySkin_ID"))
+        {
+            PlayerPrefs.SetInt("BodySkin_ID", 0);
+        }
 
         PlayerPrefs.Save();
     }
@@ -94,7 +99,9 @@ public class GameController : MonoBehaviour
         //RESET LEVEL AT START
         if(PlayerPrefs.GetInt("goneShopping") == 1)
         {
+            //Increased level stats (as if next level button was pressed)
             ChangeSpeedAndLevel();
+
             gameLevel = PlayerPrefs.GetInt("currentLevel");
             PlayerPrefs.SetInt("goneShopping", 0);
             PlayerPrefs.Save();

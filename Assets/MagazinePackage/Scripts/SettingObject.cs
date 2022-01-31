@@ -47,7 +47,7 @@ public class SettingObject : MonoBehaviour
     [SerializeField] private GameObject particle;
     public void SetNewInUseObj()
     {
-        particle.SetActive(true);
+        //particle.SetActive(true);
 
         if (skin)
             PlayerPrefs.SetInt("BodySkin_ID", objectID);
@@ -57,8 +57,8 @@ public class SettingObject : MonoBehaviour
 
     public void DeactiveParticle(SettingObject obj)
     {
-        if (skin == obj.skin)
-            particle.SetActive(false);
+        //if (skin == obj.skin)
+            //particle.SetActive(false);
     }
 
     /// <summary>
