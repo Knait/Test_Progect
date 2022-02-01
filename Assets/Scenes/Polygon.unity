@@ -5286,9 +5286,8 @@ Animator:
     'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:Spine1'\n\tTransform
     'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
     'mixamorig:LeftUpLeg'\n\tTransform 'mixamorig:Head'\n\tand more ...\n\tFrom animation
-    clip 'idle_(70)'\n\tFrom animation clip 'JumpStart_(30)'\n\tFrom animation clip
-    'Armature_Armature_mixamo.com_Layer0'\n\tFrom animation clip 'Walking'\n\tFrom
-    animation clip 'Losing'\n\tFrom animation clip 'JumpStart_(30)'"
+    clip 'JumpStart_(30)'\n\tFrom animation clip 'Walking'\n\tFrom animation clip
+    'Losing'\n\tFrom animation clip 'JumpStart_(30)'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -5654,7 +5653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &6702935099235075362
 Animator:
   serializedVersion: 3
@@ -5676,9 +5675,8 @@ Animator:
     'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:Spine1'\n\tTransform
     'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
     'mixamorig:LeftUpLeg'\n\tTransform 'mixamorig:Head'\n\tand more ...\n\tFrom animation
-    clip 'idle_(70)'\n\tFrom animation clip 'JumpStart_(30)'\n\tFrom animation clip
-    'Armature_Armature_mixamo.com_Layer0'\n\tFrom animation clip 'Walking'\n\tFrom
-    animation clip 'Losing'\n\tFrom animation clip 'JumpStart_(30)'"
+    clip 'JumpStart_(30)'\n\tFrom animation clip 'Walking'\n\tFrom animation clip
+    'Losing'\n\tFrom animation clip 'JumpStart_(30)'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -7475,7 +7473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6702935099667916257
 Transform:
   m_ObjectHideFlags: 0
@@ -8341,7 +8339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &6702935099896345006
 Animator:
   serializedVersion: 3
@@ -10356,7 +10354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &6702935100378531263
 Animator:
   serializedVersion: 3
@@ -12566,7 +12564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &6702935100834104758
 Animator:
   serializedVersion: 3
@@ -14205,7 +14203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6702935101231868902
 Transform:
   m_ObjectHideFlags: 0
@@ -14363,7 +14361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &6702935101270603615
 Animator:
   serializedVersion: 3
@@ -14446,7 +14444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &6702935101275016851
 Animator:
   serializedVersion: 3
