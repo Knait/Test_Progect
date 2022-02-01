@@ -48,14 +48,16 @@ public class PlayerController : MonoBehaviour
     [Header("DON'T CHANGE")]
     [SerializeField] private Vector3 velocity;
 
+    //Flags
     [HideInInspector] public bool dashing = false;
-
     //To track if player is attached to the wall
     public bool flying = false;
     [HideInInspector]public bool playerControllsBlocked = false;
+
     private Collision prevCol;
     private Vector3 pos;
     private Quaternion rot;
+
     void Awake()
     {
         instance = this;
@@ -79,11 +81,12 @@ public class PlayerController : MonoBehaviour
         bladeRef.Pause();
         coinRef.Pause();
 
-        playerAnimator = GetComponentInChildren<Animator>();
+        //playerAnimator = GetComponentInChildren<Animator>();
         pos = transform.position;
 
         if (skinList.Count > 0)
         {
+            Debug.Log("A");
             //Turning every skin off
             foreach (GameObject targetSkin in skinList)
             {
@@ -97,7 +100,8 @@ public class PlayerController : MonoBehaviour
         Debug.Log(PlayerPrefs.GetInt("BodySkin_ID"));
 
         //Setting the right skin
-        skinList[0].SetActive(true);
+        skinList[2].SetActive(true);
+        playerAnimator = skinList[2].GetComponent<Animator>();
 
         thisRB.useGravity = false;
         bladeRef.Play();
@@ -105,8 +109,6 @@ public class PlayerController : MonoBehaviour
 
         //Find winning crystal on the level
         //gemRef = GameObject.Find("Crystal7").transform;
-
-
     }
 
     void Update()
