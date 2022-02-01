@@ -1,23 +1,14 @@
 fileFormatVersion: 2
-guid: 0e466ee67c62dc8469d8a5835e6a0215
+guid: f949e69fe40c33e45a510a3fb20bfb43
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 800913225157025814
-    second: "\u0438\u0434\u0435\u0442"
+      74: 1181662275228936838
+    second: podnymaet
   - first:
-      74: 2654908253525092759
-    second: "\u043F\u043E\u0434\u043D\u044F\u043B"
-  - first:
-      74: -4791504522942941401
-    second: Armature|Armature|mixamo.com|Layer0
-  - first:
-      74: -7311215330428641870
-    second: "Armature|\u0438\u0434\u0435\u0442"
-  - first:
-      74: -7428690722270011713
-    second: "Armature|\u043F\u043E\u0434\u043D\u044F\u043B"
+      74: -3419257869308726280
+    second: walk
   externalObjects: {}
   materials:
     materialImportMode: 2
