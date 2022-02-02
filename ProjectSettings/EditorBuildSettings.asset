@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/borschtScene.unity
-    guid: c478c74d43875d8438103ecd0e7e6415
+    path: Assets/Scenes/Polygon.unity
+    guid: c0fcda28af52df84da2a118d63cc5714
+  - enabled: 1
+    path: Assets/Scenes/SceneMarket.unity
+    guid: a0b882259e2a4b74abef55bfe5dee5fc
   m_configObjects: {}

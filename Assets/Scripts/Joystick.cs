@@ -57,6 +57,8 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
         if (dragging)
         {
             PlayerController.Instance.dashing = true;
+            PlayerController.Instance.flying = true;
+            PlayerController.Instance.attached = false;
             dragging = false;
         }
     }

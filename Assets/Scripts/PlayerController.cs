@@ -38,7 +38,8 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem bladeRef;
     private ParticleSystem coinRef;
 
-    private Animator playerAnimator;
+    //Temporary public - set to private later
+    public Animator playerAnimator;
     private Rigidbody thisRB;
 
     private Vector3 startingPlayerPosition;
@@ -52,9 +53,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool dashing = false;
     //To track if player is attached to the wall
     public bool flying = false;
+    public bool attached;
     [HideInInspector]public bool playerControllsBlocked = false;
 
     private Collision prevCol;
+    private ControllerColliderHit test;
     private Vector3 pos;
     private Quaternion rot;
 
@@ -81,27 +84,23 @@ public class PlayerController : MonoBehaviour
         bladeRef.Pause();
         coinRef.Pause();
 
-        //playerAnimator = GetComponentInChildren<Animator>();
-        pos = transform.position;
-
         if (skinList.Count > 0)
         {
-            Debug.Log("A");
             //Turning every skin off
             foreach (GameObject targetSkin in skinList)
             {
                 targetSkin.SetActive(false);
             }
         }
+
+        //Setting the right skin
+        skinList[PlayerPrefs.GetInt("BodySkin_ID")].SetActive(true);
+        playerAnimator = skinList[PlayerPrefs.GetInt("BodySkin_ID")].GetComponent<Animator>();
     }
 
     void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt("BodySkin_ID"));
-
-        //Setting the right skin
-        skinList[2].SetActive(true);
-        playerAnimator = skinList[2].GetComponent<Animator>();
+        //Debug.Log(PlayerPrefs.GetInt("BodySkin_ID"));
 
         thisRB.useGravity = false;
         bladeRef.Play();
@@ -113,15 +112,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        pos = transform.position;
         pos.y = Mathf.Clamp(0, 0, 0);
 
         velocity = thisRB.velocity;
+        pos = transform.position;
 
-        if (!flying && !GameController.Instance.endGame) StopPlayer();
+        //if (!flying && !GameController.Instance.endGame) StopPlayer();
 
         //Dashing trigger
-        if (dashing && !flying && !GameController.Instance.paused)
+        if (dashing && !attached && !GameController.Instance.paused)
         {
             thisRB.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Move();
@@ -131,19 +130,20 @@ public class PlayerController : MonoBehaviour
             //Dash Effect play
             dashRef.Play();
             //Animation
-            playerAnimator.SetBool("dashing", true);
-            playerAnimator.SetBool("attached", false);
+
             //Flags
             dashing = false;
-            flying = true;
 
             //Stopping particles
             crashRef.Stop();
             bladeRef.Stop();
         }
 
-
-        transform.position = pos;
+        if(flying)
+        {
+            playerAnimator.SetBool("dashing", true);
+            playerAnimator.SetBool("attached", false);
+        }
     }
 
     public Vector3 GetStartingPosition()
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
     public void Move()
     {
         //Reset the velocity, so the speed will remain the same
-        thisRB.velocity = new Vector3(0, 0, 0);
+        thisRB.velocity = Vector3.zero;
         thisRB.AddForce(Dir() * dashSpeed, ForceMode.Impulse);
         //Debug.Log("Direction " + Dir());
     }
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
             //Stopping dash effect
             dashRef.Stop();
             if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
-            StopPlayer();
+            //StopPlayer();
             return;
         }
           
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("SameCollision " + prevCol.transform.position);
             flying = false;
-            StopPlayer();
+            //StopPlayer();
             //Don't play dashing animation
             playerAnimator.SetBool("dashing", false);
             //Stopping dash effect
@@ -244,10 +244,10 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Look " + lookRotation);
         transform.rotation = lookRotation;
 
+        //StopPlayer();
+
         //Push the player to the opposite direction
         StartCoroutine(PushPlayer());
-        
-        StopPlayer();
 
         //LEAVE IT FOR EFFECTS
         //crashRef.Play();
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
         //When player reached pedestal
         if (other.gameObject.name == "GameObject")
         {
-            playerAnimator.Play("поднял");
+            playerAnimator.Play("РїРѕРґРЅСЏР»");
             StopPlayer();
             gemRef.SetParent(gemPos);
         }
@@ -318,7 +318,8 @@ public class PlayerController : MonoBehaviour
     //A coroutine to slightly push the player in the opposite direction
     IEnumerator PushPlayer()
     {
-        thisRB.AddForce(-Dir() * 0.3f, ForceMode.Impulse);
+        Debug.Log("Pushin");
+        thisRB.AddForce(new Vector3(0, 10f, 0), ForceMode.Impulse);
 
         yield return null;
     }

@@ -53,6 +53,8 @@ public class SettingObject : MonoBehaviour
             PlayerPrefs.SetInt("BodySkin_ID", objectID);
         else
             PlayerPrefs.SetInt("GunSkin_ID", objectID);
+
+        PlayerPrefs.Save();
     }
 
     public void DeactiveParticle(SettingObject obj)
@@ -62,7 +64,7 @@ public class SettingObject : MonoBehaviour
     }
 
     /// <summary>
-    /// обновление текста на плашках
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     void UpdateText()
     {
@@ -80,7 +82,7 @@ public class SettingObject : MonoBehaviour
     }
 
     /// <summary>
-    /// вращение обьекта над плашкой
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     void RotateObject()
     {

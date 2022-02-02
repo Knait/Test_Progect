@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class SaveData
 {
-    // Размер массива для сохранения состаяния продуктов в магазе
+    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     public int[] priceProduct = new int[27];
     public StateProduct[] stateProduct = new StateProduct[27];
 }
@@ -16,27 +16,27 @@ public class MarketManager : MonoBehaviour
 {
     private RaycastHit hit;
     private Ray MyRay;
-    private GameObject currentObjectInUse;  // текущий обьект продукта
+    private GameObject currentObjectInUse;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
    // [SerializeField]
-    private int ID;             // текущий ID обьекта продукта
+    private int ID;             // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     // [SerializeField]
     // private int LoadID;
 
     [SerializeField]
-    private Transform cameraPosition;   //Камера
+    private Transform cameraPosition;   //пїЅпїЅпїЅпїЅпїЅпїЅ
     [SerializeField]
     private TMPro.TextMeshProUGUI textAllPoints;         
 
    // [SerializeField]
-    private int AllPoints;  // Игровая валюта
+    private int AllPoints;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     [Header("Array Bars")]
     [SerializeField]
-    private GameObject[] Bars;           //массив 3d кнопок плашек
+    private GameObject[] Bars;           //пїЅпїЅпїЅпїЅпїЅпїЅ 3d пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     [Header("Array Sprites Background")]
     [SerializeField]
-    private Sprite[] backGround;         // массив фона текста
+    private Sprite[] backGround;         // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     [SerializeField] private UnityEngine.UI.Button closeButton;
 
@@ -48,13 +48,13 @@ public class MarketManager : MonoBehaviour
 
         if (cameraPosition != null) cameraPos = new Vector3(-7.0f, cameraPosition.position.y, cameraPosition.position.z);
 
-        //находим продукт InUse 
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ InUse 
         foreach (GameObject gObject in Bars)
         {
             if (GetStateProduct(gObject) == StateProduct.InUse)
             {
-                currentObjectInUse = gObject;           // устан текущий обьект InUse
-                ID = GetIDObject(currentObjectInUse); // установим ID текущего InUse
+                currentObjectInUse = gObject;           // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ InUse
+                ID = GetIDObject(currentObjectInUse); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ InUse
 
                break;
             }
@@ -65,7 +65,7 @@ public class MarketManager : MonoBehaviour
 
         foreach (GameObject gObject in Bars)
         {
-            if (gObject.GetComponent<SettingObject>().priceProduct > PlayerPrefs.GetInt("AllPoint"))
+            if (gObject.GetComponent<SettingObject>().priceProduct > PlayerPrefs.GetInt("allCoins"))
             {
                 PlayerPrefs.SetInt("NewTargetPrice", gObject.GetComponent<SettingObject>().priceProduct);
                 break;
@@ -75,24 +75,23 @@ public class MarketManager : MonoBehaviour
 
     void Update()
     {
-        UpdateMouse();                    // проверяем мышь
-        UpdateSpritesBackGround(Bars, backGround);         // обновление подложки текста
+        UpdateMouse();                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        UpdateSpritesBackGround(Bars, backGround);         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         UpdateTextAllPoints();
 
         if (cameraPosition != null) cameraPosition.position = Vector3.Lerp(cameraPosition.position, cameraPos, 0.05f);
     }
 
     /// <summary>
-    /// сохранение и возврат со сцены
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     private void ReturnScene(int indexScene)
     {
-        SaveData();
-        SceneManager.LoadScene(indexScene);    // загрузка пред сцены
+        SceneManager.LoadScene(indexScene);    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     }
 
     /// <summary>
-    /// Возвращает обьект по нажатию кнопки под мышей
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     /// <returns></returns>
     private GameObject GetChoiceOBject()
@@ -108,7 +107,7 @@ public class MarketManager : MonoBehaviour
             MeshFilter filter = hit.collider.GetComponent(typeof(MeshFilter)) as MeshFilter;
             if (filter)
             {
-                result = filter.gameObject;                // обьект по которому щелкнули мышей               
+                result = filter.gameObject;                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ               
             }
         }
         Debug.Log(result);
@@ -116,7 +115,7 @@ public class MarketManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Возврат  ID планки
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ  ID пїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     /// <param name="gameObject"></param>
     /// <returns></returns>
@@ -129,21 +128,21 @@ public class MarketManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Смена продукта в магазе
+    /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     /// <param name="Object"></param>
     private void ChangeProduct(GameObject gObject)
     {
         StateProduct stateProduct = GetStateProduct(gObject);
 
-        if (stateProduct == StateProduct.InUse || stateProduct == StateProduct.Locked) // если используем или заблокирован то выход
+        if (stateProduct == StateProduct.InUse || stateProduct == StateProduct.Locked) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         {
             Debug.Log("StateObject " + stateProduct);
             return;
         }
 
 
-        if (stateProduct == StateProduct.Price)                                       // если есть деньги то покупаем
+        if (stateProduct == StateProduct.Price)                                       // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             int currentPriceObject = gObject.GetComponent<SettingObject>().priceProduct;
 
@@ -157,27 +156,27 @@ public class MarketManager : MonoBehaviour
             }
             Debug.Log("StateObject " + stateProduct);
 
-            UpdateSpritesBackGround(Bars, backGround);         // обновление подложки текста
+            UpdateSpritesBackGround(Bars, backGround);         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             return;
         }
 
         if (stateProduct == StateProduct.Use)
         {
-            SetStateProduct(gObject, StateProduct.InUse);               //если мона использовать то используем 
+            SetStateProduct(gObject, StateProduct.InUse);               //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 
             if (currentObjectInUse)
             {
                 SetStateProduct(currentObjectInUse, StateProduct.Use);
             }
-            currentObjectInUse = gObject;                          // установим текущий обьект InUse
-            ID = GetIDObject(currentObjectInUse);                 // установим ID текущего InUse
-            UpdateSpritesBackGround(Bars, backGround);         // обновление подложки текста
+            currentObjectInUse = gObject;                          // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ InUse
+            ID = GetIDObject(currentObjectInUse);                 // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ InUse
+            UpdateSpritesBackGround(Bars, backGround);         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         }
     }
 
 
     /// <summary>
-    /// возврат состояния продукта
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     /// <param name="gObject"></param>
     /// <returns></returns>
@@ -190,7 +189,7 @@ public class MarketManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Установка статуса плашки
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     /// <param name="gObject"></param>
     /// <param name="stateProduct"></param>
@@ -201,7 +200,7 @@ public class MarketManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Смена подложки текста на плашках (барах)
+    /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ)
     /// </summary>
     /// <param name="arrayObjects"></param>
     /// <param name="arraySprites"></param>
@@ -218,7 +217,7 @@ public class MarketManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Загрузка данных магазина
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     void LoadData()
     {
@@ -249,7 +248,7 @@ public class MarketManager : MonoBehaviour
     }
 
     /// <summary>
-    /// сохранение данных магазина
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     void SaveData()
     {
@@ -267,6 +266,7 @@ public class MarketManager : MonoBehaviour
         string value = JsonUtility.ToJson(data);
         PlayerPrefs.SetString(key, value);
 
+        Debug.Log("All points" + AllPoints);
         key = "allCoins";
         PlayerPrefs.SetInt("allCoins", AllPoints);
         PlayerPrefs.SetInt("SavedID", ID);
@@ -275,7 +275,7 @@ public class MarketManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Удаление всех данных
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     void DeleteAllData()
     {
@@ -286,7 +286,7 @@ public class MarketManager : MonoBehaviour
 
 
     /// <summary>
-    /// Обработка мыши
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     /// </summary>
     void UpdateMouse()
     {
@@ -305,12 +305,12 @@ public class MarketManager : MonoBehaviour
                         SceneManager.LoadScene(0);
                     }
 
-                    if (nameObject == "ButtonSection(1)")       //перемещаем камеру слево
+                    if (nameObject == "ButtonSection(1)")       //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                     {
                         cameraPos = new Vector3(-7.0f, cameraPosition.position.y, cameraPosition.position.z);
                     }
 
-                    if (nameObject == "ButtonSection(2)")       //перемещаем камеру  середина
+                    if (nameObject == "ButtonSection(2)")       //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     {
                         cameraPos = new Vector3(0.0f, cameraPosition.position.y, cameraPosition.position.z);
                     }
@@ -331,6 +331,8 @@ public class MarketManager : MonoBehaviour
     void UpdateTextAllPoints()
     {
         textAllPoints.text = AllPoints.ToString();
+
+        SaveData();
     }
 
 }
