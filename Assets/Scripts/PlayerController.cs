@@ -246,27 +246,13 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
-        StopPlayer();
-
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
         
         bladeRef.Play();
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
 
-        //If collided with finishlane
-        if (collision.gameObject.GetComponentInChildren<NextLevel>())
-        {
-            //Assing the activated sword the right position
-            swordRef.transform.SetParent(beltPos);
-            swordRef.transform.rotation = beltPos.rotation;
-            swordRef.transform.position = beltPos.position;
-
-            //swordList[swordId].transform.position = beltPos.position;
-            transform.LookAt(new Vector3(0, 0, 0));
-            playerAnimator.SetBool("win", true);
-            GameController.Instance.NextLevel();
-        }
+        StopPlayer();
 
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
@@ -361,7 +347,19 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(StopCoinAfterSomeTime(0.4f));
         }
 
+        //If collided with finishlane
+        if (other.gameObject.GetComponentInChildren<NextLevel>())
+        {
+            //Assing the activated sword the right position
+            swordRef.transform.SetParent(beltPos);
+            swordRef.transform.rotation = beltPos.rotation;
+            swordRef.transform.position = beltPos.position;
 
+            //swordList[swordId].transform.position = beltPos.position;
+            transform.LookAt(new Vector3(0, 0, 0));
+            playerAnimator.SetBool("win", true);
+            GameController.Instance.NextLevel();
+        }
 
         //When player reached pedestal
         if (other.gameObject.name == "GameObject")
@@ -369,6 +367,8 @@ public class PlayerController : MonoBehaviour
             playerAnimator.Play("поднял");
             StopPlayer();
             gemRef.SetParent(gemPos);
+            gemRef.position = gemPos.transform.position;
+            gemRef.rotation = gemPos.transform.rotation;
         }
 
         //If player reached finish lane
@@ -411,6 +411,7 @@ public class PlayerController : MonoBehaviour
        
         playerControllsBlocked = false;
         flying = false;
+        swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
     }
 
     public void DestroyGem()

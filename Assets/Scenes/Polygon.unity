@@ -1678,7 +1678,7 @@ GameObject:
   m_Layer: 0
   m_Name: Cristal
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1690,7 +1690,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115625928}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.885, y: -0.15, z: 0.021}
+  m_LocalPosition: {x: -0, y: 0.04, z: 1.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6702935100552527611}
@@ -7029,9 +7029,6 @@ MonoBehaviour:
   dashSpeed: 35
   walkingSpeed: 0
   joystick: {fileID: 223458943}
-  swordPos: {fileID: 0}
-  gemPos: {fileID: 0}
-  beltPos: {fileID: 0}
   dashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   crashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
