@@ -52,7 +52,7 @@ public class SettingObject : MonoBehaviour
         if (skin)
             PlayerPrefs.SetInt("BodySkin_ID", objectID);
         else
-            PlayerPrefs.SetInt("GunSkin_ID", objectID);
+            PlayerPrefs.SetInt("SwordSkin_ID", objectID);
 
         PlayerPrefs.Save();
     }
@@ -66,6 +66,7 @@ public class SettingObject : MonoBehaviour
     /// <summary>
     /// ���������� ������ �� �������
     /// </summary>
+    //Updates the text on Bars
     void UpdateText()
     {
         string currentStateProduct;

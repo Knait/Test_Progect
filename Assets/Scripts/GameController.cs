@@ -88,6 +88,11 @@ public class GameController : MonoBehaviour
         {
             PlayerPrefs.SetInt("BodySkin_ID", 0);
         }
+        //Current sword skin
+        if (!PlayerPrefs.HasKey("SwordSkin_ID"))
+        {
+            PlayerPrefs.SetInt("SwordSkin_ID", 0);
+        }
 
         PlayerPrefs.Save();
     }
@@ -143,13 +148,17 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        //Debug
+        //Debug (Resetting data)
         if (Input.GetKeyDown(KeyCode.R))
         {
-            //Also need to reset local variable
-            PlayerPrefs.SetInt("allCoins", 0);
+            
+            PlayerPrefs.DeleteAll();
             allCoins = 0;
+            //Also need to reset local variable
+            PlayerPrefs.Save();
+            Debug.Log("All data was reset!");
         }
+        //Debug (Pause the level)
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if(paused)
@@ -159,6 +168,12 @@ public class GameController : MonoBehaviour
             {
                 Pause();
             }
+        }
+
+        //Debug (Add 200 crystals)
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            localScore += 1000;
         }
         //Debug
 
@@ -413,6 +428,8 @@ public class GameController : MonoBehaviour
 
     void ShopSelection()
     {
+        allCoins += localScore;
+        PlayerPrefs.SetInt("allCoins", allCoins);
         PlayerPrefs.SetFloat("currentSpeed", defaultLevelSpeed);
         PlayerPrefs.SetInt("currentLevel", gameLevel);
         PlayerPrefs.SetInt("goneShopping", 1);

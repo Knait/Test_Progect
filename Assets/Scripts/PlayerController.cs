@@ -18,9 +18,10 @@ public class PlayerController : MonoBehaviour
     //Refs
     public Joystick joystick;
     [Header("Positions")]
-    //Position for blade effect
-    [SerializeField] private Transform bladePos;
+    //Positions 
+    [SerializeField] private Transform swordPos;
     [SerializeField] private Transform gemPos;
+    [SerializeField] private Transform beltPos;
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem dashEffect;
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Skins")]
     [SerializeField] private List<GameObject> skinList = new List<GameObject>();
+    [Header("Swords")]
+    [SerializeField] private List<GameObject> swordList = new List<GameObject>();
 
     //Hidden
     //Inside refs
@@ -37,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem crashRef;
     private ParticleSystem bladeRef;
     private ParticleSystem coinRef;
+
+    private GameObject swordRef;
 
     //Temporary public - set to private later
     public Animator playerAnimator;
@@ -64,14 +69,51 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        //If there are loaded skins - turn them all off
+        if (skinList.Count > 0)
+        {
+            //Turning every skin off
+            foreach (GameObject targetSkin in skinList)
+            {
+                targetSkin.SetActive(false);
+            }
+        }
+
+        if (swordList.Count > 0)
+        {
+            //Turning every sword off
+            foreach (GameObject targetSword in swordList)
+            {
+                targetSword.SetActive(false);
+            }
+        }
+
+        //Temp variable to hold skin id
+        var skinId = PlayerPrefs.GetInt("BodySkin_ID");
+        //Setting the right skin
+        skinList[skinId].SetActive(true);
+        //Getting animator
+        playerAnimator = skinList[skinId].GetComponent<Animator>();
+        //Getting the required positions
+        swordPos = skinList[skinId].GetComponent<PositionsHolder>().swordPos;
+        beltPos = skinList[skinId].GetComponent<PositionsHolder>().beltPos;
+        gemPos = skinList[skinId].GetComponent<PositionsHolder>().crystalPos;
+
+        
+        //swordList[swordId].transform.eulerAngles.Set(0, 30, 90);
+
+        //Getting a reference to this RigidBody
         thisRB = GetComponent<Rigidbody>();
+
+        //Setting current position as a starting position
         startingPlayerPosition = transform.position;
         transform.position = startingPlayerPosition;
 
         //Effects references
         crashRef = Instantiate(crashEffect, gameObject.transform);
         dashRef = Instantiate(dashEffect, gameObject.transform);
-        bladeRef = Instantiate(bladeEffect, bladePos);
+        bladeRef = Instantiate(bladeEffect, swordPos);
         coinRef = Instantiate(coinEffect);
 
         //Dash effect position and rotation
@@ -83,24 +125,21 @@ public class PlayerController : MonoBehaviour
         dashRef.Pause();
         bladeRef.Pause();
         coinRef.Pause();
-
-        if (skinList.Count > 0)
-        {
-            //Turning every skin off
-            foreach (GameObject targetSkin in skinList)
-            {
-                targetSkin.SetActive(false);
-            }
-        }
-
-        //Setting the right skin
-        skinList[PlayerPrefs.GetInt("BodySkin_ID")].SetActive(true);
-        playerAnimator = skinList[PlayerPrefs.GetInt("BodySkin_ID")].GetComponent<Animator>();
     }
 
     void Start()
     {
         //Debug.Log(PlayerPrefs.GetInt("BodySkin_ID"));
+
+        //Temp variable to hold sword id
+        var swordId = PlayerPrefs.GetInt("SwordSkin_ID");
+        //Setting the right skin
+        swordList[swordId].SetActive(true);
+        swordRef = swordList[swordId];
+        swordRef.transform.position = swordPos.position;
+        //Assing the activated sword the right position
+        swordRef.transform.SetParent(swordPos);
+        swordRef.transform.rotation = swordPos.rotation;
 
         thisRB.useGravity = false;
         bladeRef.Play();
@@ -122,6 +161,7 @@ public class PlayerController : MonoBehaviour
         //Dashing trigger
         if (dashing && !attached && !GameController.Instance.paused)
         {
+            swordPos.rotation = new Quaternion(0, 0, 0, 0);
             thisRB.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Move();
             Quaternion lookRotation = Quaternion.LookRotation(Dir());
@@ -133,6 +173,7 @@ public class PlayerController : MonoBehaviour
 
             //Flags
             dashing = false;
+            attached = false;
 
             //Stopping particles
             crashRef.Stop();
@@ -144,13 +185,24 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("dashing", true);
             playerAnimator.SetBool("attached", false);
         }
+
+        if(attached)
+        {
+            swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
+        }
     }
 
+    /// <summary>
+    /// Get the default starting position
+    /// </summary>
     public Vector3 GetStartingPosition()
     {
         return startingPlayerPosition;
     }
 
+    /// <summary>
+    /// Set new starting position
+    /// </summary>
     public void SetStartingPosition(Vector3 _position)
     {
         StopPlayer();
@@ -194,6 +246,7 @@ public class PlayerController : MonoBehaviour
     {
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
 
+        
         bladeRef.Play();
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
@@ -241,6 +294,8 @@ public class PlayerController : MonoBehaviour
         lookRotation.x = 0;
         lookRotation.z = 0;
 
+              
+
         //Debug.Log("Look " + lookRotation);
         transform.rotation = lookRotation;
 
@@ -254,6 +309,8 @@ public class PlayerController : MonoBehaviour
 
         //Flying flag
         flying = false;
+
+        attached = true;
         //Don't Play dashing animation
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("attached", true);
@@ -294,6 +351,12 @@ public class PlayerController : MonoBehaviour
         //If collided with finishlane
         if (other.gameObject.GetComponent<NextLevel>())
         {
+            //Assing the activated sword the right position
+            swordRef.transform.SetParent(beltPos);
+            swordRef.transform.rotation = beltPos.rotation;
+            swordRef.transform.position = beltPos.position;
+            
+            //swordList[swordId].transform.position = beltPos.position;
             transform.LookAt(new Vector3(0, 0, 0));
             playerAnimator.SetBool("win", true);
             GameController.Instance.NextLevel();

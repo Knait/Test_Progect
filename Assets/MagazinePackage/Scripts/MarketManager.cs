@@ -269,7 +269,7 @@ public class MarketManager : MonoBehaviour
         Debug.Log("All points" + AllPoints);
         key = "allCoins";
         PlayerPrefs.SetInt("allCoins", AllPoints);
-        PlayerPrefs.SetInt("SavedID", ID);
+        //PlayerPrefs.SetInt("SavedID", ID);
         PlayerPrefs.Save();
         Debug.Log("Data saved!");
     }
