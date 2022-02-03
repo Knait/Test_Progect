@@ -292,6 +292,10 @@ public class GameController : MonoBehaviour
 
     void WinButton()
     {
+        allCoins += localScore;
+        PlayerPrefs.SetInt("allCoins", allCoins);
+        PlayerPrefs.Save();
+
         endGame = false;
 
         PlayerController.Instance.ResetPlayer();

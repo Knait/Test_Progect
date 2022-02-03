@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
         if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
 
         //Find winning crystal on the level
-        //gemRef = GameObject.Find("Crystal7").transform;
+        gemRef = GameObject.Find("Crystal7").transform;
     }
 
     void Update()
@@ -246,12 +246,27 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
-        if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
+        StopPlayer();
 
+        if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
         
         bladeRef.Play();
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
+
+        //If collided with finishlane
+        if (collision.gameObject.GetComponentInChildren<NextLevel>())
+        {
+            //Assing the activated sword the right position
+            swordRef.transform.SetParent(beltPos);
+            swordRef.transform.rotation = beltPos.rotation;
+            swordRef.transform.position = beltPos.position;
+
+            //swordList[swordId].transform.position = beltPos.position;
+            transform.LookAt(new Vector3(0, 0, 0));
+            playerAnimator.SetBool("win", true);
+            GameController.Instance.NextLevel();
+        }
 
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
@@ -296,12 +311,8 @@ public class PlayerController : MonoBehaviour
         lookRotation.x = 0;
         lookRotation.z = 0;
 
-              
-
         //Debug.Log("Look " + lookRotation);
         transform.rotation = lookRotation;
-
-        //StopPlayer();
 
         //Push the player to the opposite direction
         StartCoroutine(PushPlayer());
@@ -350,19 +361,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(StopCoinAfterSomeTime(0.4f));
         }
 
-        //If collided with finishlane
-        if (other.gameObject.GetComponent<NextLevel>())
-        {
-            //Assing the activated sword the right position
-            swordRef.transform.SetParent(beltPos);
-            swordRef.transform.rotation = beltPos.rotation;
-            swordRef.transform.position = beltPos.position;
 
-            //swordList[swordId].transform.position = beltPos.position;
-            transform.LookAt(new Vector3(0, 0, 0));
-            playerAnimator.SetBool("win", true);
-            GameController.Instance.NextLevel();
-        }
 
         //When player reached pedestal
         if (other.gameObject.name == "GameObject")
@@ -383,7 +382,6 @@ public class PlayerController : MonoBehaviour
     //A coroutine to slightly push the player in the opposite direction
     IEnumerator PushPlayer()
     {
-        Debug.Log("Pushin");
         thisRB.AddForce(new Vector3(0, 10f, 0), ForceMode.Impulse);
 
         yield return null;
