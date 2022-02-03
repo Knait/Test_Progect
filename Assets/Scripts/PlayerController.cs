@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     public Joystick joystick;
     [Header("Positions")]
     //Positions 
-    [SerializeField] private Transform swordPos;
-    [SerializeField] private Transform gemPos;
-    [SerializeField] private Transform beltPos;
+    private Transform swordPos;
+    private Transform gemPos;
+    private Transform beltPos;
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem dashEffect;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private GameObject swordRef;
 
     //Temporary public - set to private later
-    public Animator playerAnimator;
+    [HideInInspector] public Animator playerAnimator;
     private Rigidbody thisRB;
 
     private Vector3 startingPlayerPosition;
@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
     //Flags
     [HideInInspector] public bool dashing = false;
     //To track if player is attached to the wall
+
+    [Header("DEBUG")]
     public bool flying = false;
     public bool attached;
     [HideInInspector]public bool playerControllsBlocked = false;
@@ -355,7 +357,7 @@ public class PlayerController : MonoBehaviour
             swordRef.transform.SetParent(beltPos);
             swordRef.transform.rotation = beltPos.rotation;
             swordRef.transform.position = beltPos.position;
-            
+
             //swordList[swordId].transform.position = beltPos.position;
             transform.LookAt(new Vector3(0, 0, 0));
             playerAnimator.SetBool("win", true);
