@@ -190,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
         if(attached)
         {
+            Debug.Log("Rotating Bruh");
             swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
         }
     }
@@ -355,7 +356,7 @@ public class PlayerController : MonoBehaviour
             swordRef.transform.rotation = beltPos.rotation;
             swordRef.transform.position = beltPos.position;
 
-            //swordList[swordId].transform.position = beltPos.position;
+            //Player Winning 
             transform.LookAt(new Vector3(0, 0, 0));
             playerAnimator.SetBool("win", true);
             GameController.Instance.NextLevel();
@@ -366,6 +367,7 @@ public class PlayerController : MonoBehaviour
         {
             playerAnimator.Play("поднял");
             StopPlayer();
+            
             gemRef.SetParent(gemPos);
             gemRef.position = gemPos.transform.position;
             gemRef.rotation = gemPos.transform.rotation;
@@ -398,7 +400,7 @@ public class PlayerController : MonoBehaviour
     {
         StopPlayer();
         transform.rotation = new Quaternion(0, 0, 0, 0);
-        transform.position = new Vector3(0, 0, 6);
+        transform.position = GetStartingPosition();
 
         StopAnimations();
         StopEffects();
@@ -411,6 +413,12 @@ public class PlayerController : MonoBehaviour
        
         playerControllsBlocked = false;
         flying = false;
+        attached = true;
+
+        swordRef.transform.position = swordPos.position;
+        //Assing the activated sword the right position
+        swordRef.transform.SetParent(swordPos);
+        swordRef.transform.rotation = swordPos.rotation;
         swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
     }
 
