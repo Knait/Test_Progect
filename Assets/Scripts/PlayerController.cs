@@ -143,6 +143,7 @@ public class PlayerController : MonoBehaviour
         swordRef.transform.SetParent(swordPos);
         swordRef.transform.rotation = swordPos.rotation;
         swordRef.transform.position = swordPos.position;
+        swordRef.transform.localScale = swordPos.localScale;
 
         thisRB.useGravity = false;
         bladeRef.Play();
