@@ -138,10 +138,11 @@ public class PlayerController : MonoBehaviour
         //Setting the right skin
         swordList[swordId].SetActive(true);
         swordRef = swordList[swordId];
-        swordRef.transform.position = swordPos.position;
+ 
         //Assing the activated sword the right position
         swordRef.transform.SetParent(swordPos);
         swordRef.transform.rotation = swordPos.rotation;
+        swordRef.transform.position = swordPos.position;
 
         thisRB.useGravity = false;
         bladeRef.Play();
@@ -163,7 +164,7 @@ public class PlayerController : MonoBehaviour
         //Dashing trigger
         if (dashing && !attached && !GameController.Instance.paused)
         {
-            swordPos.rotation = new Quaternion(0, 0, 0, 0);
+            //swordPos.rotation = new Quaternion(0, 0, 0, 0);
             thisRB.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Move();
             Quaternion lookRotation = Quaternion.LookRotation(Dir());
@@ -190,8 +191,7 @@ public class PlayerController : MonoBehaviour
 
         if(attached)
         {
-            Debug.Log("Rotating Bruh");
-            swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
+            //swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
         }
     }
 
@@ -349,7 +349,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //If collided with finishlane
-        if (other.gameObject.GetComponentInChildren<NextLevel>())
+        if (other.gameObject.GetComponent<NextLevel>())
         {
             //Assing the activated sword the right position
             swordRef.transform.SetParent(beltPos);
@@ -415,11 +415,11 @@ public class PlayerController : MonoBehaviour
         flying = false;
         attached = true;
 
-        swordRef.transform.position = swordPos.position;
+        //swordRef.transform.position = swordPos.position;
         //Assing the activated sword the right position
-        swordRef.transform.SetParent(swordPos);
-        swordRef.transform.rotation = swordPos.rotation;
-        swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
+        //swordRef.transform.SetParent(swordPos);
+        //swordRef.transform.rotation = swordPos.rotation;
+        //swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
     }
 
     public void DestroyGem()
