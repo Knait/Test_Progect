@@ -138,10 +138,12 @@ public class PlayerController : MonoBehaviour
         //Setting the right skin
         swordList[swordId].SetActive(true);
         swordRef = swordList[swordId];
-        swordRef.transform.position = swordPos.position;
+ 
         //Assing the activated sword the right position
         swordRef.transform.SetParent(swordPos);
         swordRef.transform.rotation = swordPos.rotation;
+        swordRef.transform.position = swordPos.position;
+        swordRef.transform.localScale = swordPos.localScale;
 
         thisRB.useGravity = false;
         bladeRef.Play();
@@ -163,7 +165,7 @@ public class PlayerController : MonoBehaviour
         //Dashing trigger
         if (dashing && !attached && !GameController.Instance.paused)
         {
-            swordPos.rotation = new Quaternion(0, 0, 0, 0);
+            //swordPos.rotation = new Quaternion(0, 0, 0, 0);
             thisRB.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Move();
             Quaternion lookRotation = Quaternion.LookRotation(Dir());
@@ -190,8 +192,7 @@ public class PlayerController : MonoBehaviour
 
         if(attached)
         {
-            Debug.Log("Rotating Bruh");
-            swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
+            //swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
         }
     }
 
@@ -247,13 +248,12 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        StopPlayer();
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
         
         bladeRef.Play();
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
-
-        StopPlayer();
 
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
@@ -302,7 +302,9 @@ public class PlayerController : MonoBehaviour
         transform.rotation = lookRotation;
 
         //Push the player to the opposite direction
-        StartCoroutine(PushPlayer());
+        //StartCoroutine(PushPlayer());
+
+        thisRB.AddForce(-Dir(), ForceMode.Impulse);
 
         //LEAVE IT FOR EFFECTS
         //crashRef.Play();
@@ -317,6 +319,7 @@ public class PlayerController : MonoBehaviour
 
         //Stopping dash effect
         dashRef.Stop();
+        StopPlayer();
     }
 
     void LateUpdate()
@@ -349,7 +352,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //If collided with finishlane
-        if (other.gameObject.GetComponentInChildren<NextLevel>())
+        if (other.gameObject.GetComponent<NextLevel>())
         {
             //Assing the activated sword the right position
             swordRef.transform.SetParent(beltPos);
@@ -384,7 +387,6 @@ public class PlayerController : MonoBehaviour
     //A coroutine to slightly push the player in the opposite direction
     IEnumerator PushPlayer()
     {
-        thisRB.AddForce(new Vector3(0, 10f, 0), ForceMode.Impulse);
 
         yield return null;
     }
@@ -415,11 +417,17 @@ public class PlayerController : MonoBehaviour
         flying = false;
         attached = true;
 
-        swordRef.transform.position = swordPos.position;
         //Assing the activated sword the right position
         swordRef.transform.SetParent(swordPos);
         swordRef.transform.rotation = swordPos.rotation;
-        swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
+        swordRef.transform.position = swordPos.position;
+        swordRef.transform.localScale = swordPos.localScale;
+
+        //swordRef.transform.position = swordPos.position;
+        //Assing the activated sword the right position
+        //swordRef.transform.SetParent(swordPos);
+        //swordRef.transform.rotation = swordPos.rotation;
+        //swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
     }
 
     public void DestroyGem()
