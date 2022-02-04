@@ -416,6 +416,12 @@ public class PlayerController : MonoBehaviour
         flying = false;
         attached = true;
 
+        //Assing the activated sword the right position
+        swordRef.transform.SetParent(swordPos);
+        swordRef.transform.rotation = swordPos.rotation;
+        swordRef.transform.position = swordPos.position;
+        swordRef.transform.localScale = swordPos.localScale;
+        
         //swordRef.transform.position = swordPos.position;
         //Assing the activated sword the right position
         //swordRef.transform.SetParent(swordPos);
