@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3813231400174171895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1027228932988049417}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1027228932988049417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3813231400174171895}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.004, y: 0.43838584, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5774248567369861474}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6586955179144500184
 GameObject:
   m_ObjectHideFlags: 0
@@ -26,10 +56,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6586955179144500184}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1027228932988049417}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,10 +91,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1933632292217251832, guid: 9a05488aef43e8441b4be79e3ea6e33b, type: 3}
-  - {fileID: -586648137795990427, guid: 9a05488aef43e8441b4be79e3ea6e33b, type: 3}
-  - {fileID: 6552384957791553272, guid: 9a05488aef43e8441b4be79e3ea6e33b, type: 3}
-  - {fileID: -6772528458690496831, guid: 9a05488aef43e8441b4be79e3ea6e33b, type: 3}
+  - {fileID: 2100000, guid: 911cae02ea1f1394296006cf7e9bf637, type: 2}
+  - {fileID: 2100000, guid: 911cae02ea1f1394296006cf7e9bf637, type: 2}
+  - {fileID: 2100000, guid: 0ea33adb9e23de24a90c6a5a504e1e35, type: 2}
+  - {fileID: 2100000, guid: ce84ca546b5ee0c4fb8c5d3e6c0148a5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

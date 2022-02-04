@@ -2129,7 +2129,7 @@ MonoBehaviour:
   localScore: 0
   goldPerCrystal: 1
   levelGold: 10
-  TrubaAmountAtStart: 3
+  TrubaAmountAtStart: 8
   fadeSpeed: 0
   secondsBeforeTransfer: 0.5
   secondsAfterTransfer: 0.025
@@ -3531,6 +3531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 6655430}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 89794111}
   crystalPos: {fileID: 345274674}
 --- !u!1 &187771653387968564
@@ -7584,6 +7585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 1412166954}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 530501996}
   crystalPos: {fileID: 1115625929}
 --- !u!4 &6702935099187000034
@@ -9359,6 +9361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 1164653626}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 1209777391}
   crystalPos: {fileID: 2144332311}
 --- !u!4 &6702935099667916257
@@ -10156,6 +10159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 1491586397}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 112087145}
   crystalPos: {fileID: 951391534}
 --- !u!95 &6702935099896345006
@@ -11704,6 +11708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 2020121809}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 1407464413}
   crystalPos: {fileID: 1854018758}
 --- !u!95 &6702935100378531263
@@ -13562,6 +13567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 336778675}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 491269424}
   crystalPos: {fileID: 795167948}
 --- !u!95 &6702935100834104758
@@ -14807,6 +14813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 1726582643}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 1874881582}
   crystalPos: {fileID: 920537374}
 --- !u!4 &6702935101250171660
@@ -14948,6 +14955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 2116479309}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 1365540736}
   crystalPos: {fileID: 1711442919}
 --- !u!95 &6702935101270603615
@@ -15016,6 +15024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPos: {fileID: 672162692}
+  effectPos: {fileID: 0}
   beltPos: {fileID: 1603071014}
   crystalPos: {fileID: 1158038097}
 --- !u!95 &6702935101275016851
