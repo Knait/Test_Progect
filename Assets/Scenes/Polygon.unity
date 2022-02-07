@@ -7029,7 +7029,7 @@ MonoBehaviour:
   walkingSpeed: 0
   joystick: {fileID: 223458943}
   dashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
-  crashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
+  crashEffect: {fileID: 198880425136568428, guid: f171ac3dbb620c44e81cd88ddee1cbbd, type: 3}
   bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
   coinEffect: {fileID: 19851284, guid: 5552d0e6b5e91684c9b9b938763192bf, type: 3}
   crystalEffectDisappearTime: 0
@@ -7057,6 +7057,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   dashing: 0
+  particlePos: {fileID: 0}
   flying: 0
   attached: 0
   playerControllsBlocked: 0
