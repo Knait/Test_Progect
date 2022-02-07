@@ -120,6 +120,25 @@ public class PlayerController : MonoBehaviour
         beltPos = skinList[skinId].GetComponent<PositionsHolder>().beltPos;
         gemPos = skinList[skinId].GetComponent<PositionsHolder>().crystalPos;
 
+        //Temp variable to hold sword id
+        var swordId = PlayerPrefs.GetInt("SwordSkin_ID");
+        //Setting the right skin
+        swordList[swordId].SetActive(true);
+        swordRef = swordList[swordId];
+
+        //particlePos = swordList[swordId].
+
+        //Assing the activated sword the right position
+        swordRef.transform.SetParent(swordPos);
+        //Effect position on sword
+        particlePos = swordPos.GetComponent<Sword>().effectPos;
+        bladeRef = Instantiate(bladeEffect, particlePos);
+
+        swordRef.transform.rotation = swordPos.rotation;
+        swordRef.transform.position = swordPos.position;
+        swordRef.transform.localScale = swordPos.localScale;
+
+
         //Getting a reference to this RigidBody
         thisRB = GetComponent<Rigidbody>();
 
@@ -140,7 +159,7 @@ public class PlayerController : MonoBehaviour
         //References to instantiated effects
         crashRef.Pause();
         dashRef.Pause();
-        
+        bladeRef.Pause();
         coinRef.Pause();
     }
 
@@ -148,23 +167,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log(PlayerPrefs.GetInt("BodySkin_ID"));
 
-        //Temp variable to hold sword id
-        var swordId = PlayerPrefs.GetInt("SwordSkin_ID");
-        //Setting the right skin
-        swordList[swordId].SetActive(true);
-        swordRef = swordList[swordId];
 
-        //particlePos = swordList[swordId].
-
-        //Assing the activated sword the right position
-        swordRef.transform.SetParent(swordPos);
-        //Effect position on sword
-        particlePos = swordPos.GetComponent<Sword>().effectPos;
-        bladeRef = Instantiate(bladeEffect, particlePos);
-
-        swordRef.transform.rotation = swordPos.rotation;
-        swordRef.transform.position = swordPos.position;
-        swordRef.transform.localScale = swordPos.localScale;
 
         thisRB.useGravity = false;
         bladeRef.Play();
