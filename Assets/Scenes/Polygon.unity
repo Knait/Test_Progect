@@ -7044,6 +7044,8 @@ MonoBehaviour:
   crashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
   coinEffect: {fileID: 19851284, guid: 5552d0e6b5e91684c9b9b938763192bf, type: 3}
+  crystalEffectDisappear: 0.04
+  crashEffectDisappear: 0.02
   skinList:
   - {fileID: 6702935099183420546}
   - {fileID: 187771653231202598}

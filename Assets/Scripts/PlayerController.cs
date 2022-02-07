@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     [Header("Paramaeters")]
+    [Tooltip("Скорость рывка.")]
     [SerializeField] private float dashSpeed;
+    [Tooltip("Скорость игрока при подходе к кристалу.")]
     [SerializeField] private float walkingSpeed;
 
     [Header("References")]
@@ -19,15 +21,30 @@ public class PlayerController : MonoBehaviour
     public Joystick joystick;
     [Header("Positions")]
     //Positions 
+    [Tooltip("Позиция меча.")]
     private Transform swordPos;
+
+    [Tooltip("Позиция кристала, для финишной анимации.")]
     private Transform gemPos;
+
+    [Tooltip("Позиция пояса, для финишной анимации.")]
     private Transform beltPos;
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem dashEffect;
+
+    [Tooltip("Эффект столкновения.")]
     [SerializeField] private ParticleSystem crashEffect;
+    [Tooltip("Эффект искр меча.")]
     [SerializeField] private ParticleSystem bladeEffect;
+    [Tooltip("Эффект подбора кристала.")]
     [SerializeField] private ParticleSystem coinEffect;
+
+    [Header("Effect Parameters")]
+    [Tooltip("Время после которого исчезнет эффект подбора кристала.")]
+    [SerializeField] private float crystalEffectDisappearTime;
+    [Tooltip("Время после которого исчезнет эффект столкновения.")]
+    [SerializeField] private float crashEffectDisappearTime;
 
     [Header("Skins")]
     [SerializeField] private List<GameObject> skinList = new List<GameObject>();
@@ -147,7 +164,11 @@ public class PlayerController : MonoBehaviour
 
         thisRB.useGravity = false;
         bladeRef.Play();
+
+        //Run various checks
         if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
+        if (crystalEffectDisappearTime == 0) crystalEffectDisappearTime = 0.04f;
+        if (crashEffectDisappearTime == 0) crashEffectDisappearTime = 0.02f;
 
         //Find winning crystal on the level
         gemRef = GameObject.Find("Crystal7").transform;
@@ -155,10 +176,21 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        pos.y = Mathf.Clamp(0, 0, 0);
+        pos.y = Mathf.Clamp(pos.y, 0, 1);
 
         velocity = thisRB.velocity;
         pos = transform.position;
+
+        //To fix the bug with NO collision on idle (Just pushes player on and off all the time to activate collision)
+        if(pos.y > 0)
+        {
+            thisRB.AddForce(new Vector3(0, -0.5f, 0), ForceMode.Acceleration);
+
+        } else
+        {
+            thisRB.AddForce(new Vector3(0, 0.5f, 0), ForceMode.Acceleration);
+        }
+
 
         //if (!flying && !GameController.Instance.endGame) StopPlayer();
 
@@ -249,7 +281,7 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         StopPlayer();
-        if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
+        if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         
         bladeRef.Play();
         //Debug.Log(collision.collider.name);
@@ -258,12 +290,14 @@ public class PlayerController : MonoBehaviour
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
         {
+            crashRef.Play();
             playerAnimator.SetBool("death", true);
             playerAnimator.SetBool("dashing", false);
             playerAnimator.SetBool("attached", false);
             //Stopping dash effect
             dashRef.Stop();
-            if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
+            if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
+            StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
             //StopPlayer();
             return;
         }
@@ -282,7 +316,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("dashing", false);
             //Stopping dash effect
             dashRef.Stop();
-            if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(0.4f));
+            if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         }
 
         //To track the previous collision
@@ -307,7 +341,8 @@ public class PlayerController : MonoBehaviour
         thisRB.AddForce(-Dir(), ForceMode.Impulse);
 
         //LEAVE IT FOR EFFECTS
-        //crashRef.Play();
+        crashRef.Play();
+        StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
 
         //Flying flag
         flying = false;
@@ -348,7 +383,7 @@ public class PlayerController : MonoBehaviour
             GameController.Instance.CollectGold();
             GameController.Instance.currentCoins--;
             other.gameObject.SetActive(false);
-            StartCoroutine(StopCoinAfterSomeTime(0.4f));
+            StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         }
 
         //If collided with finishlane
@@ -384,17 +419,16 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    //A coroutine to slightly push the player in the opposite direction
-    IEnumerator PushPlayer()
-    {
-
-        yield return null;
-    }
-
     IEnumerator StopCoinAfterSomeTime(float _time)
     {
         yield return new WaitForSeconds(_time);
         coinRef.Stop();
+    }
+
+    IEnumerator StopCrashEffect(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        crashRef.Stop();
     }
 
     //Reset player animation back to "Idle"
