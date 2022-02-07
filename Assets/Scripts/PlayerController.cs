@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
         //Assing the activated sword the right position
         swordRef.transform.SetParent(swordPos);
         //Effect position on sword
-        particlePos = swordPos.GetComponent<Sword>().effectPos;
+        particlePos = swordRef.GetComponent<Sword>().effectPos;
         bladeRef = Instantiate(bladeEffect, particlePos);
 
         swordRef.transform.rotation = swordPos.rotation;
