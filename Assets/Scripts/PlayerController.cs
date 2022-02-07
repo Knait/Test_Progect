@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem crashRef;
     private ParticleSystem bladeRef;
     private ParticleSystem coinRef;
-
     private GameObject swordRef;
 
     //Temporary public - set to private later
@@ -76,6 +75,7 @@ public class PlayerController : MonoBehaviour
     //To track if player is attached to the wall
 
     [Header("DEBUG")]
+    public Transform particlePos;
     public bool flying = false;
     public bool attached;
     [HideInInspector]public bool playerControllsBlocked = false;
@@ -112,15 +112,13 @@ public class PlayerController : MonoBehaviour
         var skinId = PlayerPrefs.GetInt("BodySkin_ID");
         //Setting the right skin
         skinList[skinId].SetActive(true);
+
         //Getting animator
         playerAnimator = skinList[skinId].GetComponent<Animator>();
         //Getting the required positions
         swordPos = skinList[skinId].GetComponent<PositionsHolder>().swordPos;
         beltPos = skinList[skinId].GetComponent<PositionsHolder>().beltPos;
         gemPos = skinList[skinId].GetComponent<PositionsHolder>().crystalPos;
-
-        
-        //swordList[swordId].transform.eulerAngles.Set(0, 30, 90);
 
         //Getting a reference to this RigidBody
         thisRB = GetComponent<Rigidbody>();
@@ -132,7 +130,7 @@ public class PlayerController : MonoBehaviour
         //Effects references
         crashRef = Instantiate(crashEffect, gameObject.transform);
         dashRef = Instantiate(dashEffect, gameObject.transform);
-        bladeRef = Instantiate(bladeEffect, swordPos);
+        
         coinRef = Instantiate(coinEffect);
 
         //Dash effect position and rotation
@@ -142,7 +140,7 @@ public class PlayerController : MonoBehaviour
         //References to instantiated effects
         crashRef.Pause();
         dashRef.Pause();
-        bladeRef.Pause();
+        
         coinRef.Pause();
     }
 
@@ -155,9 +153,15 @@ public class PlayerController : MonoBehaviour
         //Setting the right skin
         swordList[swordId].SetActive(true);
         swordRef = swordList[swordId];
- 
+
+        //particlePos = swordList[swordId].
+
         //Assing the activated sword the right position
         swordRef.transform.SetParent(swordPos);
+        //Effect position on sword
+        particlePos = swordPos.GetComponent<Sword>().effectPos;
+        bladeRef = Instantiate(bladeEffect, particlePos);
+
         swordRef.transform.rotation = swordPos.rotation;
         swordRef.transform.position = swordPos.position;
         swordRef.transform.localScale = swordPos.localScale;
@@ -280,6 +284,7 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        Handheld.Vibrate();
         StopPlayer();
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         
@@ -322,7 +327,7 @@ public class PlayerController : MonoBehaviour
         //To track the previous collision
         prevCol = collision;
 
-        crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
+        //crashRef.transform.position = collision.collider.ClosestPoint(transform.position);
 
         //Making sure the player looks at the collided object
         //ONLY ROTATE ON Y AXIS
