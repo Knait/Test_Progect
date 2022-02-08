@@ -15,20 +15,34 @@ public class GameController : MonoBehaviour
     [Header("Globals")]
     private int gameLevel;
     [HideInInspector] public int localScore;
+
+    [Tooltip("Количество очков за подбор кристала.")]
     [SerializeField] private int goldPerCrystal;
+
+    [Tooltip("Количество очков за прохождение уровня.")]
     [SerializeField] private int levelGold;
+
+    [Tooltip("Количество труб на старте.")]
     [SerializeField] private int TrubaAmountAtStart;
+
+    [Tooltip("Скорость с которой исчезают препятствия.")]
     public float fadeSpeed;
 
     [Header("UI Parameters")]
+    [Tooltip("Сколько секунд подождать перед начислением очков.")]
     [SerializeField] private float secondsBeforeTransfer;
+
+    [Tooltip("Сколько секунд между начислением одного очка.")]
     [SerializeField] private float secondsAfterTransfer;
 
     [Header("Speed")]
+    [Tooltip("Начальная скорость уровня.")]
     [SerializeField] private float defaultLevelSpeed;
+    [Tooltip("На сколько увеличивать скорость уровня.")]
     [SerializeField] private float speedIncrease;
 
     [Header("UI")]
+    [Tooltip("Задержка времени перед появлением панели Победы.")]
     [SerializeField] private float timeBeforeWinPanel;
     [SerializeField] private RectTransform textPanel;
     [SerializeField] private RectTransform startPanel;

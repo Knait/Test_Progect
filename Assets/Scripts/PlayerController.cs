@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
     private Transform beltPos;
 
     [Header("Effects")]
-    [SerializeField] private ParticleSystem dashEffect;
 
     [Tooltip("Эффект столкновения.")]
     [SerializeField] private ParticleSystem crashEffect;
@@ -53,7 +52,6 @@ public class PlayerController : MonoBehaviour
 
     //Hidden
     //Inside refs
-    private ParticleSystem dashRef;
     private ParticleSystem crashRef;
     private ParticleSystem bladeRef;
     private ParticleSystem coinRef;
@@ -149,17 +147,10 @@ public class PlayerController : MonoBehaviour
 
         //Effects references
         crashRef = Instantiate(crashEffect, gameObject.transform);
-        dashRef = Instantiate(dashEffect, gameObject.transform);
-        
         coinRef = Instantiate(coinEffect);
-
-        //Dash effect position and rotation
-        dashRef.transform.position -= new Vector3(0, 0, 0.1f);
-        dashRef.transform.localRotation = new Quaternion(0, -180, 0, 0);
 
         //References to instantiated effects
         crashRef.Pause();
-        dashRef.Pause();
         bladeRef.Pause();
         coinRef.Pause();
     }
@@ -172,7 +163,6 @@ public class PlayerController : MonoBehaviour
         bladeRef.Play();
 
         //Run various checks
-        if (!dashEffect || !crashEffect) Debug.LogError("Can't find particles! Please add them in the inspector.");
         if (crystalEffectDisappearTime == 0) crystalEffectDisappearTime = 0.04f;
         if (crashEffectDisappearTime == 0) crashEffectDisappearTime = 0.02f;
 
@@ -198,9 +188,6 @@ public class PlayerController : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(Dir());
             //Vector3 rotation = Quaternion.Lerp(crashRef.transform.rotation, lookRotation, 1).eulerAngles;
             transform.rotation = lookRotation;
-            //Dash Effect play
-            dashRef.Play();
-            //Animation
 
             //Flags
             dashing = false;
@@ -247,7 +234,7 @@ public class PlayerController : MonoBehaviour
             thisRB.AddForce(new Vector3(0, 0.5f, 0), ForceMode.Impulse);
         }
     }
-    
+
     /// <summary>
     /// Get the default starting position
     /// </summary>
@@ -318,8 +305,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("death", true);
             playerAnimator.SetBool("dashing", false);
             playerAnimator.SetBool("attached", false);
-            //Stopping dash effect
-            dashRef.Stop();
+
             if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
             StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
             StopPlayer();
@@ -338,8 +324,7 @@ public class PlayerController : MonoBehaviour
             //StopPlayer();
             //Don't play dashing animation
             playerAnimator.SetBool("dashing", false);
-            //Stopping dash effect
-            dashRef.Stop();
+
             if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         }
 
@@ -374,8 +359,6 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("attached", true);
 
-        //Stopping dash effect
-        dashRef.Stop();
         StopPlayer();
         //Vibrator.Cansel();
     }
@@ -504,7 +487,6 @@ public class PlayerController : MonoBehaviour
 
     public void StopEffects()
     {
-        dashRef.Stop();
         crashRef.Stop();
         bladeRef.Stop();
         coinRef.Stop();
