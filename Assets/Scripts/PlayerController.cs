@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using AndroidNativeCore;
 public class PlayerController : MonoBehaviour
 {
     #region Singleton
@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
     public Transform particlePos;
     public bool flying = false;
     public bool attached;
+
+    public bool vibrate = false;
     [HideInInspector]public bool playerControllsBlocked = false;
 
     private Collision prevCol;
@@ -138,7 +140,6 @@ public class PlayerController : MonoBehaviour
         swordRef.transform.position = swordPos.position;
         swordRef.transform.localScale = swordPos.localScale;
 
-
         //Getting a reference to this RigidBody
         thisRB = GetComponent<Rigidbody>();
 
@@ -167,8 +168,6 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log(PlayerPrefs.GetInt("BodySkin_ID"));
 
-
-
         thisRB.useGravity = false;
         bladeRef.Play();
 
@@ -187,17 +186,6 @@ public class PlayerController : MonoBehaviour
 
         velocity = thisRB.velocity;
         pos = transform.position;
-
-        //To fix the bug with NO collision on idle (Just pushes player on and off all the time to activate collision)
-        if(pos.y > 0)
-        {
-            thisRB.AddForce(new Vector3(0, -0.5f, 0), ForceMode.Acceleration);
-
-        } else
-        {
-            thisRB.AddForce(new Vector3(0, 0.5f, 0), ForceMode.Acceleration);
-        }
-
 
         //if (!flying && !GameController.Instance.endGame) StopPlayer();
 
@@ -229,12 +217,37 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("attached", false);
         }
 
-        if(attached)
+        if(vibrate)
         {
-            //swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
+            Handheld.Vibrate();
+            vibrate = false;
+        }
+
+        if(GameController.Instance.paused && !GameController.Instance.endGame)
+        {
+            StopPlayer();
+        }
+
+        if(attached && !GameController.Instance.endGame)
+        {
+            StopPlayer();
         }
     }
 
+    void FixedUpdate()
+    {
+        //To fix the bug with NO collision on idle (Just pushes player on and off all the time to activate collision)
+        if(pos.y > 0)
+        {
+            Debug.Log("pushin");
+            thisRB.AddForce(new Vector3(0, -0.5f, 0), ForceMode.Impulse);
+
+        } else
+        {
+            thisRB.AddForce(new Vector3(0, 0.5f, 0), ForceMode.Impulse);
+        }
+    }
+    
     /// <summary>
     /// Get the default starting position
     /// </summary>
@@ -287,7 +300,10 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
-        Handheld.Vibrate();
+        //Vibrator.Vibrate(200);
+        //Handheld.Vibrate();
+
+        vibrate = true;
         StopPlayer();
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         
@@ -306,7 +322,7 @@ public class PlayerController : MonoBehaviour
             dashRef.Stop();
             if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
             StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
-            //StopPlayer();
+            StopPlayer();
             return;
         }
           
@@ -344,18 +360,16 @@ public class PlayerController : MonoBehaviour
         transform.rotation = lookRotation;
 
         //Push the player to the opposite direction
-        //StartCoroutine(PushPlayer());
-
-        thisRB.AddForce(-Dir(), ForceMode.Impulse);
+        thisRB.AddForce(-Dir() * 1, ForceMode.Impulse);
 
         //LEAVE IT FOR EFFECTS
         crashRef.Play();
         StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
 
-        //Flying flag
+        //Flags
         flying = false;
-
         attached = true;
+
         //Don't Play dashing animation
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("attached", true);
@@ -363,6 +377,7 @@ public class PlayerController : MonoBehaviour
         //Stopping dash effect
         dashRef.Stop();
         StopPlayer();
+        //Vibrator.Cansel();
     }
 
     void LateUpdate()
@@ -509,10 +524,17 @@ public class PlayerController : MonoBehaviour
         StopEffects();
         StopPlayer();
         Vector3 dir = new Vector3(0, 0, 0) - gameObject.transform.position;
+        transform.LookAt(Vector3.zero);
 
         for(float i = 0; i < 4; i += 0.5f)
         {
             thisRB.AddForce(dir.normalized, ForceMode.Impulse);
         }
+    }
+
+    IEnumerator VibrateOverTime(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        vibrate = false;
     }
 }
