@@ -402,7 +402,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &194896034
 GameObject:
@@ -701,7 +703,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &306818943
 GameObject:
@@ -946,7 +950,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &530501995
 GameObject:
@@ -1235,7 +1241,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &689466390
 GameObject:
@@ -1446,7 +1454,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &795167947
 GameObject:
@@ -1538,7 +1548,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &920537373
 GameObject:
@@ -2102,7 +2114,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &1365540735
 GameObject:
@@ -2346,7 +2360,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &1491586396
 GameObject:
@@ -3187,7 +3203,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_Smoke
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2669873288827518413, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
+    - {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
 --- !u!1 &2020121808
 GameObject:
@@ -7587,7 +7605,6 @@ MonoBehaviour:
   dashSpeed: 35
   walkingSpeed: 0
   joystick: {fileID: 223458943}
-  dashEffect: {fileID: 19848150, guid: 00dac97cdd613fe49a4eb911783ae686, type: 3}
   crashEffect: {fileID: 2668975232451719099, guid: 4917e0698c8e34a4984130a25fce748f, type: 3}
   bladeEffect: {fileID: 19852676, guid: fe3d56eddfcbadb418d81896e5ec547c, type: 3}
   coinEffect: {fileID: 19851284, guid: 5552d0e6b5e91684c9b9b938763192bf, type: 3}
@@ -7619,6 +7636,7 @@ MonoBehaviour:
   particlePos: {fileID: 0}
   flying: 0
   attached: 0
+  vibrate: 0
   playerControllsBlocked: 0
 --- !u!4 &6702935099136983574
 Transform:
@@ -14107,7 +14125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6702935100834104753
 MonoBehaviour:
   m_ObjectHideFlags: 0
