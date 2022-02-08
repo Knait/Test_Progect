@@ -210,12 +210,12 @@ public class PlayerController : MonoBehaviour
             vibrate = false;
         }
 
-        if(GameController.Instance.paused && !GameController.Instance.endGame)
+        if(attached && !GameController.Instance.endGame)
         {
             StopPlayer();
         }
 
-        if(attached && !GameController.Instance.endGame)
+        if(GameController.Instance.paused && !GameController.Instance.endGame)
         {
             StopPlayer();
         }
@@ -235,6 +235,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        if(GameController.Instance.paused && !GameController.Instance.endGame)
+        {
+            StopPlayer();
+        }
+        
+        //Find winning crystal on the level
+        if (gemRef == null)
+        {
+            //Find gem
+            gemRef = GameObject.Find("Crystal7").transform;
+            //Assign it a random color
+            gemRef.GetComponent<MeshRenderer>().material.SetColor("_Color", GameController.Instance.gemColors[Random.Range(0, GameController.Instance.gemColors.Count)]);
+        }
+    }
     /// <summary>
     /// Get the default starting position
     /// </summary>
@@ -301,7 +317,7 @@ public class PlayerController : MonoBehaviour
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
         {
-            crashRef.Play();
+            //crashRef.Play();
             playerAnimator.SetBool("death", true);
             playerAnimator.SetBool("dashing", false);
             playerAnimator.SetBool("attached", false);
@@ -361,18 +377,6 @@ public class PlayerController : MonoBehaviour
 
         StopPlayer();
         //Vibrator.Cansel();
-    }
-
-    void LateUpdate()
-    {
-        //Find winning crystal on the level
-        if (gemRef == null)
-        {
-            //Find gem
-            gemRef = GameObject.Find("Crystal7").transform;
-            //Assign it a random color
-            gemRef.GetComponent<MeshRenderer>().material.SetColor("_Color", GameController.Instance.gemColors[Random.Range(0, GameController.Instance.gemColors.Count)]);
-        }
     }
 
     void OnTriggerEnter(Collider other)
