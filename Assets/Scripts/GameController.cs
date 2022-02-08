@@ -275,6 +275,7 @@ public class GameController : MonoBehaviour
 
         //Add them to the list for easier manipulation
         CrystalList.AddRange(FindObjectsOfType<Coin>());
+        PlayerController.Instance.StartEffect();
         Resume();
     }
 

@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
 
         if(vibrate)
         {
-            Handheld.Vibrate();
+            Vibration.Vibrate();
             vibrate = false;
         }
 
@@ -525,5 +525,10 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(_time);
         vibrate = false;
+    }
+
+    public void StartEffect()
+    {
+        bladeRef.Play();
     }
 }
