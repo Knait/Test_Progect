@@ -307,7 +307,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("attached", false);
 
             if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
-            StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
+            //StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
             StopPlayer();
             return;
         }
@@ -349,7 +349,7 @@ public class PlayerController : MonoBehaviour
 
         //LEAVE IT FOR EFFECTS
         crashRef.Play();
-        StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
+        //StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
 
         //Flags
         flying = false;
