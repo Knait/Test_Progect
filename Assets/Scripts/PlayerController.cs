@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AndroidNativeCore;
+//using AndroidNativeCore;
 public class PlayerController : MonoBehaviour
 {
     #region Singleton
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
         transform.position = startingPlayerPosition;
 
         //Effects references
-        crashRef = Instantiate(crashEffect, gameObject.transform);
+        crashRef = Instantiate(crashEffect, skinList[skinId].GetComponent<PositionsHolder>().effectPos);
         coinRef = Instantiate(coinEffect);
 
         //References to instantiated effects
