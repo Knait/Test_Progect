@@ -218,10 +218,6 @@ public class PlayerController : MonoBehaviour
         if(GameController.Instance.paused && !GameController.Instance.endGame)
         {
             StopPlayer();
-        }
-
-        if(GameController.Instance.paused)
-        {
             StopEffects();
         }
     }
@@ -236,6 +232,12 @@ public class PlayerController : MonoBehaviour
         } else
         {
             thisRB.AddForce(new Vector3(0, 0.5f, 0), ForceMode.Impulse);
+        }
+
+        if(GameController.Instance.paused && !GameController.Instance.endGame)
+        {
+            StopPlayer();
+            StopEffects();
         }
     }
 
@@ -367,9 +369,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = lookRotation;
 
         //Push the player to the opposite direction
-        thisRB.AddForce(-Dir() * 1, ForceMode.Impulse);
-
-        //StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
+        if(!GameController.Instance.paused) thisRB.AddForce(-Dir() * 1, ForceMode.Impulse);
 
         //Flags
         flying = false;
