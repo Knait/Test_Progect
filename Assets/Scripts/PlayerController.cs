@@ -219,6 +219,11 @@ public class PlayerController : MonoBehaviour
         {
             StopPlayer();
         }
+
+        if(GameController.Instance.paused)
+        {
+            StopEffects();
+        }
     }
 
     void FixedUpdate()
@@ -226,7 +231,6 @@ public class PlayerController : MonoBehaviour
         //To fix the bug with NO collision on idle (Just pushes player on and off all the time to activate collision)
         if(pos.y > 0)
         {
-            Debug.Log("pushin");
             thisRB.AddForce(new Vector3(0, -0.5f, 0), ForceMode.Impulse);
 
         } else
@@ -305,7 +309,8 @@ public class PlayerController : MonoBehaviour
     {
         //Vibrator.Vibrate(200);
         //Handheld.Vibrate();
-
+        //LEAVE IT FOR EFFECTS
+        crashRef.Play();
         vibrate = true;
         StopPlayer();
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
@@ -317,17 +322,17 @@ public class PlayerController : MonoBehaviour
         //If player collided with obstacle
         if (collision.gameObject.GetComponent<ObstacleWallController>())
         {
-            //crashRef.Play();
             playerAnimator.SetBool("death", true);
             playerAnimator.SetBool("dashing", false);
             playerAnimator.SetBool("attached", false);
 
             if (coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
             //StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
+            StopEffects();
             StopPlayer();
             return;
         }
-          
+        
         //Debug
         //Debug.Log("Collision" + collision.transform.position);
         //
@@ -363,8 +368,6 @@ public class PlayerController : MonoBehaviour
         //Push the player to the opposite direction
         thisRB.AddForce(-Dir() * 1, ForceMode.Impulse);
 
-        //LEAVE IT FOR EFFECTS
-        crashRef.Play();
         //StartCoroutine(StopCrashEffect(crashEffectDisappearTime));
 
         //Flags
