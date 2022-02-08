@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
 
         if(vibrate)
         {
-            Vibration.Vibrate();
+            Vibration.Vibrate(100);
             vibrate = false;
         }
 
@@ -307,6 +307,7 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
+        //Vibration.Vibrate();
         //Vibrator.Vibrate(200);
         //Handheld.Vibrate();
         //LEAVE IT FOR EFFECTS
