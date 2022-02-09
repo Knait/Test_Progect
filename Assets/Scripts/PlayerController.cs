@@ -214,18 +214,12 @@ public class PlayerController : MonoBehaviour
         {
             StopPlayer();
         }
-
-        if(GameController.Instance.paused && !GameController.Instance.endGame)
-        {
-            StopPlayer();
-            StopEffects();
-        }
     }
 
     void FixedUpdate()
     {
         //To fix the bug with NO collision on idle (Just pushes player on and off all the time to activate collision)
-        if(pos.y > 0)
+        if(pos.y > 0 && !GameController.Instance.paused)
         {
             thisRB.AddForce(new Vector3(0, -0.5f, 0), ForceMode.Impulse);
 
@@ -404,7 +398,7 @@ public class PlayerController : MonoBehaviour
             attached = false;
             flying = false;
             dashing = false;
-            
+
             //Assing the activated sword the right position
             swordRef.transform.SetParent(beltPos);
             swordRef.transform.rotation = beltPos.rotation;
@@ -451,10 +445,11 @@ public class PlayerController : MonoBehaviour
     //Reset player animation back to "Idle"
     public void ResetPlayer()
     {
-        StopPlayer();
+        
         transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = GetStartingPosition();
 
+        StopPlayer();
         StopAnimations();
         StopEffects();
 
@@ -463,6 +458,7 @@ public class PlayerController : MonoBehaviour
 
         bladeRef.Play();
         playerAnimator.SetBool("pickUp", false);
+        playerAnimator.Play("idle_(70)");
        
         playerControllsBlocked = false;
         flying = false;
