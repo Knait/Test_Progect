@@ -440,9 +440,9 @@ RectTransform:
   m_Father: {fileID: 1540573737}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -663, y: 18}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -493, y: -1437}
   m_SizeDelta: {x: 280, y: 120}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &194896036
@@ -1083,7 +1083,7 @@ MonoBehaviour:
   target: {fileID: 6702935100188036029}
   timeBeforeCamera: 0.06
   classicOffset: {x: 0, y: 30, z: 0}
-  finishOffset: {x: 3, y: 3, z: 0.5}
+  finishOffset: {x: 3, y: 4, z: 0.5}
 --- !u!1001 &586618925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1694,7 +1694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1026723336
 Transform:
   m_ObjectHideFlags: 0
@@ -2411,7 +2411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1540573737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5472,7 +5472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1945145574872610564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7453,7 +7453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1945145576095602400
 MonoBehaviour:
   m_ObjectHideFlags: 0
