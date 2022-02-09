@@ -326,10 +326,11 @@ public class GameController : MonoBehaviour
 
         ChangeSpeedAndLevel();
 
-        PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
+        //STARTING POS MAKING BUG
+        //PlayerController.Instance.IncreaseStartingPosition(new Vector3(0, speedIncrease, 0));
 
         //Resetting the position of the player
-        PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
+        //PlayerController.Instance.gameObject.transform.position = PlayerController.Instance.GetStartingPosition();
 
         //Destroying previously attached gem
         PlayerController.Instance.DestroyGem();

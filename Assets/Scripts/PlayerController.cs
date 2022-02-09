@@ -214,6 +214,8 @@ public class PlayerController : MonoBehaviour
         {
             StopPlayer();
         }
+
+
     }
 
     void FixedUpdate()
@@ -249,6 +251,12 @@ public class PlayerController : MonoBehaviour
             gemRef = GameObject.Find("Crystal7").transform;
             //Assign it a random color
             gemRef.GetComponent<MeshRenderer>().material.SetColor("_Color", GameController.Instance.gemColors[Random.Range(0, GameController.Instance.gemColors.Count)]);
+        }
+
+        if(GameController.Instance.endGame)
+        {
+            //Player Winning 
+            //transform.LookAt(new Vector3(0, 1, 0));
         }
     }
     /// <summary>
@@ -365,8 +373,9 @@ public class PlayerController : MonoBehaviour
 
         //Flags
         flying = false;
-        attached = true;
 
+        if(!GameController.Instance.paused) attached = true;
+    
         //Don't Play dashing animation
         playerAnimator.SetBool("dashing", false);
         playerAnimator.SetBool("attached", true);
@@ -404,8 +413,6 @@ public class PlayerController : MonoBehaviour
             swordRef.transform.rotation = beltPos.rotation;
             swordRef.transform.position = beltPos.position;
 
-            //Player Winning 
-            transform.LookAt(new Vector3(0, 0, 0));
             playerAnimator.SetBool("win", true);
 
             GameController.Instance.NextLevel();
@@ -445,9 +452,9 @@ public class PlayerController : MonoBehaviour
     //Reset player animation back to "Idle"
     public void ResetPlayer()
     {
-        
         transform.rotation = new Quaternion(0, 0, 0, 0);
-        transform.position = GetStartingPosition();
+        //transform.position = GetStartingPosition();
+        transform.position = new Vector3(0,0,7);
 
         StopPlayer();
         StopAnimations();
@@ -469,12 +476,6 @@ public class PlayerController : MonoBehaviour
         swordRef.transform.rotation = swordPos.rotation;
         swordRef.transform.position = swordPos.position;
         swordRef.transform.localScale = swordPos.localScale;
-
-        //swordRef.transform.position = swordPos.position;
-        //Assing the activated sword the right position
-        //swordRef.transform.SetParent(swordPos);
-        //swordRef.transform.rotation = swordPos.rotation;
-        //swordPos.localRotation =  new Quaternion(0, 30, 90, 0);
     }
 
     public void DestroyGem()
@@ -513,7 +514,8 @@ public class PlayerController : MonoBehaviour
         StopEffects();
         StopPlayer();
         Vector3 dir = new Vector3(0, 0, 0) - gameObject.transform.position;
-        transform.LookAt(Vector3.zero);
+
+        transform.LookAt(gemRef.position - new Vector3(0, 0.8f, 0));
 
         for(float i = 0; i < 4; i += 0.5f)
         {

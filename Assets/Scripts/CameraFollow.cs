@@ -54,7 +54,7 @@ public class CameraFollow : MonoBehaviour
         //var dir = target.position - gameObject.transform.position;
         yield return new WaitForSeconds(timeBeforeCamera);
 
-        transform.position = Vector3.zero;
+        //transform.position = Vector3.zero;
         transform.position = new Vector3(0 - target.position.x, finishOffset.y, 0 - target.position.z);
         thisCamera.fieldOfView = 45;
         transform.LookAt(target);
