@@ -309,16 +309,14 @@ public class PlayerController : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision collision)
     {
-        //Vibration.Vibrate();
-        //Vibrator.Vibrate(200);
-        //Handheld.Vibrate();
-        //LEAVE IT FOR EFFECTS
+        //Effects
         crashRef.Play();
         vibrate = true;
         StopPlayer();
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         
         bladeRef.Play();
+
         //Debug.Log(collision.collider.name);
         //Debug.Log("Collision");
 
@@ -403,6 +401,10 @@ public class PlayerController : MonoBehaviour
         //If collided with finishlane
         if (other.gameObject.GetComponent<NextLevel>())
         {
+            attached = false;
+            flying = false;
+            dashing = false;
+            
             //Assing the activated sword the right position
             swordRef.transform.SetParent(beltPos);
             swordRef.transform.rotation = beltPos.rotation;
@@ -411,6 +413,7 @@ public class PlayerController : MonoBehaviour
             //Player Winning 
             transform.LookAt(new Vector3(0, 0, 0));
             playerAnimator.SetBool("win", true);
+
             GameController.Instance.NextLevel();
         }
 
