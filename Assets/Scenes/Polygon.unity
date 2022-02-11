@@ -1279,8 +1279,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: 0}
-  m_SizeDelta: {x: 240, y: 120}
+  m_AnchoredPosition: {x: 13, y: 0}
+  m_SizeDelta: {x: 260, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &689466392
 MonoBehaviour:
@@ -1315,7 +1315,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 212
+  m_Text: '20000
+
+'
 --- !u!222 &689466393
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1694,7 +1696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1026723336
 Transform:
   m_ObjectHideFlags: 0
@@ -2432,8 +2434,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 276, y: 607}
-  m_SizeDelta: {x: 280, y: 100}
+  m_AnchoredPosition: {x: 245, y: 607}
+  m_SizeDelta: {x: 340, y: 100}
   m_Pivot: {x: 0.5, y: 0.49999997}
 --- !u!114 &1540573738
 MonoBehaviour:
@@ -2518,8 +2520,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localScore: 0
-  goldPerCrystal: 1
-  levelGold: 10
+  goldPerCrystal: 10
+  levelGold: 100
   TrubaAmountAtStart: 7
   fadeSpeed: 0
   secondsBeforeTransfer: 0.5
@@ -2631,7 +2633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -106, y: -7}
+  m_AnchoredPosition: {x: -164, y: -7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1615102722
@@ -4082,7 +4084,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &187771653231202599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5472,7 +5474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1945145574872610564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8140,7 +8142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6702935099183420547
 MonoBehaviour:
   m_ObjectHideFlags: 0
