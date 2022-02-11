@@ -72,6 +72,8 @@ public class GameController : MonoBehaviour
     [HideInInspector] public bool paused = false;
     [HideInInspector] public bool endGame = false;
 
+    [HideInInspector] public bool vibrationLocked = false;
+
     void Awake()
     {
         instance = this;
@@ -107,6 +109,21 @@ public class GameController : MonoBehaviour
         {
             PlayerPrefs.SetInt("SwordSkin_ID", 0);
         }
+        //The state of vibration (1 - On, 0 - Off)
+        if (!PlayerPrefs.HasKey("Vibration"))
+        {
+            PlayerPrefs.SetInt("Vibration", 1);
+
+        } else if (PlayerPrefs.HasKey("Vibration")) //If player set the settings before
+        {
+            if(PlayerPrefs.GetInt("Vibration") == 0)
+            {
+                vibrationLocked = true;
+            } else
+            {
+                vibrationLocked = false;
+            }
+        }
 
         PlayerPrefs.Save();
     }
@@ -137,7 +154,30 @@ public class GameController : MonoBehaviour
         levelTxt = startPanel.GetChild(0).GetComponent<TMP_Text>();
 
         textPanel.gameObject.SetActive(false);
-        textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
+        
+        //Creating a list of buttons on textpanel and filling it out
+        List<Button> textPanelButtons = new List<Button>();
+        textPanelButtons.AddRange(textPanel.GetComponentsInChildren<Button>());
+
+        //If there is more than one button
+        if(textPanelButtons.Count > 1)
+        {
+            for(int i = 0; i < textPanelButtons.Count; i++)
+            {
+                if(textPanelButtons[i].name == "VibrationOnOff")
+                {
+                    textPanelButtons[i].onClick.AddListener(SwitchVibration);
+
+                } else
+                {
+                    textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
+                }
+            }
+
+        } else
+        {
+            textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
+        }
 
         //Death panel setup
         endPanel.gameObject.SetActive(false);
@@ -446,6 +486,7 @@ public class GameController : MonoBehaviour
         localScore += goldPerCrystal;
     }
 
+    //A function that executes when player pressed "Shop" button
     void ShopSelection()
     {
         allCoins += localScore;
@@ -456,5 +497,31 @@ public class GameController : MonoBehaviour
         PlayerPrefs.Save();
 
         SceneManager.LoadScene(1);
+    }
+
+    //Switching vibration on and off
+    void SwitchVibration()
+    {
+        Debug.Log("Vibration swiitching");
+
+        if(!vibrationLocked) 
+        {
+            vibrationLocked = true;
+            Vibration.Cancel(); 
+
+            //Save the changes
+            PlayerPrefs.SetInt("Vibration", 0);
+
+        } else
+        {
+            vibrationLocked = false;
+
+            //Save the changes
+            PlayerPrefs.SetInt("Vibration", 1);
+            
+        }
+
+        PlayerPrefs.Save();
+      
     }
 }
