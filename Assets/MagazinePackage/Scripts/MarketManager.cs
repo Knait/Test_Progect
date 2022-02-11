@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SaveData
 {
@@ -25,7 +26,7 @@ public class MarketManager : MonoBehaviour
     [SerializeField]
     private Transform cameraPosition;   //������
     [SerializeField]
-    private TMPro.TextMeshProUGUI textAllPoints;         
+    private TMP_Text textAllPoints;         
 
    // [SerializeField]
     private int AllPoints;  // ������� ������
