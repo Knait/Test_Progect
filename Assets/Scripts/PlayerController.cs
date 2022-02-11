@@ -214,8 +214,6 @@ public class PlayerController : MonoBehaviour
         {
             StopPlayer();
         }
-
-
     }
 
     void FixedUpdate()
@@ -313,7 +311,12 @@ public class PlayerController : MonoBehaviour
     {
         //Effects
         crashRef.Play();
-        vibrate = true;
+
+        if(!GameController.Instance.vibrationLocked)
+        {
+            vibrate = true;
+        }
+
         StopPlayer();
         if(coinRef.isPlaying) StartCoroutine(StopCoinAfterSomeTime(crystalEffectDisappearTime));
         
@@ -381,7 +384,6 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("attached", true);
 
         StopPlayer();
-        //Vibrator.Cansel();
     }
 
     void OnTriggerEnter(Collider other)
