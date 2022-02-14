@@ -114,19 +114,29 @@ public class GameController : MonoBehaviour
         {
             PlayerPrefs.SetInt("Vibration", 1);
 
-        } else if (PlayerPrefs.HasKey("Vibration")) //If player set the settings before
-        {
-            if(PlayerPrefs.GetInt("Vibration") == 0)
-            {
-                vibrationLocked = true;
-            } else
-            {
-                vibrationLocked = false;
-            }
         }
+        else 
+            if (PlayerPrefs.HasKey("Vibration")) //If player set the settings before
+            {
+                if(PlayerPrefs.GetInt("Vibration") == 0)
+                {
+                    vibrationLocked = true;
+                }
+                else
+                    {
+                        vibrationLocked = false;
+                    }
+            }
 
         PlayerPrefs.Save();
     }
+
+    [SerializeField] private Button VibrateButton;
+    [SerializeField] private Image buttonVibrateVisual;
+    [SerializeField] private Sprite onVibrateVisual;
+    [SerializeField] private Sprite offVibrateVisual;
+
+    [SerializeField] private Button ShopButton;
 
     void Start()
     {
@@ -156,28 +166,18 @@ public class GameController : MonoBehaviour
         textPanel.gameObject.SetActive(false);
         
         //Creating a list of buttons on textpanel and filling it out
-        List<Button> textPanelButtons = new List<Button>();
-        textPanelButtons.AddRange(textPanel.GetComponentsInChildren<Button>());
+      //  List<Button> textPanelButtons = new List<Button>();
+     //   textPanelButtons.AddRange(textPanel.GetComponentsInChildren<Button>());
 
         //If there is more than one button
-        if(textPanelButtons.Count > 1)
-        {
-            for(int i = 0; i < textPanelButtons.Count; i++)
-            {
-                if(textPanelButtons[i].name == "VibrationOnOff")
-                {
-                    textPanelButtons[i].onClick.AddListener(SwitchVibration);
 
-                } else
-                {
-                    textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
-                }
-            }
+        ShopButton.onClick.AddListener(ShopSelection);
 
-        } else
-        {
-            textPanel.GetComponentInChildren<Button>().onClick.AddListener(ShopSelection);
-        }
+        VibrateButton.onClick.AddListener(() => SwitchVibration());
+        if (vibrationLocked)
+            buttonVibrateVisual.sprite = offVibrateVisual;
+        else
+            buttonVibrateVisual.sprite = onVibrateVisual;
 
         //Death panel setup
         endPanel.gameObject.SetActive(false);
@@ -507,21 +507,22 @@ public class GameController : MonoBehaviour
         if(!vibrationLocked) 
         {
             vibrationLocked = true;
+            buttonVibrateVisual.sprite = offVibrateVisual;
             Vibration.Cancel(); 
 
             //Save the changes
             PlayerPrefs.SetInt("Vibration", 0);
 
-        } else
+        }
+        else
         {
             vibrationLocked = false;
+            buttonVibrateVisual.sprite = onVibrateVisual;
 
             //Save the changes
             PlayerPrefs.SetInt("Vibration", 1);
-            
         }
 
         PlayerPrefs.Save();
-      
     }
 }
